@@ -1,4 +1,4 @@
-package com.sharingif.cube.spring.boot.web;
+package org.com.sharingif.cube.spring.boot.web.springmvc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
