@@ -26,7 +26,9 @@
 	
 		<maven.project.com.sharingif.cube.groupId>com.sharingif.cube</maven.project.com.sharingif.cube.groupId>
 		<maven.project.com.sharingif.cube.release.version>3.0.0-SNAPSHOT</maven.project.com.sharingif.cube.release.version>
-	
+		
+		<maven.project.org.springframework.boot.release.version>1.5.3.RELEASE</maven.project.org.springframework.boot.release.version>
+		
 	</properties>
 
 	<modules>

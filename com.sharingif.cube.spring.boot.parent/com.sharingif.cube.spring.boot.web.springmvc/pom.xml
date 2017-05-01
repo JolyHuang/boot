@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>1.5.3.RELEASE</version>
+			<version>${maven.project.org.springframework.boot.release.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
