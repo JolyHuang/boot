@@ -68,6 +68,7 @@ public class SpringMVCComponentsAutoconfigure {
 		return new ExtendedMappingJackson2HttpMessageConverter();
 	}
 	
+	@Bean
 	public List<HttpMessageConverter<?>> getMessageConverters() {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>(4);
 		messageConverters.add(getByteArrayHttpMessageConverter());
