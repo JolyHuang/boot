@@ -1,13 +1,19 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.bind.support.WebBindingInitializer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.chain.SpringMVCChainAutoconfigure;
-import com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components.SpringMVCComponentsAutoconfigure;
+import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
+import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
 import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
 
 /**
@@ -19,6 +25,13 @@ import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappin
  */
 @Configuration
 public class WebCubeContextAutoconfigure extends WebMvcConfigurationSupport {
+	
+	@Resource
+	private MultiHandlerMethodChain<SpringMVCHandlerMethodContent> springMCVChains;
+	@Resource
+	private WebBindingInitializer webBindingInitializer;
+	@Resource
+	private List<HttpMessageConverter<?>> customMessageConverters;
 
 	@Bean(name="handlerMapping")
 	@Override
@@ -32,9 +45,9 @@ public class WebCubeContextAutoconfigure extends WebMvcConfigurationSupport {
 	@Override
 	public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
 		ExtendedRequestMappingHandlerAdapter handlerAdapter = new ExtendedRequestMappingHandlerAdapter();
-		handlerAdapter.setHandlerMethodChain(SpringMVCChainAutoconfigure.getInstance().getSpringMCVChains());
-		handlerAdapter.setWebBindingInitializer(SpringMVCComponentsAutoconfigure.getInstance().getWebBindingInitializer());
-		handlerAdapter.setMessageConverters(SpringMVCComponentsAutoconfigure.getInstance().getMessageConverters());
+		handlerAdapter.setHandlerMethodChain(springMCVChains);
+		handlerAdapter.setWebBindingInitializer(webBindingInitializer);
+		handlerAdapter.setMessageConverters(customMessageConverters);
 		
 		return handlerAdapter;
 	}

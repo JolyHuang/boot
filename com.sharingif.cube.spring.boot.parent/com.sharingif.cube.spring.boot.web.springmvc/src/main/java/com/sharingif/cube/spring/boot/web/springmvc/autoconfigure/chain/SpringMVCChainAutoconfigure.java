@@ -3,12 +3,16 @@ package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.chain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.sharingif.cube.core.handler.HandlerMethodContent;
+import com.sharingif.cube.core.handler.chain.AnnotationHandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
+import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.spring.boot.core.autoconfigure.chain.CoreChainAutoconfigure;
 import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
 import com.sharingif.cube.web.springmvc.handler.chain.ViewRefererChain;
 
@@ -22,19 +26,18 @@ import com.sharingif.cube.web.springmvc.handler.chain.ViewRefererChain;
 @Configuration
 public class SpringMVCChainAutoconfigure {
 	
-	private static final SpringMVCChainAutoconfigure springMVCChainAutoconfigure = new SpringMVCChainAutoconfigure();
+	@Resource
+	private MonitorPerformanceChain monitorPerformanceChain;
+	@Resource
+	private AnnotationHandlerMethodChain<HandlerMethodContent> annotationHandlerMethodChain;
 	
-	public static SpringMVCChainAutoconfigure getInstance() {
-		return springMVCChainAutoconfigure;
-	}
-	
-	@Bean
+	@Bean(name="springMCVChains")
 	public MultiHandlerMethodChain<SpringMVCHandlerMethodContent> getSpringMCVChains() {
 		
 		List<HandlerMethodChain<? super SpringMVCHandlerMethodContent>> chains = new ArrayList<HandlerMethodChain<? super SpringMVCHandlerMethodContent>>(3);
 		chains.add(getViewRefererChain());
-		chains.add(CoreChainAutoconfigure.getInstance().getMonitorPerformanceChain());
-		chains.add(CoreChainAutoconfigure.getInstance().getAnnotationHandlerMethodChain());
+		chains.add(monitorPerformanceChain);
+		chains.add(annotationHandlerMethodChain);
 		
 		MultiHandlerMethodChain<SpringMVCHandlerMethodContent> springMVCHandlerMethodContent = new MultiHandlerMethodChain<SpringMVCHandlerMethodContent>();
 		springMVCHandlerMethodContent.setChains(chains);
@@ -42,7 +45,7 @@ public class SpringMVCChainAutoconfigure {
 		return  springMVCHandlerMethodContent;
 	}
 	
-	@Bean
+	@Bean(name="viewRefererChain")
 	public ViewRefererChain getViewRefererChain() {
 		return new ViewRefererChain();
 	}

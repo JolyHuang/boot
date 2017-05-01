@@ -3,13 +3,16 @@ package com.sharingif.cube.spring.boot.web.autoconfigure.chain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.sharingif.cube.communication.http.handler.HttpHandlerMethodContent;
 import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
+import com.sharingif.cube.core.handler.chain.MDCChain;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.spring.boot.core.autoconfigure.chain.CoreChainAutoconfigure;
+import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
 
 /**
  * WebChainAutoconfigure
@@ -21,18 +24,17 @@ import com.sharingif.cube.spring.boot.core.autoconfigure.chain.CoreChainAutoconf
 @Configuration
 public class WebChainAutoconfigure {
 	
-	private static final WebChainAutoconfigure webChainAutoconfigure = new WebChainAutoconfigure();
+	@Resource
+	private RequestLocalContextHolderChain requestLocalContextHolderChain;
+	@Resource
+	private MDCChain mdcChain;
 	
-	public static WebChainAutoconfigure getInstance() {
-		return webChainAutoconfigure;
-	}
-	
-	@Bean
+	@Bean(name="webHandlerMethodChain")
 	public MultiHandlerMethodChain<HttpHandlerMethodContent> getWebHandlerMethodChain() {
 		
 		List<HandlerMethodChain<? super HttpHandlerMethodContent>> chains = new ArrayList<HandlerMethodChain<? super HttpHandlerMethodContent>>(2);
-		chains.add(CoreChainAutoconfigure.getInstance().getRequestLocalContextHolderChain());
-		chains.add(CoreChainAutoconfigure.getInstance().getMDCChain());
+		chains.add(requestLocalContextHolderChain);
+		chains.add(mdcChain);
 		
 		MultiHandlerMethodChain<HttpHandlerMethodContent> webHandlerMethodChain = new MultiHandlerMethodChain<HttpHandlerMethodContent>();
 		webHandlerMethodChain.setChains(chains);

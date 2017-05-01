@@ -3,18 +3,21 @@ package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.http.converter.xml.SourceHttpMessageConverter;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
 
-import com.sharingif.cube.spring.boot.core.autoconfigure.components.CoreComponentsAutoconfigure;
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 
 /**
@@ -27,53 +30,53 @@ import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJacks
 @Configuration
 public class SpringMVCComponentsAutoconfigure {
 	
-	private static final SpringMVCComponentsAutoconfigure springMVCComponentsAutoconfigure = new SpringMVCComponentsAutoconfigure();
+	@Resource
+	private ConversionService conversionService;
+	@Resource
+	private Validator validator;
 	
-	public static SpringMVCComponentsAutoconfigure getInstance() {
-		return springMVCComponentsAutoconfigure;
-	}
-	
-	@Bean
+	@Bean(name="webBindingInitializer")
 	public WebBindingInitializer getWebBindingInitializer() {
 		ConfigurableWebBindingInitializer webBindingInitializer = new ConfigurableWebBindingInitializer();
-		webBindingInitializer.setConversionService(CoreComponentsAutoconfigure.getInstance().getConversionService());
-		webBindingInitializer.setValidator(CoreComponentsAutoconfigure.getInstance().getValidator());
+		webBindingInitializer.setConversionService(conversionService);
+		webBindingInitializer.setValidator(validator);
 		
 		return webBindingInitializer;
 	}
 	
-	@Bean
+	@Bean(name="byteArrayHttpMessageConverter")
 	public ByteArrayHttpMessageConverter getByteArrayHttpMessageConverter() {
 		return new ByteArrayHttpMessageConverter();
 	}
 	
-	@Bean
+	@Bean(name="stringHttpMessageConverter")
 	public StringHttpMessageConverter getStringHttpMessageConverter() {
 		return new StringHttpMessageConverter();
 	}
 	
-	@Bean
+	@Bean("sourceHttpMessageConverter")
 	@SuppressWarnings("rawtypes")
 	public SourceHttpMessageConverter getSourceHttpMessageConverter() {
 		return new SourceHttpMessageConverter();
 	}
 	
-	@Bean
+	@Bean(name="allEncompassingFormHttpMessageConverter")
 	public AllEncompassingFormHttpMessageConverter getAllEncompassingFormHttpMessageConverter() {
 		return new AllEncompassingFormHttpMessageConverter();
 	}
 	
-	@Bean
+	@Bean(name="mappingJackson2HttpMessageConverter")
 	public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
 		return new ExtendedMappingJackson2HttpMessageConverter();
 	}
 	
-	@Bean
-	public List<HttpMessageConverter<?>> getMessageConverters() {
+	@Bean(name="customMessageConverters")
+	public List<HttpMessageConverter<?>> getCustomMessageConverters() {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>(4);
 		messageConverters.add(getByteArrayHttpMessageConverter());
 		messageConverters.add(getStringHttpMessageConverter());
 		messageConverters.add(getSourceHttpMessageConverter());
+		messageConverters.add(getAllEncompassingFormHttpMessageConverter());
 		messageConverters.add(getMappingJackson2HttpMessageConverter());
 		
 		return messageConverters;

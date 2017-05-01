@@ -7,7 +7,6 @@ import com.sharingif.cube.core.handler.HandlerMethodContent;
 import com.sharingif.cube.core.handler.chain.AnnotationHandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.MDCChain;
 import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
-import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
 
 /**
@@ -20,13 +19,7 @@ import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
 @Configuration
 public class CoreChainAutoconfigure {
 	
-	private static final CoreChainAutoconfigure coreChainAutoconfigure = new CoreChainAutoconfigure();
-	
-	public static CoreChainAutoconfigure getInstance() {
-		return coreChainAutoconfigure;
-	}
-
-	@Bean
+	@Bean(name="annotationHandlerMethodChain")
 	public AnnotationHandlerMethodChain<HandlerMethodContent> getAnnotationHandlerMethodChain() {
 		return new AnnotationHandlerMethodChain<HandlerMethodContent>();
 	}
@@ -36,17 +29,12 @@ public class CoreChainAutoconfigure {
 		return new MDCChain();
 	}
 	
-	@Bean
+	@Bean(name="monitorPerformanceChain")
 	public MonitorPerformanceChain getMonitorPerformanceChain() {
 		return new MonitorPerformanceChain();
 	}
 	
-	@Bean
-	public MultiHandlerMethodChain<HandlerMethodContent> getMultiHandlerMethodChain() {
-		return new MultiHandlerMethodChain<HandlerMethodContent>();
-	}
-	
-	@Bean
+	@Bean(name="requestLocalContextHolderChain")
 	public RequestLocalContextHolderChain getRequestLocalContextHolderChain() {
 		return new RequestLocalContextHolderChain();
 	}
