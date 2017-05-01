@@ -1,30 +1,31 @@
-package org.com.sharingif.cube.spring.boot.web.springmvc;
+package com.sharingif.cube.spring.boot.web.springmvc;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * TODO
- * 2017年4月26日 下午9:59:23
- * @author Joly
- * @version v1.0
- * @since v1.0
- */
+import com.sharingif.cube.core.handler.chain.MDCChain;
+
 @Controller
-@EnableAutoConfiguration
+@SpringBootApplication(scanBasePackages="com.sharingif.cube.spring.boot.*")
 public class SampleController {
 
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return "Hello World!!!";
+        return "Hello World!";
     }
-
+    
+    @Bean
+    public MDCChain getMDCChainere() {
+    	return new MDCChain();
+    }
+    
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SampleController.class, args);
     }
-}
 
+}

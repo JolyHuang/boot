@@ -11,13 +11,44 @@
 	<artifactId>com.sharingif.cube.spring.boot.web.springmvc</artifactId>
 	<name>com.sharingif.cube.spring.boot.web.springmvc</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<dependencies>
+	
+		<dependency>
+			<groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
+			<artifactId>com.sharingif.cube.web.springmvc</artifactId>
+			<version>${maven.project.com.sharingif.cube.release.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.sharingif.cube.spring.boot.web</artifactId>
+			<version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>1.5.3.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
-	
+
 </project>

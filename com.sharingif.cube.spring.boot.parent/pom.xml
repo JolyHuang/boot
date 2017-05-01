@@ -23,11 +23,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.jdk.version>1.8</project.build.jdk.version>
 		<maven.project.com.sharingif.cube.spring.boot.version>3.0.0-SNAPSHOT</maven.project.com.sharingif.cube.spring.boot.version>
+	
+		<maven.project.com.sharingif.cube.groupId>com.sharingif.cube</maven.project.com.sharingif.cube.groupId>
+		<maven.project.com.sharingif.cube.release.version>3.0.0-SNAPSHOT</maven.project.com.sharingif.cube.release.version>
+	
 	</properties>
 
 	<modules>
 		<module>com.sharingif.cube.spring.boot.web</module>
     <module>com.sharingif.cube.spring.boot.web.springmvc</module>
+    <module>com.sharingif.cube.spring.boot.core</module>
   </modules>
 
 	<dependencies>
