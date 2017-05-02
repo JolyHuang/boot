@@ -1,6 +1,5 @@
 package com.sharingif.cube.spring.boot.web.springmvc;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,9 +14,6 @@ import com.sharingif.cube.context.annotation.RemoveLastImplOfDAOServiceAnnotatio
 @ComponentScan(basePackages="com.sharingif.cube.spring.boot.*",nameGenerator=RemoveLastImplOfDAOServiceAnnotationBeanNameGenerator.class)
 public class SampleController {
 
-	@Value("${wechat.token}")
-	private String wechatToken;
-	
     @RequestMapping("/")
     @ResponseBody
     String home() {

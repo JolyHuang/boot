@@ -12,7 +12,6 @@ import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.support.FormattingConversionServiceFactoryBean;
@@ -52,8 +51,9 @@ public class CoreComponentsAutoconfigure {
 	}
 
 	@Bean(name="conversionService")
-	public ConversionService getConversionService() {
-		return new FormattingConversionServiceFactoryBean().getObject();
+	public FormattingConversionServiceFactoryBean getConversionService() {
+		FormattingConversionServiceFactoryBean conversionService = new FormattingConversionServiceFactoryBean();
+		return conversionService;
 	}
 	
 	@Bean(name="validator")

@@ -7,14 +7,24 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.support.WebBindingInitializer;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.sharingif.cube.core.exception.handler.AbstractCubeExceptionHandler;
+import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
+import com.sharingif.cube.web.exception.handler.WebExceptionContent;
+import com.sharingif.cube.web.exception.handler.WebRequestInfo;
 import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
 import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
+import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
+import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
 
 /**
  * ExtendedWebMvcConfigurationSupport
@@ -32,6 +42,14 @@ public class WebCubeContextAutoconfigure extends WebMvcConfigurationSupport {
 	private WebBindingInitializer webBindingInitializer;
 	@Resource
 	private List<HttpMessageConverter<?>> customMessageConverters;
+	@Resource
+	private AbstractCubeExceptionHandler<WebRequestInfo, WebExceptionContent, HandlerMethod> springMVCCubeExceptionHandlers;
+	@Resource
+	private ContentNegotiationManager contentNegotiationManager;
+	@Resource
+	private List<ViewResolver> viewResolvers;
+	@Resource
+	private List<View> defaultViews;
 
 	@Bean(name="handlerMapping")
 	@Override
@@ -50,6 +68,26 @@ public class WebCubeContextAutoconfigure extends WebMvcConfigurationSupport {
 		handlerAdapter.setMessageConverters(customMessageConverters);
 		
 		return handlerAdapter;
+	}
+	
+	@Bean("handlerExceptionResolver")
+	@Override
+	public HandlerExceptionResolver handlerExceptionResolver() {
+		SimpleHandlerExceptionResolver handlerExceptionResolver = new SimpleHandlerExceptionResolver();
+		handlerExceptionResolver.setCubeExceptionHandler(springMVCCubeExceptionHandlers);
+		
+		return handlerExceptionResolver;
+	}
+	
+	@Bean(name="viewResolver")
+	@Override
+	public ViewResolver mvcViewResolver() {
+		ExtendedContentNegotiatingViewResolver viewResolver = new ExtendedContentNegotiatingViewResolver();
+		viewResolver.setContentNegotiationManager(contentNegotiationManager);
+		viewResolver.setViewResolvers(viewResolvers);
+		viewResolver.setDefaultViews(defaultViews);
+		
+		return viewResolver;
 	}
 	
 }
