@@ -43,6 +43,7 @@ import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgum
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;
+import com.sharingif.cube.web.springmvc.servlet.view.json.ExtendedMappingJackson2JsonView;
 import com.sharingif.cube.web.springmvc.servlet.view.referer.RefererViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
@@ -210,7 +211,7 @@ public class SpringMVCComponentsAutoconfigure {
 	
 	@Bean(name="mappingJackson2JsonView")
 	public MappingJackson2JsonView getMappingJackson2JsonView() {
-		MappingJackson2JsonView mappingJackson2JsonView = new MappingJackson2JsonView();
+		ExtendedMappingJackson2JsonView mappingJackson2JsonView = new ExtendedMappingJackson2JsonView();
 		
 		return mappingJackson2JsonView;
 	}
