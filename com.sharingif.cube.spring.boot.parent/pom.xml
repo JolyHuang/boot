@@ -56,7 +56,7 @@
 			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 			<version>${maven.project.org.springframework.boot.release.version}</version>
-			<scope>runtime</scope>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
