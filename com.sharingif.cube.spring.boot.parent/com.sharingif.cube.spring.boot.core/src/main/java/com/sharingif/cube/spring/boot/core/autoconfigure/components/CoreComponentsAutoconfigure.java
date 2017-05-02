@@ -7,10 +7,10 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
@@ -97,7 +97,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="devPropertyPlaceholderConfigurer")
-	@ConfigurationProperties(prefix="DEV")
+	@Profile("DEV")
 	public PropertyPlaceholderConfigurer getDevPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(getCommonProperties());
 		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
@@ -107,7 +107,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="testPropertyPlaceholderConfigurer")
-	@ConfigurationProperties(prefix="TEST")
+	@Profile("TEST")
 	public PropertyPlaceholderConfigurer getTestPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(getCommonProperties());
 		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
@@ -117,7 +117,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="prodPropertyPlaceholderConfigurer")
-	@ConfigurationProperties(prefix="PROD")
+	@Profile("PROD")
 	public PropertyPlaceholderConfigurer getProdPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(getCommonProperties());
 		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);

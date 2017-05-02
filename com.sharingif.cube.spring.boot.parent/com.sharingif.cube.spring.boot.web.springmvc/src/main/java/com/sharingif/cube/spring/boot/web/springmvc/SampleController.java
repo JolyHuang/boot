@@ -21,7 +21,6 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-    	System.out.println(wechatToken);
         return "Hello World!";
     }
     
