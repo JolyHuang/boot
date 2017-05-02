@@ -20,12 +20,12 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
 			<artifactId>spring-boot</artifactId>
 			<version>${maven.project.org.springframework.boot.release.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>org.springframework</groupId>
+					<groupId>${maven.project.springframework.groupId}</groupId>
 					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
