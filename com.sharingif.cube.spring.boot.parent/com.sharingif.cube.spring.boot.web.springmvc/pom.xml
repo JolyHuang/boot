@@ -13,28 +13,28 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
-	
+
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.3.2</version>
-		    <scope>provided</scope>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
 			<artifactId>com.sharingif.cube.web.springmvc</artifactId>
 			<version>${maven.project.com.sharingif.cube.release.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>com.sharingif.cube.spring.boot.web</artifactId>
 			<version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
 		</dependency>
-	
+
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${maven.project.org.springframework.boot.release.version}</version>
 			<exclusions>
@@ -56,6 +56,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 	</dependencies>
 
 </project>

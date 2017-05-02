@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sharingif.cube.spring.boot</groupId>
 	<artifactId>com.sharingif.cube.spring.boot.parent</artifactId>
@@ -23,26 +24,61 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.jdk.version>1.8</project.build.jdk.version>
 		<maven.project.com.sharingif.cube.spring.boot.version>3.0.0-SNAPSHOT</maven.project.com.sharingif.cube.spring.boot.version>
-	
+
 		<maven.project.com.sharingif.cube.groupId>com.sharingif.cube</maven.project.com.sharingif.cube.groupId>
 		<maven.project.com.sharingif.cube.release.version>3.0.0-SNAPSHOT</maven.project.com.sharingif.cube.release.version>
-		
+		<maven.project.springframework.groupId>org.springframework</maven.project.springframework.groupId>
+		<maven.project.org.springframework.boot.groupId>org.springframework.boot</maven.project.org.springframework.boot.groupId>
 		<maven.project.org.springframework.boot.release.version>1.5.3.RELEASE</maven.project.org.springframework.boot.release.version>
-		
+
 	</properties>
 
 	<modules>
 		<module>com.sharingif.cube.spring.boot.web</module>
-    <module>com.sharingif.cube.spring.boot.web.springmvc</module>
-    <module>com.sharingif.cube.spring.boot.core</module>
-  </modules>
+		<module>com.sharingif.cube.spring.boot.web.springmvc</module>
+		<module>com.sharingif.cube.spring.boot.core</module>
+	</modules>
 
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.11</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>${maven.project.org.springframework.boot.release.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
+					<artifactId>spring-boot-starter</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
+					<artifactId>spring-boot</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
+					<artifactId>spring-boot-autoconfigure</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${maven.project.springframework.groupId}</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 

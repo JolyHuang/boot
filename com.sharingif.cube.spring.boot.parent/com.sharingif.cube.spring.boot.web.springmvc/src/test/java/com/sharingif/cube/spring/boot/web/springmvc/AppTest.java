@@ -1,4 +1,4 @@
-package org.com.sharingif.cube.spring.boot.web.springmvc;
+package com.sharingif.cube.spring.boot.web.springmvc;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
