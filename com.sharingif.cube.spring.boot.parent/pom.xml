@@ -46,11 +46,10 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
@@ -79,7 +78,7 @@
 					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
