@@ -3,8 +3,6 @@ package com.sharingif.cube.spring.boot.web.autoconfigure.chain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,13 +22,8 @@ import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
 @Configuration
 public class WebChainAutoconfigure {
 	
-	@Resource
-	private RequestLocalContextHolderChain requestLocalContextHolderChain;
-	@Resource
-	private MDCChain mdcChain;
-	
 	@Bean(name="webHandlerMethodChain")
-	public MultiHandlerMethodChain<HttpHandlerMethodContent> getWebHandlerMethodChain() {
+	public MultiHandlerMethodChain<HttpHandlerMethodContent> createWebHandlerMethodChain(MDCChain mdcChain, RequestLocalContextHolderChain requestLocalContextHolderChain) {
 		
 		List<HandlerMethodChain<? super HttpHandlerMethodContent>> chains = new ArrayList<HandlerMethodChain<? super HttpHandlerMethodContent>>(2);
 		chains.add(requestLocalContextHolderChain);

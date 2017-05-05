@@ -3,8 +3,6 @@ package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.chain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,16 +24,11 @@ import com.sharingif.cube.web.springmvc.handler.chain.ViewRefererChain;
 @Configuration
 public class SpringMVCChainAutoconfigure {
 	
-	@Resource
-	private MonitorPerformanceChain monitorPerformanceChain;
-	@Resource
-	private AnnotationHandlerMethodChain<HandlerMethodContent> annotationHandlerMethodChain;
-	
 	@Bean(name="springMCVChains")
-	public MultiHandlerMethodChain<SpringMVCHandlerMethodContent> getSpringMCVChains() {
+	public MultiHandlerMethodChain<SpringMVCHandlerMethodContent> createSpringMCVChains(MonitorPerformanceChain monitorPerformanceChain, AnnotationHandlerMethodChain<HandlerMethodContent> annotationHandlerMethodChain) {
 		
 		List<HandlerMethodChain<? super SpringMVCHandlerMethodContent>> chains = new ArrayList<HandlerMethodChain<? super SpringMVCHandlerMethodContent>>(3);
-		chains.add(getViewRefererChain());
+		chains.add(createViewRefererChain());
 		chains.add(monitorPerformanceChain);
 		chains.add(annotationHandlerMethodChain);
 		
@@ -46,7 +39,7 @@ public class SpringMVCChainAutoconfigure {
 	}
 	
 	@Bean(name="viewRefererChain")
-	public ViewRefererChain getViewRefererChain() {
+	public ViewRefererChain createViewRefererChain() {
 		return new ViewRefererChain();
 	}
 

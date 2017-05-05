@@ -20,7 +20,7 @@ import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
 public class CoreChainAutoconfigure {
 	
 	@Bean(name="annotationHandlerMethodChain")
-	public AnnotationHandlerMethodChain<HandlerMethodContent> getAnnotationHandlerMethodChain() {
+	public AnnotationHandlerMethodChain<HandlerMethodContent> createAnnotationHandlerMethodChain() {
 		return new AnnotationHandlerMethodChain<HandlerMethodContent>();
 	}
 	
@@ -30,12 +30,12 @@ public class CoreChainAutoconfigure {
 	}
 	
 	@Bean(name="monitorPerformanceChain")
-	public MonitorPerformanceChain getMonitorPerformanceChain() {
+	public MonitorPerformanceChain createMonitorPerformanceChain() {
 		return new MonitorPerformanceChain();
 	}
 	
 	@Bean(name="requestLocalContextHolderChain")
-	public RequestLocalContextHolderChain getRequestLocalContextHolderChain() {
+	public RequestLocalContextHolderChain createRequestLocalContextHolderChain() {
 		return new RequestLocalContextHolderChain();
 	}
 	

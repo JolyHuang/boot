@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.fileupload.FileItemFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
@@ -24,6 +25,9 @@ import org.springframework.validation.Validator;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
+import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
@@ -40,6 +44,7 @@ import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExc
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
+import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;
@@ -58,24 +63,8 @@ import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
 @Configuration
 public class SpringMVCComponentsAutoconfigure {
 	
-	@Resource
-	private ConversionService conversionService;
-	@Resource
-	private Validator validator;
-	@Resource
-	private AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler;
-	@Resource
-	private TokenValidationCubeExceptionHandler tokenValidationCubeExceptionHandler;
-	@Resource
-	private BindValidationCubeExceptionHandler bindValidationCubeExceptionHandler;
-	@Resource
-	private ValidationCubeExceptionHandler validationCubeExceptionHandler;
-	@Resource
-	private WebCubeExceptionHandler webCubeExceptionHandler;
-	
-	
 	@Bean(name="webBindingInitializer")
-	public WebBindingInitializer getWebBindingInitializer() {
+	public WebBindingInitializer createWebBindingInitializer(ConversionService conversionService, Validator validator) {
 		ConfigurableWebBindingInitializer webBindingInitializer = new ConfigurableWebBindingInitializer();
 		webBindingInitializer.setConversionService(conversionService);
 		webBindingInitializer.setValidator(validator);
@@ -84,7 +73,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="byteArrayHttpMessageConverter")
-	public ByteArrayHttpMessageConverter getByteArrayHttpMessageConverter() {
+	public ByteArrayHttpMessageConverter createByteArrayHttpMessageConverter() {
 		return new ByteArrayHttpMessageConverter();
 	}
 	
@@ -110,9 +99,9 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="customMessageConverters")
-	public List<HttpMessageConverter<?>> getCustomMessageConverters() {
+	public List<HttpMessageConverter<?>> createCustomMessageConverters() {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>(4);
-		messageConverters.add(getByteArrayHttpMessageConverter());
+		messageConverters.add(createByteArrayHttpMessageConverter());
 		messageConverters.add(getStringHttpMessageConverter());
 		messageConverters.add(getSourceHttpMessageConverter());
 		messageConverters.add(getAllEncompassingFormHttpMessageConverter());
@@ -122,7 +111,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="methodArgumentNotValidExceptionHandler")
-	public MethodArgumentNotValidExceptionHandler getMethodArgumentNotValidExceptionHandler() {
+	public MethodArgumentNotValidExceptionHandler createMethodArgumentNotValidExceptionHandler() {
 		MethodArgumentNotValidExceptionHandler methodArgumentNotValidExceptionHandler = new MethodArgumentNotValidExceptionHandler();
 		
 		return methodArgumentNotValidExceptionHandler;
@@ -130,11 +119,17 @@ public class SpringMVCComponentsAutoconfigure {
 	
 	@Bean(name="springMVCCubeExceptionHandlers")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public MultiCubeExceptionHandler<WebRequestInfo,WebExceptionContent,HandlerMethod> getSpringMVCCubeExceptionHandlers() {
+	public MultiCubeExceptionHandler<WebRequestInfo,WebExceptionContent,HandlerMethod> createSpringMVCCubeExceptionHandlers(
+			AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler
+			,TokenValidationCubeExceptionHandler tokenValidationCubeExceptionHandler
+			,BindValidationCubeExceptionHandler bindValidationCubeExceptionHandler
+			,ValidationCubeExceptionHandler validationCubeExceptionHandler
+			,WebCubeExceptionHandler webCubeExceptionHandler
+			) {
 		List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>(6);
 		webCubeExceptionHandlers.add(accessDecisionCubeExceptionHandler);
 		webCubeExceptionHandlers.add(tokenValidationCubeExceptionHandler);
-		webCubeExceptionHandlers.add(getMethodArgumentNotValidExceptionHandler());
+		webCubeExceptionHandlers.add(createMethodArgumentNotValidExceptionHandler());
 		webCubeExceptionHandlers.add(bindValidationCubeExceptionHandler);
 		webCubeExceptionHandlers.add(validationCubeExceptionHandler);
 		webCubeExceptionHandlers.add(webCubeExceptionHandler);
@@ -147,7 +142,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="contentNegotiationManager")
-	public ContentNegotiationManagerFactoryBean getContentNegotiationManager() {
+	public ContentNegotiationManagerFactoryBean createContentNegotiationManager() {
 		
 		Properties mediaTypes = new Properties();
 		mediaTypes.put("image", "image/*");
@@ -165,7 +160,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="streamView")
-	public StreamView getStreamView() {
+	public StreamView createStreamView() {
 		StreamView streamView = new StreamView();
 		streamView.setContentType(MediaType.IMAGE_PNG_VALUE);
 		
@@ -173,9 +168,9 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="streamViewResolver")
-	public StreamViewResolver getStreamViewResolver() {
+	public StreamViewResolver createStreamViewResolver() {
 		Map<String,StreamView> streamViews = new HashMap<String,StreamView>(1);
-		streamViews.put("imagePng", getStreamView());
+		streamViews.put("imagePng", createStreamView());
 		
 		StreamViewResolver streamViewResolver = new StreamViewResolver();
 		streamViewResolver.setStreamViews(streamViews);
@@ -184,14 +179,14 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="refererViewResolver")
-	public RefererViewResolver getRefererViewResolver() {
+	public RefererViewResolver createRefererViewResolver() {
 		RefererViewResolver refererViewResolver = new RefererViewResolver();
 		
 		return refererViewResolver;
 	}
 	
 	@Bean(name="internalResourceViewResolver")
-	public InternalResourceViewResolver getInternalResourceViewResolver() {
+	public InternalResourceViewResolver createInternalResourceViewResolver() {
 		ExtendedInternalResourceViewResolver internalResourceViewResolver = new ExtendedInternalResourceViewResolver();
 		internalResourceViewResolver.setPrefix("/WEB-INF/views/");
 		internalResourceViewResolver.setSuffix(".jsp");
@@ -202,7 +197,7 @@ public class SpringMVCComponentsAutoconfigure {
 	
 	@Bean(name="multipartResolver")
 	@ConditionalOnBean(FileItemFactory.class)
-	public CommonsMultipartResolver getMultipartResolver() {
+	public CommonsMultipartResolver createMultipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setMaxUploadSize(1024*1024*5);
 		
@@ -210,7 +205,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="mappingJackson2JsonView")
-	public MappingJackson2JsonView getMappingJackson2JsonView() {
+	public MappingJackson2JsonView createMappingJackson2JsonView() {
 		ExtendedMappingJackson2JsonView mappingJackson2JsonView = new ExtendedMappingJackson2JsonView();
 		
 		return mappingJackson2JsonView;
@@ -219,17 +214,17 @@ public class SpringMVCComponentsAutoconfigure {
 	@Bean(name="viewResolvers")
 	public List<ViewResolver> getViewResolvers() {
 		List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>(3);
-		viewResolvers.add(getStreamViewResolver());
-		viewResolvers.add(getRefererViewResolver());
-		viewResolvers.add(getInternalResourceViewResolver());
+		viewResolvers.add(createStreamViewResolver());
+		viewResolvers.add(createRefererViewResolver());
+		viewResolvers.add(createInternalResourceViewResolver());
 		
 		return viewResolvers;
 	}
 	
 	@Bean(name="defaultViews")
-	public List<View> getDefaultViews() {
+	public List<View> createDefaultViews() {
 		List<View> defaultViews = new ArrayList<View>(1);
-		defaultViews.add(getMappingJackson2JsonView());
+		defaultViews.add(createMappingJackson2JsonView());
 		
 		return defaultViews;
 	}

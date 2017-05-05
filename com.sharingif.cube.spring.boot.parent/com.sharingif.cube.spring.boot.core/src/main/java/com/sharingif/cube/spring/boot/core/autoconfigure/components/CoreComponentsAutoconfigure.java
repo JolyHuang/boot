@@ -51,18 +51,18 @@ public class CoreComponentsAutoconfigure {
 	}
 
 	@Bean(name="conversionService")
-	public FormattingConversionServiceFactoryBean getConversionService() {
+	public FormattingConversionServiceFactoryBean createConversionService() {
 		FormattingConversionServiceFactoryBean conversionService = new FormattingConversionServiceFactoryBean();
 		return conversionService;
 	}
 	
 	@Bean(name="validator")
-	public Validator getValidator() {
+	public Validator createValidator() {
 		return new LocalValidatorFactoryBean();
 	}
 	
 	@Bean(name="commonAnnotationBeanPostProcessor")
-	public CommonAnnotationBeanPostProcessor getCommonAnnotationBeanPostProcessor() {
+	public CommonAnnotationBeanPostProcessor createCommonAnnotationBeanPostProcessor() {
 		CommonAnnotationBeanPostProcessor commonAnnotationBeanPostProcessor = new CommonAnnotationBeanPostProcessor();
 		commonAnnotationBeanPostProcessor.setFallbackToDefaultTypeMatch(false);
 		
@@ -70,7 +70,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="messageSource")
-	public ResourceBundleMessageSource getMessageSource() {
+	public ResourceBundleMessageSource createMessageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setDefaultEncoding(defaultEncoding);
 		messageSource.setBasenames(
@@ -89,7 +89,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="commonProperties")
-	public List<Resource> getCommonProperties() {
+	public List<Resource> createCommonProperties() {
 		List<Resource> commonProperties = new ArrayList<Resource>(2);
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
 		
@@ -98,8 +98,8 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="devPropertyPlaceholderConfigurer")
 	@Profile("DEV")
-	public PropertyPlaceholderConfigurer getDevPropertyPlaceholderConfigurer() {
-		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(getCommonProperties());
+	public PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer() {
+		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
 		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_DEV.properties"));
 		
@@ -108,8 +108,8 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="testPropertyPlaceholderConfigurer")
 	@Profile("TEST")
-	public PropertyPlaceholderConfigurer getTestPropertyPlaceholderConfigurer() {
-		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(getCommonProperties());
+	public PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer() {
+		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
 		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_TEST.properties"));
 		
@@ -118,8 +118,8 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="prodPropertyPlaceholderConfigurer")
 	@Profile("PROD")
-	public PropertyPlaceholderConfigurer getProdPropertyPlaceholderConfigurer() {
-		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(getCommonProperties());
+	public PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer() {
+		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
 		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_PROD.properties"));
 		

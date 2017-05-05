@@ -20,7 +20,7 @@ import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExcepti
 public class WebComponentsAutoconfigure {
 
 	@Bean(name="accessDecisionCubeExceptionHandler")
-	public AccessDecisionCubeExceptionHandler getAccessDecisionCubeExceptionHandler() {
+	public AccessDecisionCubeExceptionHandler createAccessDecisionCubeExceptionHandler() {
 		AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler = new AccessDecisionCubeExceptionHandler();
 		accessDecisionCubeExceptionHandler.setDefaultErrorView("redirect:/user/preLogin");
 		
@@ -36,21 +36,21 @@ public class WebComponentsAutoconfigure {
 	}
 	
 	@Bean(name="bindValidationCubeExceptionHandler")
-	public BindValidationCubeExceptionHandler getBindValidationCubeExceptionHandler() {
+	public BindValidationCubeExceptionHandler createBindValidationCubeExceptionHandler() {
 		BindValidationCubeExceptionHandler bindValidationCubeExceptionHandler = new BindValidationCubeExceptionHandler();
 		
 		return bindValidationCubeExceptionHandler;
 	}
 	
 	@Bean(name="validationCubeExceptionHandler")
-	public ValidationCubeExceptionHandler getValidationCubeExceptionHandler() {
+	public ValidationCubeExceptionHandler createValidationCubeExceptionHandler() {
 		ValidationCubeExceptionHandler validationCubeExceptionHandler = new ValidationCubeExceptionHandler();
 		
 		return validationCubeExceptionHandler;
 	}
 	
 	@Bean(name="webCubeExceptionHandler")
-	public WebCubeExceptionHandler getWebCubeExceptionHandler() {
+	public WebCubeExceptionHandler createWebCubeExceptionHandler() {
 		WebCubeExceptionHandler webCubeExceptionHandler = new WebCubeExceptionHandler();
 		webCubeExceptionHandler.setDefaultErrorView("error/defaultError");
 		
