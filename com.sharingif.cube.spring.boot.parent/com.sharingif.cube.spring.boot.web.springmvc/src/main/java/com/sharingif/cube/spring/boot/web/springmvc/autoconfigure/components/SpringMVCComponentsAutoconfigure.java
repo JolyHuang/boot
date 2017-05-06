@@ -7,10 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.fileupload.FileItemFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
@@ -25,10 +22,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
-import org.springframework.web.filter.RequestContextFilter;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -36,6 +29,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
+import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebExceptionContent;
@@ -44,7 +38,6 @@ import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExc
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
-import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;

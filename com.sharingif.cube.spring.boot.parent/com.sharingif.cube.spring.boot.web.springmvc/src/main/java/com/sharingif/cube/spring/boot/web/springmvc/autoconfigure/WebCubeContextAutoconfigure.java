@@ -2,9 +2,9 @@ package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -12,14 +12,14 @@ import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.support.WebBindingInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
-import org.springframework.web.filter.RequestContextFilter;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.sharingif.cube.core.exception.handler.AbstractCubeExceptionHandler;
+import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.web.exception.handler.WebExceptionContent;
@@ -27,6 +27,7 @@ import com.sharingif.cube.web.exception.handler.WebRequestInfo;
 import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
 import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
 import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
+import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
 import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
 
@@ -62,7 +63,7 @@ public class WebCubeContextAutoconfigure {
 	}
 	
 	@Bean("handlerExceptionResolver")
-	public HandlerExceptionResolver createHandlerExceptionResolver(AbstractCubeExceptionHandler<WebRequestInfo, WebExceptionContent, HandlerMethod> springMVCCubeExceptionHandlers) {
+	public HandlerExceptionResolver createHandlerExceptionResolver(@Qualifier("springMVCCubeExceptionHandlers") MultiCubeExceptionHandler<WebRequestInfo, WebExceptionContent, HandlerMethod> springMVCCubeExceptionHandlers) {
 		SimpleHandlerExceptionResolver handlerExceptionResolver = new SimpleHandlerExceptionResolver();
 		handlerExceptionResolver.setCubeExceptionHandler(springMVCCubeExceptionHandlers);
 		
@@ -96,11 +97,18 @@ public class WebCubeContextAutoconfigure {
 		return new ExtendedHiddenHttpMethodFilter();
 	}
 	
-	@Bean
-	public FilterRegistrationBean registration(RequestContextFilter requestContextFilter) {
-	    FilterRegistrationBean registration = new FilterRegistrationBean(requestContextFilter);
-	    registration.setEnabled(false);
-	    return registration;
+	@Bean(name="dispatcherServlet")
+	public DispatcherServlet createDispatcherServlet() {
+		ExtendedDispatcherServlet dispatcherServlet = new ExtendedDispatcherServlet();
+		dispatcherServlet.setDispatchOptionsRequest(true);
+		dispatcherServlet.setDispatchTraceRequest(false);
+		dispatcherServlet.setThrowExceptionIfNoHandlerFound(false);
+		
+		dispatcherServlet.setDetectAllHandlerMappings(false);
+		dispatcherServlet.setDetectAllHandlerAdapters(false);
+		dispatcherServlet.setDetectAllHandlerExceptionResolvers(false);
+		
+		return dispatcherServlet;
 	}
 	
 }

@@ -31,11 +31,11 @@ import com.sharingif.cube.core.util.Charset;
 @Configuration
 public class CoreComponentsAutoconfigure {
 	
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(CoreComponentsAutoconfigure.class);
 	
-	private String defaultEncoding;
+	private static final String DEFAULT_ENCODING;
 	
-	public CoreComponentsAutoconfigure() {
+	static{
 		ResourceBundle resourceBundle = null;
 		try {
 			resourceBundle = ResourceBundle.getBundle("config.app.CubeConfigure");
@@ -43,11 +43,10 @@ public class CoreComponentsAutoconfigure {
 			logger.error("config.app.CubeConfigure file not found");
 		}
 		if(resourceBundle == null) {
-			defaultEncoding = Charset.UTF8.toString();
+			DEFAULT_ENCODING = Charset.UTF8.toString();
 		} else {
-			defaultEncoding = resourceBundle.getString("app.properties.default.encoding");
+			DEFAULT_ENCODING = resourceBundle.getString("app.properties.default.encoding");
 		}
-		
 	}
 
 	@Bean(name="conversionService")
@@ -72,7 +71,7 @@ public class CoreComponentsAutoconfigure {
 	@Bean(name="messageSource")
 	public ResourceBundleMessageSource createMessageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setDefaultEncoding(defaultEncoding);
+		messageSource.setDefaultEncoding(DEFAULT_ENCODING);
 		messageSource.setBasenames(
 				"config.i18n.exception.DefaultValidationMessages"
 				,"config.i18n.exception.Cube"
@@ -89,7 +88,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="commonProperties")
-	public List<Resource> createCommonProperties() {
+	public static List<Resource> createCommonProperties() {
 		List<Resource> commonProperties = new ArrayList<Resource>(2);
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
 		
@@ -98,9 +97,9 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="devPropertyPlaceholderConfigurer")
 	@Profile("DEV")
-	public PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer() {
+	public static PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
-		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
+		propertyPlaceholderConfigurer.setFileEncoding(DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_DEV.properties"));
 		
 		return propertyPlaceholderConfigurer;
@@ -108,9 +107,9 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="testPropertyPlaceholderConfigurer")
 	@Profile("TEST")
-	public PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer() {
+	public static PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
-		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
+		propertyPlaceholderConfigurer.setFileEncoding(DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_TEST.properties"));
 		
 		return propertyPlaceholderConfigurer;
@@ -118,12 +117,12 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="prodPropertyPlaceholderConfigurer")
 	@Profile("PROD")
-	public PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer() {
+	public static PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
-		propertyPlaceholderConfigurer.setFileEncoding(defaultEncoding);
+		propertyPlaceholderConfigurer.setFileEncoding(DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_PROD.properties"));
 		
 		return propertyPlaceholderConfigurer;
 	}
-
+	
 }
