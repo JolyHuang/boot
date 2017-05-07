@@ -1,9 +1,11 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +18,11 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
@@ -41,10 +46,23 @@ import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingV
 @Configuration
 public class WebCubeContextAutoconfigure {
 	
+	@Bean(name="simpleUrlHandlerMapping")
+	public SimpleUrlHandlerMapping createSimpleUrlHandlerMapping(ResourceHttpRequestHandler resourceHttpRequestHandler) {
+		
+		Map<String, ResourceHttpRequestHandler> urlMap = new ManagedMap<String, ResourceHttpRequestHandler>();
+		urlMap.put("/static/**", resourceHttpRequestHandler);
+		urlMap.put("**/favicon.ico", resourceHttpRequestHandler);
+		
+		SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
+		simpleUrlHandlerMapping.setUrlMap(urlMap);
+		
+		return simpleUrlHandlerMapping;
+	}
 	@Bean(name="handlerMapping")
 	public RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
 		RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
 		handlerMapping.setUseSuffixPatternMatch(false);
+		
 		return handlerMapping;
 	}
 
@@ -60,6 +78,12 @@ public class WebCubeContextAutoconfigure {
 		handlerAdapter.setMessageConverters(customMessageConverters);
 		
 		return handlerAdapter;
+	}
+	@Bean(name="httpRequestHandlerAdapter")
+	public HttpRequestHandlerAdapter createHttpRequestHandlerAdapter() {
+		HttpRequestHandlerAdapter httpRequestHandlerAdapter = new HttpRequestHandlerAdapter();
+		
+		return httpRequestHandlerAdapter;
 	}
 	
 	@Bean("handlerExceptionResolver")
@@ -104,8 +128,6 @@ public class WebCubeContextAutoconfigure {
 		dispatcherServlet.setDispatchTraceRequest(false);
 		dispatcherServlet.setThrowExceptionIfNoHandlerFound(false);
 		
-		dispatcherServlet.setDetectAllHandlerMappings(false);
-		dispatcherServlet.setDetectAllHandlerAdapters(false);
 		dispatcherServlet.setDetectAllHandlerExceptionResolvers(false);
 		
 		return dispatcherServlet;

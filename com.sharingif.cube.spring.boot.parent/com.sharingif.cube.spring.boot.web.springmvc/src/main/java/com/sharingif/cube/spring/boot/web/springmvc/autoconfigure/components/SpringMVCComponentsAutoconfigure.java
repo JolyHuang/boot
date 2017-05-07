@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.fileupload.FileItemFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,9 +25,12 @@ import org.springframework.validation.Validator;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -54,7 +60,13 @@ import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
  * @since v1.0
  */
 @Configuration
-public class SpringMVCComponentsAutoconfigure {
+public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
+	
+	private ServletContext servletContext;
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
 	
 	@Bean(name="webBindingInitializer")
 	public WebBindingInitializer createWebBindingInitializer(ConversionService conversionService, Validator validator) {
@@ -222,4 +234,15 @@ public class SpringMVCComponentsAutoconfigure {
 		return defaultViews;
 	}
 	
+	@Bean(name="resourceHttpRequestHandler")
+	public ResourceHttpRequestHandler createResourceHttpRequestHandler() {
+		List<Resource> locations = new ArrayList<Resource>();
+		locations.add(new ServletContextResource(servletContext, "/static/"));
+		
+		ResourceHttpRequestHandler resourceHttpRequestHandler = new ResourceHttpRequestHandler();
+		resourceHttpRequestHandler.setLocations(locations);
+		
+		return resourceHttpRequestHandler;
+	}
+
 }

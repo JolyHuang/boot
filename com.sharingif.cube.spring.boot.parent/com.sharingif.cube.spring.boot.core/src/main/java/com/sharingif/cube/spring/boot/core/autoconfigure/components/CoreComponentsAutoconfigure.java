@@ -2,10 +2,7 @@ package com.sharingif.cube.spring.boot.core.autoconfigure.components;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
@@ -19,7 +16,7 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfigurer;
-import com.sharingif.cube.core.util.Charset;
+import com.sharingif.cube.spring.boot.core.CubeConfigure;
 
 /**
  * CoreComponentsAutoconfigure 2017年5月1日 下午6:15:05
@@ -31,24 +28,6 @@ import com.sharingif.cube.core.util.Charset;
 @Configuration
 public class CoreComponentsAutoconfigure {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CoreComponentsAutoconfigure.class);
-	
-	private static final String DEFAULT_ENCODING;
-	
-	static{
-		ResourceBundle resourceBundle = null;
-		try {
-			resourceBundle = ResourceBundle.getBundle("config.app.CubeConfigure");
-		} catch (Exception e) {
-			logger.error("config.app.CubeConfigure file not found");
-		}
-		if(resourceBundle == null) {
-			DEFAULT_ENCODING = Charset.UTF8.toString();
-		} else {
-			DEFAULT_ENCODING = resourceBundle.getString("app.properties.default.encoding");
-		}
-	}
-
 	@Bean(name="conversionService")
 	public FormattingConversionServiceFactoryBean createConversionService() {
 		FormattingConversionServiceFactoryBean conversionService = new FormattingConversionServiceFactoryBean();
@@ -71,7 +50,7 @@ public class CoreComponentsAutoconfigure {
 	@Bean(name="messageSource")
 	public ResourceBundleMessageSource createMessageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setDefaultEncoding(DEFAULT_ENCODING);
+		messageSource.setDefaultEncoding(CubeConfigure.DEFAULT_ENCODING);
 		messageSource.setBasenames(
 				"config.i18n.exception.DefaultValidationMessages"
 				,"config.i18n.exception.Cube"
@@ -99,7 +78,7 @@ public class CoreComponentsAutoconfigure {
 	@Profile("DEV")
 	public static PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
-		propertyPlaceholderConfigurer.setFileEncoding(DEFAULT_ENCODING);
+		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_DEV.properties"));
 		
 		return propertyPlaceholderConfigurer;
@@ -109,7 +88,7 @@ public class CoreComponentsAutoconfigure {
 	@Profile("TEST")
 	public static PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
-		propertyPlaceholderConfigurer.setFileEncoding(DEFAULT_ENCODING);
+		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_TEST.properties"));
 		
 		return propertyPlaceholderConfigurer;
@@ -119,7 +98,7 @@ public class CoreComponentsAutoconfigure {
 	@Profile("PROD")
 	public static PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer() {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
-		propertyPlaceholderConfigurer.setFileEncoding(DEFAULT_ENCODING);
+		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_PROD.properties"));
 		
 		return propertyPlaceholderConfigurer;
