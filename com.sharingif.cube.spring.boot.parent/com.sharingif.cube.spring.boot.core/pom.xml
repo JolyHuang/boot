@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
-			<artifactId>com.sharingif.cube.core</artifactId>
+			<artifactId>com.sharingif.cube.components</artifactId>
 			<version>${maven.project.com.sharingif.cube.release.version}</version>
 		</dependency>
 		

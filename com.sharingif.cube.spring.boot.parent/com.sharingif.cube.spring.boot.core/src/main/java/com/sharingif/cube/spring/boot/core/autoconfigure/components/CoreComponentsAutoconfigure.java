@@ -16,6 +16,8 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfigurer;
+import com.sharingif.cube.components.sequence.ISequenceHandler;
+import com.sharingif.cube.components.sequence.SequenceHandlerImpl;
 import com.sharingif.cube.spring.boot.core.CubeConfigure;
 
 /**
@@ -27,6 +29,13 @@ import com.sharingif.cube.spring.boot.core.CubeConfigure;
  */
 @Configuration
 public class CoreComponentsAutoconfigure {
+	
+	@Bean(name="sequenceHandler")
+	public ISequenceHandler createSequenceHandler() {
+		SequenceHandlerImpl sequenceHandler = new SequenceHandlerImpl();
+		
+		return sequenceHandler;
+	}
 	
 	@Bean(name="conversionService")
 	public FormattingConversionServiceFactoryBean createConversionService() {
