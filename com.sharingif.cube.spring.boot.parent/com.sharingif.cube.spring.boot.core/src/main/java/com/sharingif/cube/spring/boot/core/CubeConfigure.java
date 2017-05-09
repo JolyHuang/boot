@@ -1,11 +1,13 @@
 package com.sharingif.cube.spring.boot.core;
 
-import java.util.ResourceBundle;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sharingif.cube.core.util.Charset;
+import com.sharingif.cube.core.exception.CubeRuntimeException;
+import com.sharingif.cube.core.util.StringUtils;
 
 /**
  * 加载cube系统文件
@@ -22,22 +24,25 @@ public final class CubeConfigure {
 	public static final String  APP_COMPONENTSCAN_BASEPACKAGES;
 	
 	static{
-		ResourceBundle resourceBundle = null;
+		Properties properties = null;
 		try {
-			resourceBundle = ResourceBundle.getBundle("config.app.CubeConfigure");
+			InputStream in = CubeConfigure.class.getClassLoader().getResourceAsStream("config/app/CubeConfigure.properties");
+			properties = new Properties();
+			properties.load(in);
 		} catch (Exception e) {
 			logger.error("config.app.CubeConfigure file not found");
+			throw new CubeRuntimeException(e);
+		}
+		
+		try {
+			DEFAULT_ENCODING = properties.getProperty("app.properties.default.encoding").trim();
+		} catch (Exception e) {
+			logger.error("Property app.properties.default.encoding was not found in file config.app.CubeConfigure");
 			throw e;
 		}
 		
-		if(resourceBundle == null) {
-			DEFAULT_ENCODING = Charset.UTF8.toString();
-		} else {
-			DEFAULT_ENCODING = resourceBundle.getString("app.properties.default.encoding");
-		}
-		
 		try {
-			APP_COMPONENTSCAN_BASEPACKAGES = resourceBundle.getString("app.componentscan.basepackages");
+			APP_COMPONENTSCAN_BASEPACKAGES = properties.getProperty("app.componentscan.basepackages").trim();
 		} catch (Exception e) {
 			logger.error("Property app.componentscan.basepackages was not found in file config.app.CubeConfigure");
 			throw e;
