@@ -9,6 +9,7 @@ import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.support.FormattingConversionServiceFactoryBean;
@@ -19,10 +20,13 @@ import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfig
 import com.sharingif.cube.components.sequence.ISequenceHandler;
 import com.sharingif.cube.components.sequence.SequenceHandlerImpl;
 import com.sharingif.cube.core.config.CubeConfigure;
+import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
+import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
 
 /**
- * CoreComponentsAutoconfigure 2017年5月1日 下午6:15:05
+ * CoreComponentsAutoconfigure 
  * 
+ * 2017年5月1日 下午6:15:05
  * @author Joly
  * @version v1.0
  * @since v1.0
@@ -54,6 +58,15 @@ public class CoreComponentsAutoconfigure {
 		commonAnnotationBeanPostProcessor.setFallbackToDefaultTypeMatch(false);
 		
 		return commonAnnotationBeanPostProcessor;
+	}
+	
+	@Bean(name = "bindingInitializer")
+	public BindingInitializer create(Validator validator, ConversionService conversionService) {
+		ConfigurableBindingInitializer bindingInitializer = new ConfigurableBindingInitializer();
+		bindingInitializer.setValidator(validator);
+		bindingInitializer.setConversionService(conversionService);
+		
+		return bindingInitializer;
 	}
 	
 	@Bean(name="messageSource")

@@ -33,11 +33,16 @@
 	</properties>
 
 	<modules>
+		<module>com.sharingif.cube.spring.boot.core</module>
+		
+		<module>com.sharingif.cube.spring.boot.persistence</module>
+		
+		<module>com.sharingif.cube.spring.boot.communication</module>
+		<module>com.sharingif.cube.spring.boot.communication.http</module>
+		
 		<module>com.sharingif.cube.spring.boot.web</module>
 		<module>com.sharingif.cube.spring.boot.web.springmvc</module>
-		<module>com.sharingif.cube.spring.boot.core</module>
-		<module>com.sharingif.cube.spring.boot.persistence</module>
-	</modules>
+  </modules>
 
 	<dependencies>
 		<dependency>
