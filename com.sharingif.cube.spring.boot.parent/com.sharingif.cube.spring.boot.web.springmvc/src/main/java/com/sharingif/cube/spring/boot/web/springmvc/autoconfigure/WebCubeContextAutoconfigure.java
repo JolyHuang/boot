@@ -70,12 +70,12 @@ public class WebCubeContextAutoconfigure {
 	public RequestMappingHandlerAdapter createRequestMappingHandlerAdapter(
 			MultiHandlerMethodChain<SpringMVCHandlerMethodContent> springMCVChains
 			,WebBindingInitializer webBindingInitializer
-			,List<HttpMessageConverter<?>> customMessageConverters
+			,List<HttpMessageConverter<?>> messageConverters
 			) {
 		ExtendedRequestMappingHandlerAdapter handlerAdapter = new ExtendedRequestMappingHandlerAdapter();
 		handlerAdapter.setHandlerMethodChain(springMCVChains);
 		handlerAdapter.setWebBindingInitializer(webBindingInitializer);
-		handlerAdapter.setMessageConverters(customMessageConverters);
+		handlerAdapter.setMessageConverters(messageConverters);
 		
 		return handlerAdapter;
 	}

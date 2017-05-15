@@ -104,7 +104,7 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	@Bean(name="customMessageConverters")
+	@Bean(name="messageConverters")
 	public List<HttpMessageConverter<?>> createCustomMessageConverters(
 			ByteArrayHttpMessageConverter byteArrayHttpMessageConverter
 			,StringHttpMessageConverter stringHttpMessageConverter
