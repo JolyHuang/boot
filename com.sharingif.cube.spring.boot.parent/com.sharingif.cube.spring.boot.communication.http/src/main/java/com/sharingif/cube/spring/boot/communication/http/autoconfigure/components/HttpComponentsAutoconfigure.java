@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.communication.http.autoconfigure.components;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,6 +10,8 @@ import com.sharingif.cube.communication.http.transport.transform.HttpJsonTransfo
 import com.sharingif.cube.communication.http.transport.transform.MethodParameterArgumentToJsonModelMarshaller;
 import com.sharingif.cube.communication.http.transport.transform.ObjectToJsonStringMarshaller;
 import com.sharingif.cube.communication.transport.Connection;
+import com.sharingif.cube.core.handler.HandlerMethodContent;
+import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.request.RequestInfo;
 
 /**
@@ -36,6 +39,7 @@ public class HttpComponentsAutoconfigure {
 	}
 	
 	@Bean(name = "methodParameterArgumentToJsonModelMarshaller")
+	@ConditionalOnMissingBean(name = "methodParameterArgumentToJsonModelMarshaller", value = MethodParameterArgumentToJsonModelMarshaller.class)
 	public MethodParameterArgumentToJsonModelMarshaller createMethodParameterArgumentToJsonModelMarshaller() {
 		MethodParameterArgumentToJsonModelMarshaller methodParameterArgumentToJsonModelMarshaller = new MethodParameterArgumentToJsonModelMarshaller();
 		
@@ -52,10 +56,15 @@ public class HttpComponentsAutoconfigure {
 	}
 	
 	@Bean(name= "httpJsonRemoteHandlerMethodTransportFactory")
-	public HttpJsonRemoteHandlerMethodTransportFactory createHttpJsonRemoteHandlerMethodTransportFactory(Connection<RequestInfo<String>, String> httpJsonConnection, HttpJsonTransform httpJsonTransform) {
+	public HttpJsonRemoteHandlerMethodTransportFactory createHttpJsonRemoteHandlerMethodTransportFactory(
+			Connection<RequestInfo<String>, String> httpJsonConnection
+			,HttpJsonTransform httpJsonTransform
+			,MultiHandlerMethodChain<HandlerMethodContent> transportChains
+			) {
 		HttpJsonRemoteHandlerMethodTransportFactory httpJsonRemoteHandlerMethodTransportFactory = new HttpJsonRemoteHandlerMethodTransportFactory();
 		httpJsonRemoteHandlerMethodTransportFactory.setConnection(httpJsonConnection);
-		httpJsonRemoteHandlerMethodTransportFactory.setTransform(httpJsonTransform);;
+		httpJsonRemoteHandlerMethodTransportFactory.setTransform(httpJsonTransform);
+		httpJsonRemoteHandlerMethodTransportFactory.setHandlerMethodChain(transportChains);
 		
 		return httpJsonRemoteHandlerMethodTransportFactory;
 	}

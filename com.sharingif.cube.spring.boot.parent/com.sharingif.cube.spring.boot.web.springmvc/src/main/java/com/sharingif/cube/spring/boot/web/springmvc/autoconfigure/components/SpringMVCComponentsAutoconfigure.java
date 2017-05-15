@@ -83,34 +83,41 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 	}
 	
 	@Bean(name="stringHttpMessageConverter")
-	public StringHttpMessageConverter getStringHttpMessageConverter() {
+	public StringHttpMessageConverter createStringHttpMessageConverter() {
 		return new StringHttpMessageConverter();
 	}
 	
 	@Bean("sourceHttpMessageConverter")
 	@SuppressWarnings("rawtypes")
-	public SourceHttpMessageConverter getSourceHttpMessageConverter() {
+	public SourceHttpMessageConverter createSourceHttpMessageConverter() {
 		return new SourceHttpMessageConverter();
 	}
 	
 	@Bean(name="allEncompassingFormHttpMessageConverter")
-	public AllEncompassingFormHttpMessageConverter getAllEncompassingFormHttpMessageConverter() {
+	public AllEncompassingFormHttpMessageConverter createAllEncompassingFormHttpMessageConverter() {
 		return new AllEncompassingFormHttpMessageConverter();
 	}
 	
 	@Bean(name="mappingJackson2HttpMessageConverter")
-	public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
+	public MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
 		return new ExtendedMappingJackson2HttpMessageConverter();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Bean(name="customMessageConverters")
-	public List<HttpMessageConverter<?>> createCustomMessageConverters() {
+	public List<HttpMessageConverter<?>> createCustomMessageConverters(
+			ByteArrayHttpMessageConverter byteArrayHttpMessageConverter
+			,StringHttpMessageConverter stringHttpMessageConverter
+			,SourceHttpMessageConverter sourceHttpMessageConverter
+			,AllEncompassingFormHttpMessageConverter allEncompassingFormHttpMessageConverter
+			,MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
+			) {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>(4);
-		messageConverters.add(createByteArrayHttpMessageConverter());
-		messageConverters.add(getStringHttpMessageConverter());
-		messageConverters.add(getSourceHttpMessageConverter());
-		messageConverters.add(getAllEncompassingFormHttpMessageConverter());
-		messageConverters.add(getMappingJackson2HttpMessageConverter());
+		messageConverters.add(byteArrayHttpMessageConverter);
+		messageConverters.add(stringHttpMessageConverter);
+		messageConverters.add(sourceHttpMessageConverter);
+		messageConverters.add(allEncompassingFormHttpMessageConverter);
+		messageConverters.add(mappingJackson2HttpMessageConverter);
 		
 		return messageConverters;
 	}
@@ -217,11 +224,15 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 	}
 	
 	@Bean(name="viewResolvers")
-	public List<ViewResolver> getViewResolvers() {
+	public List<ViewResolver> getViewResolvers(
+			StreamViewResolver streamViewResolver
+			,RefererViewResolver refererViewResolver
+			,InternalResourceViewResolver internalResourceViewResolver
+			) {
 		List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>(3);
-		viewResolvers.add(createStreamViewResolver());
-		viewResolvers.add(createRefererViewResolver());
-		viewResolvers.add(createInternalResourceViewResolver());
+		viewResolvers.add(streamViewResolver);
+		viewResolvers.add(refererViewResolver);
+		viewResolvers.add(internalResourceViewResolver);
 		
 		return viewResolvers;
 	}
