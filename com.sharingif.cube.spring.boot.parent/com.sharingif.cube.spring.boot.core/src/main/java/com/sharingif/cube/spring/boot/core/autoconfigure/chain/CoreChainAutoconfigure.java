@@ -29,6 +29,13 @@ public class CoreChainAutoconfigure {
 		return new MDCChain();
 	}
 	
+	@Bean(name="transactionMonitorPerformanceChain")
+	public MonitorPerformanceChain createTransactionMonitorPerformanceChain() {
+		MonitorPerformanceChain transportMonitorPerformanceChain = new MonitorPerformanceChain();
+		transportMonitorPerformanceChain.setName("transaction");
+		return transportMonitorPerformanceChain;
+	}
+	
 	@Bean(name="controllerMonitorPerformanceChain")
 	public MonitorPerformanceChain createControllerMonitorPerformanceChain() {
 		return new MonitorPerformanceChain();
