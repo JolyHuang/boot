@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,6 +24,7 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 public class CommunicationChainAutoconfigure {
 	
 	@Bean(name="transportChains")
+	@ConditionalOnMissingBean(name = "transportChains", value = MultiHandlerMethodChain.class)
 	public MultiHandlerMethodChain<HandlerMethodContent> createTransportChains(
 			@Qualifier("transportMonitorPerformanceChain")MonitorPerformanceChain transportMonitorPerformanceChain
 			) {
