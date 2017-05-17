@@ -1,18 +1,10 @@
 package com.sharingif.cube.spring.boot.communication.http.autoconfigure.components;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sharingif.cube.communication.http.transport.HttpJsonRemoteHandlerMethodTransportFactory;
-import com.sharingif.cube.communication.http.transport.HttpJsonRequestInfoResolver;
-import com.sharingif.cube.communication.http.transport.transform.HttpJsonTransform;
-import com.sharingif.cube.communication.http.transport.transform.MethodParameterArgumentToJsonModelMarshaller;
+import com.sharingif.cube.communication.http.transport.HandlerMethodCommunicationTransportRequestInfoResolver;
 import com.sharingif.cube.communication.http.transport.transform.ObjectToJsonStringMarshaller;
-import com.sharingif.cube.communication.transport.Connection;
-import com.sharingif.cube.core.handler.HandlerMethodContent;
-import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.core.request.RequestInfo;
 
 /**
  * HttpComponentsAutoconfigure
@@ -24,11 +16,11 @@ import com.sharingif.cube.core.request.RequestInfo;
 @Configuration
 public class HttpComponentsAutoconfigure {
 	
-	@Bean(name = "httpJsonRequestInfoResolver")
-	public HttpJsonRequestInfoResolver createHttpJsonRequestInfoResolver() {
-		HttpJsonRequestInfoResolver httpJsonRequestInfoResolver = new HttpJsonRequestInfoResolver();
+	@Bean(name = "handlerMethodCommunicationTransportRequestInfoResolver")
+	public HandlerMethodCommunicationTransportRequestInfoResolver createHandlerMethodCommunicationTransportRequestInfoResolver() {
+		HandlerMethodCommunicationTransportRequestInfoResolver handlerMethodCommunicationTransportRequestInfoResolver = new HandlerMethodCommunicationTransportRequestInfoResolver();
 		
-		return httpJsonRequestInfoResolver;
+		return handlerMethodCommunicationTransportRequestInfoResolver;
 	}
 	
 	@Bean(name = "objectToJsonStringMarshaller")
@@ -38,35 +30,4 @@ public class HttpComponentsAutoconfigure {
 		return objectToJsonStringMarshaller;
 	}
 	
-	@Bean(name = "methodParameterArgumentToJsonModelMarshaller")
-	@ConditionalOnMissingBean(name = "methodParameterArgumentToJsonModelMarshaller", value = MethodParameterArgumentToJsonModelMarshaller.class)
-	public MethodParameterArgumentToJsonModelMarshaller createMethodParameterArgumentToJsonModelMarshaller() {
-		MethodParameterArgumentToJsonModelMarshaller methodParameterArgumentToJsonModelMarshaller = new MethodParameterArgumentToJsonModelMarshaller();
-		
-		return methodParameterArgumentToJsonModelMarshaller;
-	}
-	
-	@Bean(name = "httpJsonTransform")
-	public HttpJsonTransform createHttpJsonTransform(ObjectToJsonStringMarshaller objectToJsonStringMarshaller, MethodParameterArgumentToJsonModelMarshaller methodParameterArgumentToJsonModelMarshaller) {
-		HttpJsonTransform httpJsonTransform = new HttpJsonTransform();
-		httpJsonTransform.setMarshaller(objectToJsonStringMarshaller);
-		httpJsonTransform.setUnmarshaller(methodParameterArgumentToJsonModelMarshaller);
-		
-		return httpJsonTransform;
-	}
-	
-	@Bean(name= "httpJsonRemoteHandlerMethodTransportFactory")
-	public HttpJsonRemoteHandlerMethodTransportFactory createHttpJsonRemoteHandlerMethodTransportFactory(
-			Connection<RequestInfo<String>, String> httpJsonConnection
-			,HttpJsonTransform httpJsonTransform
-			,MultiHandlerMethodChain<HandlerMethodContent> transportChains
-			) {
-		HttpJsonRemoteHandlerMethodTransportFactory httpJsonRemoteHandlerMethodTransportFactory = new HttpJsonRemoteHandlerMethodTransportFactory();
-		httpJsonRemoteHandlerMethodTransportFactory.setConnection(httpJsonConnection);
-		httpJsonRemoteHandlerMethodTransportFactory.setTransform(httpJsonTransform);
-		httpJsonRemoteHandlerMethodTransportFactory.setHandlerMethodChain(transportChains);
-		
-		return httpJsonRemoteHandlerMethodTransportFactory;
-	}
-
 }
