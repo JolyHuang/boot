@@ -14,12 +14,6 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
-			<artifactId>com.sharingif.cube.components</artifactId>
-			<version>${maven.project.com.sharingif.cube.release.version}</version>
-		</dependency>
-		
-		<dependency>
 			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 			<version>${maven.project.org.springframework.boot.release.version}</version>

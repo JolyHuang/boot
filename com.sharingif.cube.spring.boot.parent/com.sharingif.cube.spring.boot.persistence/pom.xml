@@ -13,11 +13,17 @@
 	<url>http://maven.apache.org</url>
 	
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
 			<artifactId>com.sharingif.cube.persistence</artifactId>
 			<version>${maven.project.com.sharingif.cube.release.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.sharingif.cube.spring.boot.components</artifactId>
+			<version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
 		</dependency>
 		
 	</dependencies>

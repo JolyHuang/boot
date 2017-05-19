@@ -22,7 +22,7 @@
 		
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.sharingif.cube.spring.boot.core</artifactId>
+			<artifactId>com.sharingif.cube.spring.boot.components</artifactId>
 			<version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
 		</dependency>
 		
