@@ -44,7 +44,8 @@
 		
 		<module>com.sharingif.cube.spring.boot.web</module>
 		<module>com.sharingif.cube.spring.boot.web.springmvc</module>
-	</modules>
+        <module>com.sharingif.cube.spring.boot.web.vert.x</module>
+    </modules>
 
 	<dependencies>
 		<dependency>
