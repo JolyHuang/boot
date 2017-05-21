@@ -1,8 +1,15 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure;
 
-import java.util.List;
-import java.util.Map;
-
+import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
+import com.sharingif.cube.core.handler.HandlerMethod;
+import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
+import com.sharingif.cube.web.exception.handler.WebRequestInfo;
+import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
+import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
+import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
+import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
+import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
+import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.ManagedMap;
@@ -24,17 +31,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
-import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
-import com.sharingif.cube.core.handler.HandlerMethod;
-import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.web.exception.handler.WebExceptionContent;
-import com.sharingif.cube.web.exception.handler.WebRequestInfo;
-import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
-import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
-import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
-import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
-import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
-import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ExtendedWebMvcConfigurationSupport
@@ -87,7 +85,7 @@ public class WebCubeContextAutoconfigure {
 	}
 	
 	@Bean("handlerExceptionResolver")
-	public HandlerExceptionResolver createHandlerExceptionResolver(@Qualifier("springMVCCubeExceptionHandlers") MultiCubeExceptionHandler<WebRequestInfo, WebExceptionContent, HandlerMethod> springMVCCubeExceptionHandlers) {
+	public HandlerExceptionResolver createHandlerExceptionResolver(@Qualifier("springMVCCubeExceptionHandlers") MultiCubeExceptionHandler<WebRequestInfo, HandlerMethod> springMVCCubeExceptionHandlers) {
 		SimpleHandlerExceptionResolver handlerExceptionResolver = new SimpleHandlerExceptionResolver();
 		handlerExceptionResolver.setCubeExceptionHandler(springMVCCubeExceptionHandlers);
 		
