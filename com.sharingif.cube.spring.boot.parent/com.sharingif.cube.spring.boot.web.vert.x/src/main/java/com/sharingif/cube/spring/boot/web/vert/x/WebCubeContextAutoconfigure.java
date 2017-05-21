@@ -1,7 +1,6 @@
 package com.sharingif.cube.spring.boot.web.vert.x;
 
 import com.sharingif.cube.communication.view.MultiViewResolver;
-import com.sharingif.cube.core.handler.HandlerMethodContent;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
@@ -26,7 +25,7 @@ public class WebCubeContextAutoconfigure {
 	@Bean("vertXDispatcherHandler")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public VertXDispatcherHandler createVertXDispatcherHandler(
-            MultiHandlerMethodChain<HandlerMethodContent> vertxWebHandlerMethodChain
+            MultiHandlerMethodChain vertxWebHandlerMethodChain
             ,VertXRequestInfoResolver vertXRequestInfoResolver
             ,MultiHandlerMapping multiHandlerMapping
             ,MultiHandlerMethodAdapter multiHandlerMethodAdapter
@@ -48,7 +47,7 @@ public class WebCubeContextAutoconfigure {
     public VertXServer createVertXServer(
             @Value("${vertx.server.host}")String host
             ,@Value("${vertx.server.port}") int port
-            ,@Value("${contextPath}")String contextPath
+            ,@Value("${vertx.server.contextPath}")String contextPath
             ,VertXDispatcherHandler vertXDispatcherHandler
             ) {
 

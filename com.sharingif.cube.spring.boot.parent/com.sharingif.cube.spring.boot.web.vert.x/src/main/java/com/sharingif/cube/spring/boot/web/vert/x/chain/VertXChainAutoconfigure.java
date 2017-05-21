@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class VertXChainAutoconfigure {
 
-    @Bean("vertXDispatcherHandlerExceptionChain")
-    public VertXDispatcherHandlerExceptionChain createVertXDispatcherHandlerExceptionChain() {
+    @Bean("vertxDispatcherHandlerExceptionChain")
+    public VertXDispatcherHandlerExceptionChain createVertxDispatcherHandlerExceptionChain() {
         VertXDispatcherHandlerExceptionChain vertXDispatcherHandlerExceptionChain = new VertXDispatcherHandlerExceptionChain();
 
         return vertXDispatcherHandlerExceptionChain;
@@ -27,10 +27,10 @@ public class VertXChainAutoconfigure {
     @Bean("vertxWebHandlerMethodChain")
     public MultiHandlerMethodChain<HttpHandlerMethodContent> createVertxWebHandlerMethodChain(
             MultiHandlerMethodChain<HttpHandlerMethodContent> webHandlerMethodChain
-           ,VertXDispatcherHandlerExceptionChain vertXDispatcherHandlerExceptionChain
+           ,VertXDispatcherHandlerExceptionChain vertxDispatcherHandlerExceptionChain
             ) {
 
-        webHandlerMethodChain.getChains().add(vertXDispatcherHandlerExceptionChain);
+        webHandlerMethodChain.getChains().add(vertxDispatcherHandlerExceptionChain);
 
         return webHandlerMethodChain;
     }

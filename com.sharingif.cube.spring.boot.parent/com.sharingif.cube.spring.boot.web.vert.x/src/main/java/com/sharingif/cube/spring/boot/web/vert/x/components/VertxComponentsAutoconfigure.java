@@ -108,7 +108,7 @@ public class VertxComponentsAutoconfigure {
 
 	@Bean("handlerAdapters")
 	@SuppressWarnings("rawtypes")
-    public List<HandlerAdapter> createHandlerMappings(
+    public List<HandlerAdapter> createHandlerAdapters(
             DefaultMappingHandlerAdapter  defaultMappingHandlerAdapter
             ) {
         List<HandlerAdapter> handlerAdapters = new ArrayList<HandlerAdapter>();
@@ -147,8 +147,9 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("exceptionResolver")
-    public VertXExceptionResolver createVertXExceptionResolver() {
+    public VertXExceptionResolver createVertXExceptionResolver(MultiCubeExceptionHandler vertxCubeExceptionHandler) {
         VertXExceptionResolver exceptionResolver = new VertXExceptionResolver();
+        exceptionResolver.setCubeExceptionHandler(vertxCubeExceptionHandler);
 
         return exceptionResolver;
     }
