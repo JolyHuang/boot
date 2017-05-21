@@ -55,6 +55,8 @@ public class WebCubeContextAutoconfigure {
         vertXServer.setPort(port);
         vertXServer.setContextPath(contextPath);
 
+
+
         return vertXServer;
 
     }
