@@ -74,15 +74,19 @@ public class VertxComponentsAutoconfigure {
         return handlerMapping;
     }
 
-    @Bean("multiHandlerMapping")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiHandlerMapping createMultiHandlerMapping(
+    @Bean("handlerMappings")
+    public List<HandlerMapping> createHandlerMappings(
             RequestMappingHandlerMapping requestMappingHandlerMapping
-        ) {
-
+            ) {
         List<HandlerMapping> handlerMappings = new ArrayList<HandlerMapping>();
         handlerMappings.add(requestMappingHandlerMapping);
 
+        return handlerMappings;
+    }
+
+    @Bean("multiHandlerMapping")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public MultiHandlerMapping createMultiHandlerMapping(List<HandlerMapping> handlerMappings) {
         MultiHandlerMapping multiHandlerMapping = new MultiHandlerMapping();
         multiHandlerMapping.setHandlerMappings(handlerMappings);
 
@@ -101,28 +105,38 @@ public class VertxComponentsAutoconfigure {
         return defaultMappingHandlerAdapter;
     }
 
+    @Bean("handlerAdapters")
+    public List<HandlerAdapter> createHandlerMappings(
+            DefaultMappingHandlerAdapter  defaultMappingHandlerAdapter
+            ) {
+        List<HandlerAdapter> handlerAdapters = new ArrayList<HandlerAdapter>();
+        handlerAdapters.add(defaultMappingHandlerAdapter);
+
+        return handlerAdapters;
+    }
+
     @Bean("multiHandlerMethodAdapter")
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiHandlerMethodAdapter createHandlerAdapter(
-            DefaultMappingHandlerAdapter  defaultMappingHandlerAdapter
-        ) {
-
-        List<HandlerAdapter> handlerMappings = new ArrayList<HandlerAdapter>();
-        handlerMappings.add(defaultMappingHandlerAdapter);
-
+    public MultiHandlerMethodAdapter createHandlerAdapter(List<HandlerAdapter> handlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
-        multiHandlerMethodAdapter.setHandlerAdapters(handlerMappings);
+        multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
 
         return multiHandlerMethodAdapter;
     }
 
-    @Bean("vertxCubeExceptionHandler")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(
+    @Bean("webCubeExceptionHandlers")
+    public List<WebCubeExceptionHandler> createWebCubeExceptionHandlers(
             WebCubeExceptionHandler webCubeExceptionHandler
             ) {
         List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>(6);
         webCubeExceptionHandlers.add(webCubeExceptionHandler);
+
+        return webCubeExceptionHandlers;
+    }
+
+    @Bean("vertxCubeExceptionHandler")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(List<WebCubeExceptionHandler> webCubeExceptionHandlers) {
 
         MultiCubeExceptionHandler vertxCubeExceptionHandler = new MultiCubeExceptionHandler();
         vertxCubeExceptionHandler.setCubeExceptionHandlers(webCubeExceptionHandlers);
@@ -145,7 +159,6 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("viewResolvers")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public List<ViewResolver> createViewResolvers(
             VertXJsonViewResolver vertXJsonViewResolver
             ) {

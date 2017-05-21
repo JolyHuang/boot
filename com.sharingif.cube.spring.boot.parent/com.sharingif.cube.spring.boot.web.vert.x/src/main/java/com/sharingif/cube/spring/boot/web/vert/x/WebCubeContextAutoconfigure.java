@@ -48,12 +48,14 @@ public class WebCubeContextAutoconfigure {
             @Value("${vertx.server.host}")String host
             ,@Value("${vertx.server.port}") int port
             ,@Value("${contextPath}")String contextPath
+            ,VertXDispatcherHandler vertXDispatcherHandler
             ) {
 
         VertXServer vertXServer = new VertXServer();
         vertXServer.setHost(host);
         vertXServer.setPort(port);
         vertXServer.setContextPath(contextPath);
+        vertXServer.setDispatcherHandler(vertXDispatcherHandler);
 
         return vertXServer;
 
