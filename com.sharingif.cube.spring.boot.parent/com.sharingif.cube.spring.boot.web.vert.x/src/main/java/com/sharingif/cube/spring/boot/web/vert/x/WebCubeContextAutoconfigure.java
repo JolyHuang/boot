@@ -23,8 +23,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WebCubeContextAutoconfigure {
 
-    @Bean("vertXDispatcherHandler")
-    public VertXDispatcherHandler createVertXDispatcherHandler(
+	@Bean("vertXDispatcherHandler")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public VertXDispatcherHandler createVertXDispatcherHandler(
             MultiHandlerMethodChain<HandlerMethodContent> vertxWebHandlerMethodChain
             ,VertXRequestInfoResolver vertXRequestInfoResolver
             ,MultiHandlerMapping multiHandlerMapping

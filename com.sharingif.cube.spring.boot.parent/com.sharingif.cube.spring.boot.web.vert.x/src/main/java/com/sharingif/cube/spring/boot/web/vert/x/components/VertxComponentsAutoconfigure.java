@@ -74,7 +74,8 @@ public class VertxComponentsAutoconfigure {
         return handlerMapping;
     }
 
-    @Bean("handlerMappings")
+	@Bean("handlerMappings")
+	@SuppressWarnings("rawtypes")
     public List<HandlerMapping> createHandlerMappings(
             RequestMappingHandlerMapping requestMappingHandlerMapping
             ) {
@@ -105,7 +106,8 @@ public class VertxComponentsAutoconfigure {
         return defaultMappingHandlerAdapter;
     }
 
-    @Bean("handlerAdapters")
+	@Bean("handlerAdapters")
+	@SuppressWarnings("rawtypes")
     public List<HandlerAdapter> createHandlerMappings(
             DefaultMappingHandlerAdapter  defaultMappingHandlerAdapter
             ) {
@@ -158,7 +160,8 @@ public class VertxComponentsAutoconfigure {
         return vertXJsonViewResolver;
     }
 
-    @Bean("viewResolvers")
+    @SuppressWarnings("rawtypes")
+	@Bean("viewResolvers")
     public List<ViewResolver> createViewResolvers(
             VertXJsonViewResolver vertXJsonViewResolver
             ) {
