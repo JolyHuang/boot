@@ -18,6 +18,7 @@ import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
@@ -191,6 +192,7 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 	}
 	
 	@Bean(name="internalResourceViewResolver")
+	@ConditionalOnMissingBean(name = "internalResourceViewResolver")
 	public InternalResourceViewResolver createInternalResourceViewResolver() {
 		ExtendedInternalResourceViewResolver internalResourceViewResolver = new ExtendedInternalResourceViewResolver();
 		internalResourceViewResolver.setPrefix("/WEB-INF/views/");
@@ -215,8 +217,9 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 		
 		return mappingJackson2JsonView;
 	}
-	
+
 	@Bean(name="viewResolvers")
+	@ConditionalOnMissingBean(name = "viewResolvers")
 	public List<ViewResolver> getViewResolvers(
 			StreamViewResolver streamViewResolver
 			,RefererViewResolver refererViewResolver
