@@ -192,13 +192,13 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 	}
 	
 	@Bean(name="internalResourceViewResolver")
-	@ConditionalOnMissingBean(name = "internalResourceViewResolver", value = InternalResourceViewResolver.class)
+	@ConditionalOnMissingBean(name = "internalResourceViewResolver", value = ExtendedInternalResourceViewResolver.class)
 	public InternalResourceViewResolver createInternalResourceViewResolver() {
 		ExtendedInternalResourceViewResolver internalResourceViewResolver = new ExtendedInternalResourceViewResolver();
 		internalResourceViewResolver.setPrefix("/WEB-INF/views/");
 		internalResourceViewResolver.setSuffix(".jsp");
 		internalResourceViewResolver.setViewClass(ExtendedJstlView.class);
-		
+
 		return internalResourceViewResolver;
 	}
 	
