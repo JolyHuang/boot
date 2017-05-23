@@ -1,18 +1,14 @@
 package com.sharingif.cube.spring.boot.web.autoconfigure.chain;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.sharingif.cube.communication.http.handler.HttpHandlerMethodContent;
+import com.sharingif.cube.core.handler.chain.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sharingif.cube.communication.http.handler.HttpHandlerMethodContent;
-import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
-import com.sharingif.cube.core.handler.chain.MDCChain;
-import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
-import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * WebChainAutoconfigure
@@ -25,6 +21,7 @@ import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
 public class WebChainAutoconfigure {
 	
 	@Bean(name="webHandlerMethodChain")
+	@ConditionalOnMissingBean(name = "webHandlerMethodChain", value = MultiHandlerMethodChain.class)
 	public MultiHandlerMethodChain<HttpHandlerMethodContent> createWebHandlerMethodChain(
 			MDCChain mdcChain
 			,RequestLocalContextHolderChain requestLocalContextHolderChain
