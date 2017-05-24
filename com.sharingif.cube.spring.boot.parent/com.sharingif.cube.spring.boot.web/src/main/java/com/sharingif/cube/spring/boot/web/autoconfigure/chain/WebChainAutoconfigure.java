@@ -21,7 +21,7 @@ import java.util.List;
 public class WebChainAutoconfigure {
 	
 	@Bean(name="webHandlerMethodChain")
-	@ConditionalOnMissingBean(name = "webHandlerMethodChain", value = MultiHandlerMethodChain.class)
+	@ConditionalOnMissingBean(name = "webHandlerMethodChain")
 	public MultiHandlerMethodChain<HttpHandlerMethodContent> createWebHandlerMethodChain(
 			MDCChain mdcChain
 			,RequestLocalContextHolderChain requestLocalContextHolderChain

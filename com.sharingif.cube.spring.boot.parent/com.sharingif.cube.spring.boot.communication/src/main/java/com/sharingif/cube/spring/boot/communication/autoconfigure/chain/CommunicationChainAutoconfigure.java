@@ -1,17 +1,16 @@
 package com.sharingif.cube.spring.boot.communication.autoconfigure.chain;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.sharingif.cube.core.handler.HandlerMethodContent;
+import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
+import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
+import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sharingif.cube.core.handler.HandlerMethodContent;
-import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
-import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
-import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CommunicationChainAutoconfigure
@@ -24,7 +23,7 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 public class CommunicationChainAutoconfigure {
 	
 	@Bean(name="transportChains")
-	@ConditionalOnMissingBean(name = "transportChains", value = MultiHandlerMethodChain.class)
+	@ConditionalOnMissingBean(name = "transportChains")
 	public MultiHandlerMethodChain<HandlerMethodContent> createTransportChains(
 			@Qualifier("transportMonitorPerformanceChain")MonitorPerformanceChain transportMonitorPerformanceChain
 			) {

@@ -1,12 +1,5 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.chain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.sharingif.cube.core.handler.HandlerMethodContent;
 import com.sharingif.cube.core.handler.chain.AnnotationHandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
@@ -14,6 +7,13 @@ import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
 import com.sharingif.cube.web.springmvc.handler.chain.ViewRefererChain;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SpringMVCChainAutoconfigure
@@ -31,6 +31,7 @@ public class SpringMVCChainAutoconfigure {
 	}
 	
 	@Bean(name="springMCVChains")
+	@ConditionalOnMissingBean(name="springMCVChains")
 	public MultiHandlerMethodChain<SpringMVCHandlerMethodContent> createSpringMCVChains(
 			@Qualifier("controllerMonitorPerformanceChain")MonitorPerformanceChain controllerMonitorPerformanceChain
 			,ViewRefererChain viewRefererChain
