@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -35,7 +36,6 @@ import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
 import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -243,8 +243,9 @@ public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
 	
 	@Bean(name="resourceHttpRequestHandler")
 	public ResourceHttpRequestHandler createResourceHttpRequestHandler() {
+
 		List<Resource> locations = new ArrayList<Resource>();
-		locations.add(new ServletContextResource(servletContext, "/static/"));
+		locations.add(new ClassPathResource("/static/"));
 		
 		ResourceHttpRequestHandler resourceHttpRequestHandler = new ResourceHttpRequestHandler();
 		resourceHttpRequestHandler.setLocations(locations);
