@@ -1,11 +1,19 @@
 package com.sharingif.cube.spring.boot.web.vert.x.components;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.sharingif.cube.communication.view.MultiViewResolver;
 import com.sharingif.cube.communication.view.ViewResolver;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
-import com.sharingif.cube.core.handler.adapter.DefaultMappingHandlerAdapter;
 import com.sharingif.cube.core.handler.adapter.HandlerAdapter;
 import com.sharingif.cube.core.handler.adapter.HandlerMethodArgumentResolver;
+import com.sharingif.cube.core.handler.adapter.HandlerMethodHandlerAdapter;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
 import com.sharingif.cube.core.handler.mapping.HandlerMapping;
@@ -15,13 +23,13 @@ import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.handler.adapter.PathVariableMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.exception.handler.VertXExceptionResolver;
 import com.sharingif.cube.web.vert.x.handler.adapter.JsonHandlerMethodArgumentResolver;
+import com.sharingif.cube.web.vert.x.handler.adapter.StaticHandlerAdapter;
+import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
 import com.sharingif.cube.web.vert.x.view.VertXJsonViewResolver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.sharingif.cube.web.vert.x.view.VertXStaticViewResolver;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.vertx.ext.web.handler.StaticHandler;
 
 /**
  * VertxComponentsAutoconfigure
@@ -74,19 +82,36 @@ public class VertxComponentsAutoconfigure {
         return handlerMapping;
     }
 
+    @Bean("staticHandlerMapping")
+    public StaticHandlerMapping createStaticHandlerMapping() {
+
+        StaticHandler staticHandler = StaticHandler.create();
+        Map<String,StaticHandler> urlMap = new HashMap<String,StaticHandler>();
+        urlMap.put("/static/**", staticHandler);
+        urlMap.put("**/favicon.ico", staticHandler);
+
+        StaticHandlerMapping staticHandlerMapping = new StaticHandlerMapping();
+        staticHandlerMapping.setUrlMap(urlMap);
+
+
+        return staticHandlerMapping;
+    }
+
 	@Bean("handlerMappings")
 	@SuppressWarnings("rawtypes")
     public List<HandlerMapping> createHandlerMappings(
             RequestMappingHandlerMapping requestMappingHandlerMapping
+            ,StaticHandlerMapping staticHandlerMapping
             ) {
         List<HandlerMapping> handlerMappings = new ArrayList<HandlerMapping>();
         handlerMappings.add(requestMappingHandlerMapping);
+        handlerMappings.add(staticHandlerMapping);
 
         return handlerMappings;
     }
 
     @Bean("multiHandlerMapping")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("rawtypes")
     public MultiHandlerMapping createMultiHandlerMapping(List<HandlerMapping> handlerMappings) {
         MultiHandlerMapping multiHandlerMapping = new MultiHandlerMapping();
         multiHandlerMapping.setHandlerMappings(handlerMappings);
@@ -94,31 +119,38 @@ public class VertxComponentsAutoconfigure {
         return multiHandlerMapping;
     }
 
-    @Bean("defaultMappingHandlerAdapter")
-    public DefaultMappingHandlerAdapter createDefaultMappingHandlerAdapter(
+    @Bean("staticHandlerAdapter")
+    public StaticHandlerAdapter createStaticHandlerAdapter() {
+        return new StaticHandlerAdapter();
+    }
+
+    @Bean("handlerMethodHandlerAdapter")
+    public HandlerMethodHandlerAdapter createHandlerMethodHandlerAdapter(
             List<HandlerMethodArgumentResolver> argumentResolvers
             ,BindingInitializer bindingInitializer
             ) {
-        DefaultMappingHandlerAdapter  defaultMappingHandlerAdapter = new DefaultMappingHandlerAdapter();
-        defaultMappingHandlerAdapter.setArgumentResolvers(argumentResolvers);
-        defaultMappingHandlerAdapter.setBindingInitializer(bindingInitializer);
+        HandlerMethodHandlerAdapter handlerMethodHandlerAdapter = new HandlerMethodHandlerAdapter();
+        handlerMethodHandlerAdapter.setArgumentResolvers(argumentResolvers);
+        handlerMethodHandlerAdapter.setBindingInitializer(bindingInitializer);
 
-        return defaultMappingHandlerAdapter;
+        return handlerMethodHandlerAdapter;
     }
 
 	@Bean("handlerAdapters")
 	@SuppressWarnings("rawtypes")
     public List<HandlerAdapter> createHandlerAdapters(
-            DefaultMappingHandlerAdapter  defaultMappingHandlerAdapter
+            HandlerMethodHandlerAdapter handlerMethodHandlerAdapter
+            ,StaticHandlerAdapter staticHandlerAdapter
             ) {
         List<HandlerAdapter> handlerAdapters = new ArrayList<HandlerAdapter>();
-        handlerAdapters.add(defaultMappingHandlerAdapter);
+        handlerAdapters.add(handlerMethodHandlerAdapter);
+        handlerAdapters.add(staticHandlerAdapter);
 
         return handlerAdapters;
     }
 
     @Bean("multiHandlerMethodAdapter")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("rawtypes")
     public MultiHandlerMethodAdapter createHandlerAdapter(List<HandlerAdapter> handlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
         multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
@@ -146,7 +178,8 @@ public class VertxComponentsAutoconfigure {
         return vertxCubeExceptionHandler;
     }
 
-    @Bean("exceptionResolver")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@Bean("exceptionResolver")
     public VertXExceptionResolver createVertXExceptionResolver(MultiCubeExceptionHandler vertxCubeExceptionHandler) {
         VertXExceptionResolver exceptionResolver = new VertXExceptionResolver();
         exceptionResolver.setCubeExceptionHandler(vertxCubeExceptionHandler);
@@ -161,19 +194,26 @@ public class VertxComponentsAutoconfigure {
         return vertXJsonViewResolver;
     }
 
+    @Bean("vertXStaticViewResolver")
+    public VertXStaticViewResolver createVertXStaticViewResolver() {
+        return new VertXStaticViewResolver();
+    }
+
     @SuppressWarnings("rawtypes")
 	@Bean("viewResolvers")
     public List<ViewResolver> createViewResolvers(
-            VertXJsonViewResolver vertXJsonViewResolver
+            VertXStaticViewResolver vertXStaticViewResolver
+            ,VertXJsonViewResolver vertXJsonViewResolver
             ) {
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
+        viewResolvers.add(vertXStaticViewResolver);
         viewResolvers.add(vertXJsonViewResolver);
 
         return viewResolvers;
     }
 
     @Bean("multiViewResolver")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("rawtypes")
     public MultiViewResolver createmultiViewResolver(List<ViewResolver> viewResolvers) {
         MultiViewResolver multiViewResolver = new MultiViewResolver();
         multiViewResolver.setViewResolvers(viewResolvers);
