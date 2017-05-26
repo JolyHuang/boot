@@ -35,7 +35,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
-import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -43,7 +42,6 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import javax.servlet.ServletContext;
 import java.util.*;
 
 /**
@@ -54,13 +52,7 @@ import java.util.*;
  * @since v1.0
  */
 @Configuration
-public class SpringMVCComponentsAutoconfigure implements ServletContextAware {
-	
-	private ServletContext servletContext;
-	@Override
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
+public class SpringMVCComponentsAutoconfigure {
 	
 	@Bean(name="webBindingInitializer")
 	public WebBindingInitializer createWebBindingInitializer(ConversionService conversionService, Validator validator) {
