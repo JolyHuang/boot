@@ -1,13 +1,5 @@
 package com.sharingif.cube.spring.boot.web.vert.x.components;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.sharingif.cube.communication.view.MultiViewResolver;
 import com.sharingif.cube.communication.view.ViewResolver;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
@@ -28,8 +20,15 @@ import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
 import com.sharingif.cube.web.vert.x.view.VertXJsonViewResolver;
 import com.sharingif.cube.web.vert.x.view.VertXStaticViewResolver;
-
 import io.vertx.ext.web.handler.StaticHandler;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * VertxComponentsAutoconfigure
@@ -83,9 +82,10 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("staticHandlerMapping")
-    public StaticHandlerMapping createStaticHandlerMapping() {
+    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :}") String webRoot) {
 
-        StaticHandler staticHandler = StaticHandler.create();
+        StaticHandler staticHandler = StaticHandler.create("static");
+
         Map<String,StaticHandler> urlMap = new HashMap<String,StaticHandler>();
         urlMap.put("/static/**", staticHandler);
         urlMap.put("**/favicon.ico", staticHandler);

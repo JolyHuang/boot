@@ -5,6 +5,7 @@ import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +22,9 @@ public class WebComponentsAutoconfigure {
 
 	@Bean(name="accessDecisionCubeExceptionHandler")
 	@ConditionalOnMissingBean(name="accessDecisionCubeExceptionHandler", value=AccessDecisionCubeExceptionHandler.class)
-	public AccessDecisionCubeExceptionHandler createAccessDecisionCubeExceptionHandler() {
+	public AccessDecisionCubeExceptionHandler createAccessDecisionCubeExceptionHandler(@Value("${default.login.view:login}") String defaultLoginView) {
 		AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler = new AccessDecisionCubeExceptionHandler();
-		accessDecisionCubeExceptionHandler.setDefaultErrorView("redirect:/user/preLogin");
+		accessDecisionCubeExceptionHandler.setDefaultErrorView(defaultLoginView);
 		
 		return accessDecisionCubeExceptionHandler;
 	}
