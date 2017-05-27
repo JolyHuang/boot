@@ -82,9 +82,9 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("staticHandlerMapping")
-    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :}") String webRoot) {
+    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :static/..}") String webRoot) {
 
-        StaticHandler staticHandler = StaticHandler.create("static");
+        StaticHandler staticHandler = StaticHandler.create(webRoot,this.getClass().getClassLoader());
 
         Map<String,StaticHandler> urlMap = new HashMap<String,StaticHandler>();
         urlMap.put("/static/**", staticHandler);
