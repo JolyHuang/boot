@@ -5,6 +5,7 @@ import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
+import com.sharingif.cube.web.user.CoreUserHttpSessionManage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -57,6 +58,13 @@ public class WebComponentsAutoconfigure {
 		webCubeExceptionHandler.setDefaultErrorView("error/defaultError");
 		
 		return webCubeExceptionHandler;
+	}
+
+	@Bean("coreUserHttpSessionManage")
+	public CoreUserHttpSessionManage createCoreUserHttpSessionManage() {
+		CoreUserHttpSessionManage coreUserHttpSessionManage = new CoreUserHttpSessionManage();
+
+		return coreUserHttpSessionManage;
 	}
 	
 }
