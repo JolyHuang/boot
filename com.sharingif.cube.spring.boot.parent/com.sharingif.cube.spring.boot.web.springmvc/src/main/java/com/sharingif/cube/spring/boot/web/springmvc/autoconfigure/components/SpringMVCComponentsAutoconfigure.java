@@ -85,6 +85,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="mappingJackson2HttpMessageConverter")
+	@ConditionalOnMissingBean(name = "mappingJackson2HttpMessageConverter")
 	public MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
 		return new ExtendedMappingJackson2HttpMessageConverter();
 	}
@@ -204,6 +205,7 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="mappingJackson2JsonView")
+	@ConditionalOnMissingBean(name = "mappingJackson2JsonView")
 	public MappingJackson2JsonView createMappingJackson2JsonView() {
 		ExtendedMappingJackson2JsonView mappingJackson2JsonView = new ExtendedMappingJackson2JsonView();
 		
