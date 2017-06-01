@@ -228,9 +228,11 @@ public class SpringMVCComponentsAutoconfigure {
 	}
 	
 	@Bean(name="defaultViews")
-	public List<View> createDefaultViews() {
+	public List<View> createDefaultViews(
+			MappingJackson2JsonView mappingJackson2JsonView
+			) {
 		List<View> defaultViews = new ArrayList<View>(1);
-		defaultViews.add(createMappingJackson2JsonView());
+		defaultViews.add(mappingJackson2JsonView);
 		
 		return defaultViews;
 	}
