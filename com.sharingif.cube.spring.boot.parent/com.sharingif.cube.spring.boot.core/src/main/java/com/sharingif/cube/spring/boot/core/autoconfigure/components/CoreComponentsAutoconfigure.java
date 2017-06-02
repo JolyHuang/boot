@@ -1,8 +1,11 @@
 package com.sharingif.cube.spring.boot.core.autoconfigure.components;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfigurer;
+import com.sharingif.cube.components.sequence.ISequenceHandler;
+import com.sharingif.cube.components.sequence.SequenceHandlerImpl;
+import com.sharingif.cube.core.config.CubeConfigure;
+import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
+import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
@@ -16,12 +19,8 @@ import org.springframework.format.support.FormattingConversionServiceFactoryBean
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfigurer;
-import com.sharingif.cube.components.sequence.ISequenceHandler;
-import com.sharingif.cube.components.sequence.SequenceHandlerImpl;
-import com.sharingif.cube.core.config.CubeConfigure;
-import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
-import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CoreComponentsAutoconfigure 
@@ -81,6 +80,7 @@ public class CoreComponentsAutoconfigure {
 				,"config.i18n.exception.Validation"
 				,"config.i18n.exception.Security"
 				,"config.i18n.exception.ValidationForm"
+				,"config.i18n.exception.Communication"
 				,"config.i18n.constants.Constants"
 				,"config.i18n.dictionary.Dictionary"
 				);
