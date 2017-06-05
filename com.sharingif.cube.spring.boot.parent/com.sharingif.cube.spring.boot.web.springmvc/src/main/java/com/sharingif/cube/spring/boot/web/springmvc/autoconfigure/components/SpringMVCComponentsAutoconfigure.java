@@ -8,6 +8,7 @@ import com.sharingif.cube.web.exception.handler.WebRequestInfo;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
+import com.sharingif.cube.web.springmvc.exception.NoHandlerFoundExceptionHandler;
 import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
@@ -115,6 +116,13 @@ public class SpringMVCComponentsAutoconfigure {
 		
 		return methodArgumentNotValidExceptionHandler;
 	}
+
+	@Bean("noHandlerFoundExceptionHandler")
+	public NoHandlerFoundExceptionHandler createNoHandlerFoundExceptionHandler() {
+		NoHandlerFoundExceptionHandler noHandlerFoundExceptionHandler = new NoHandlerFoundExceptionHandler();
+
+		return noHandlerFoundExceptionHandler;
+	}
 	
 	@Bean(name="springMVCCubeExceptionHandlers")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -122,6 +130,7 @@ public class SpringMVCComponentsAutoconfigure {
 			AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler
 			,TokenValidationCubeExceptionHandler tokenValidationCubeExceptionHandler
 			,BindValidationCubeExceptionHandler bindValidationCubeExceptionHandler
+			,NoHandlerFoundExceptionHandler noHandlerFoundExceptionHandler
 			,ValidationCubeExceptionHandler validationCubeExceptionHandler
 			,WebCubeExceptionHandler webCubeExceptionHandler
 			) {
@@ -130,6 +139,7 @@ public class SpringMVCComponentsAutoconfigure {
 		webCubeExceptionHandlers.add(tokenValidationCubeExceptionHandler);
 		webCubeExceptionHandlers.add(createMethodArgumentNotValidExceptionHandler());
 		webCubeExceptionHandlers.add(bindValidationCubeExceptionHandler);
+		webCubeExceptionHandlers.add(noHandlerFoundExceptionHandler);
 		webCubeExceptionHandlers.add(validationCubeExceptionHandler);
 		webCubeExceptionHandlers.add(webCubeExceptionHandler);
 		

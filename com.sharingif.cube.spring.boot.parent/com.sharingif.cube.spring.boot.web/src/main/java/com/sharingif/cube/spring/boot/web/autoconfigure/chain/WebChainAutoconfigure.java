@@ -2,6 +2,8 @@ package com.sharingif.cube.spring.boot.web.autoconfigure.chain;
 
 import com.sharingif.cube.communication.http.handler.HttpHandlerMethodContent;
 import com.sharingif.cube.core.handler.chain.*;
+import com.sharingif.cube.security.web.handler.chain.CoreUserContextHolderChain;
+import com.sharingif.cube.web.user.CoreUserHttpSessionManage;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +39,14 @@ public class WebChainAutoconfigure {
 		webHandlerMethodChain.setChains(chains);
 		
 		return  webHandlerMethodChain;
+	}
+
+	@Bean("coreUserContextHolderChain")
+	public CoreUserContextHolderChain createCoreUserContextHolderChain(CoreUserHttpSessionManage coreUserHttpSessionManage) {
+		CoreUserContextHolderChain coreUserContextHolderChain = new CoreUserContextHolderChain();
+		coreUserContextHolderChain.setWebUserManage(coreUserHttpSessionManage);
+
+		return coreUserContextHolderChain;
 	}
 
 }
