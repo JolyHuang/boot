@@ -13,6 +13,7 @@ import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgum
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;
+import com.sharingif.cube.web.springmvc.servlet.view.NoHandlerFoundViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.json.ExtendedMappingJackson2JsonView;
 import com.sharingif.cube.web.springmvc.servlet.view.referer.RefererViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
@@ -222,16 +223,25 @@ public class SpringMVCComponentsAutoconfigure {
 		return mappingJackson2JsonView;
 	}
 
+	@Bean("noHandlerFoundViewResolver")
+	public NoHandlerFoundViewResolver createNoHandlerFoundViewResolver() {
+		NoHandlerFoundViewResolver noHandlerFoundViewResolver = new NoHandlerFoundViewResolver();
+
+		return noHandlerFoundViewResolver;
+	}
+
 	@Bean(name="viewResolvers")
 	@ConditionalOnMissingBean(name = "viewResolvers")
 	public List<ViewResolver> getViewResolvers(
 			StreamViewResolver streamViewResolver
 			,RefererViewResolver refererViewResolver
+			,NoHandlerFoundViewResolver noHandlerFoundViewResolver
 			,InternalResourceViewResolver internalResourceViewResolver
 			) {
 		List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>(3);
 		viewResolvers.add(streamViewResolver);
 		viewResolvers.add(refererViewResolver);
+		viewResolvers.add(noHandlerFoundViewResolver);
 		viewResolvers.add(internalResourceViewResolver);
 		
 		return viewResolvers;
