@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure;
 
+import com.sharingif.cube.core.config.CubeConfigure;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
@@ -11,7 +12,6 @@ import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
 import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
 import org.springframework.context.annotation.Bean;
@@ -107,10 +107,10 @@ public class WebCubeContextAutoconfigure {
 	}
 	
 	@Bean(name="characterEncodingFilter")
-	public CharacterEncodingFilter createCharacterEncodingFilter(@Value("${app.properties.default.encoding}") String encoding) {
+	public CharacterEncodingFilter createCharacterEncodingFilter() {
 		CharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
 		filter.setForceEncoding(true);
-		filter.setEncoding(encoding);
+		filter.setEncoding(CubeConfigure.DEFAULT_ENCODING);
 		return filter;
 	}
 	
