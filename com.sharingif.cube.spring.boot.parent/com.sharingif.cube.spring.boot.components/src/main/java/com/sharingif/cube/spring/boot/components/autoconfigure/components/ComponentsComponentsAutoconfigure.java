@@ -10,6 +10,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ComponentsComponentsAutoconfigure {
 
+    @Bean(name="sequenceHandler")
+    public ISequenceHandler createSequenceHandler() {
+        SequenceHandlerImpl sequenceHandler = new SequenceHandlerImpl();
+
+        return sequenceHandler;
+    }
+
     @Bean(name="uuidSequenceGenerator")
     public UUIDSequenceGenerator createUUIDSequenceGenerator() {
         UUIDSequenceGenerator uuidSequenceGenerator = new UUIDSequenceGenerator();

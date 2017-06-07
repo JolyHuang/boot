@@ -1,8 +1,6 @@
 package com.sharingif.cube.spring.boot.core.autoconfigure.components;
 
 import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfigurer;
-import com.sharingif.cube.components.sequence.ISequenceHandler;
-import com.sharingif.cube.components.sequence.SequenceHandlerImpl;
 import com.sharingif.cube.core.config.CubeConfigure;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
 import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
@@ -32,13 +30,6 @@ import java.util.List;
  */
 @Configuration
 public class CoreComponentsAutoconfigure {
-	
-	@Bean(name="sequenceHandler")
-	public ISequenceHandler createSequenceHandler() {
-		SequenceHandlerImpl sequenceHandler = new SequenceHandlerImpl();
-		
-		return sequenceHandler;
-	}
 	
 	@Bean(name="conversionService")
 	public FormattingConversionServiceFactoryBean createConversionService() {
