@@ -1,5 +1,7 @@
 package com.sharingif.cube.spring.boot.components.autoconfigure.components;
 
+import com.sharingif.cube.components.sequence.ISequenceHandler;
+import com.sharingif.cube.components.sequence.SequenceHandlerImpl;
 import com.sharingif.cube.components.sequence.UUIDSequenceGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
