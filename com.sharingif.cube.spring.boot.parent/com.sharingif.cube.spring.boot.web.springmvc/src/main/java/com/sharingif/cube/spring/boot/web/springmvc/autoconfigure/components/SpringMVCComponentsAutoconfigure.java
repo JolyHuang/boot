@@ -101,7 +101,7 @@ public class SpringMVCComponentsAutoconfigure {
 			,AllEncompassingFormHttpMessageConverter allEncompassingFormHttpMessageConverter
 			,MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
 			) {
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>(4);
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		messageConverters.add(byteArrayHttpMessageConverter);
 		messageConverters.add(stringHttpMessageConverter);
 		messageConverters.add(sourceHttpMessageConverter);
@@ -135,7 +135,7 @@ public class SpringMVCComponentsAutoconfigure {
 			,ValidationCubeExceptionHandler validationCubeExceptionHandler
 			,WebCubeExceptionHandler webCubeExceptionHandler
 			) {
-		List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>(6);
+		List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>();
 		webCubeExceptionHandlers.add(accessDecisionCubeExceptionHandler);
 		webCubeExceptionHandlers.add(tokenValidationCubeExceptionHandler);
 		webCubeExceptionHandlers.add(createMethodArgumentNotValidExceptionHandler());
@@ -238,7 +238,7 @@ public class SpringMVCComponentsAutoconfigure {
 			,NoHandlerFoundViewResolver noHandlerFoundViewResolver
 			,InternalResourceViewResolver internalResourceViewResolver
 			) {
-		List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>(3);
+		List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
 		viewResolvers.add(streamViewResolver);
 		viewResolvers.add(refererViewResolver);
 		viewResolvers.add(noHandlerFoundViewResolver);
@@ -251,7 +251,7 @@ public class SpringMVCComponentsAutoconfigure {
 	public List<View> createDefaultViews(
 			MappingJackson2JsonView mappingJackson2JsonView
 			) {
-		List<View> defaultViews = new ArrayList<View>(1);
+		List<View> defaultViews = new ArrayList<View>();
 		defaultViews.add(mappingJackson2JsonView);
 		
 		return defaultViews;

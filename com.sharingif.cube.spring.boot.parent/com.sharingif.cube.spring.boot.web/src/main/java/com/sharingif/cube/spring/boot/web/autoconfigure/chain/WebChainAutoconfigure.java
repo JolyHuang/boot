@@ -31,14 +31,14 @@ public class WebChainAutoconfigure {
 			,@Qualifier("transactionMonitorPerformanceChain")MonitorPerformanceChain transactionMonitorPerformanceChain
 			) {
 		
-		List<HandlerMethodChain<? super HttpHandlerMethodContent>> chains = new ArrayList<HandlerMethodChain<? super HttpHandlerMethodContent>>(2);
+		List<HandlerMethodChain<? super HttpHandlerMethodContent>> chains = new ArrayList<HandlerMethodChain<? super HttpHandlerMethodContent>>();
 		chains.add(requestLocalContextHolderChain);
 		chains.add(mdcChain);
 		chains.add(transactionMonitorPerformanceChain);
 		
 		MultiHandlerMethodChain<HttpHandlerMethodContent> webHandlerMethodChain = new MultiHandlerMethodChain<HttpHandlerMethodContent>();
 		webHandlerMethodChain.setChains(chains);
-		
+
 		return  webHandlerMethodChain;
 	}
 
