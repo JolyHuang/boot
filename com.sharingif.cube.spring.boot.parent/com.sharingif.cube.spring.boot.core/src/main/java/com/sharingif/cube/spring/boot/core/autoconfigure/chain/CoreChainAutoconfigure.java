@@ -1,13 +1,11 @@
 package com.sharingif.cube.spring.boot.core.autoconfigure.chain;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.sharingif.cube.core.handler.HandlerMethodContent;
 import com.sharingif.cube.core.handler.chain.AnnotationHandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.MDCChain;
 import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
-import com.sharingif.cube.core.handler.chain.RequestLocalContextHolderChain;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 自动配置core chian组件
@@ -46,11 +44,6 @@ public class CoreChainAutoconfigure {
 		MonitorPerformanceChain transportMonitorPerformanceChain = new MonitorPerformanceChain();
 		transportMonitorPerformanceChain.setName("Transport");
 		return transportMonitorPerformanceChain;
-	}
-	
-	@Bean(name="requestLocalContextHolderChain")
-	public RequestLocalContextHolderChain createRequestLocalContextHolderChain() {
-		return new RequestLocalContextHolderChain();
 	}
 	
 }
