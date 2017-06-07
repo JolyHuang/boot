@@ -35,6 +35,8 @@
 	<modules>
 		<module>com.sharingif.cube.spring.boot.core</module>
 
+		<module>com.sharingif.cube.spring.boot.components</module>
+
 		<module>com.sharingif.cube.spring.boot.persistence</module>
 		
 		<module>com.sharingif.cube.spring.boot.communication</module>
