@@ -5,11 +5,13 @@ import com.sharingif.cube.core.config.CubeConfigure;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
 import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -22,43 +24,23 @@ import java.util.List;
 
 /**
  * CoreComponentsAutoconfigure 
- * 
  * 2017年5月1日 下午6:15:05
  * @author Joly
  * @version v1.0
  * @since v1.0
  */
 @Configuration
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 public class CoreComponentsAutoconfigure {
-	
-	@Bean(name="conversionService")
-	public FormattingConversionServiceFactoryBean createConversionService() {
-		FormattingConversionServiceFactoryBean conversionService = new FormattingConversionServiceFactoryBean();
-		return conversionService;
-	}
-	
-	@Bean(name="validator")
-	public Validator createValidator() {
-		return new LocalValidatorFactoryBean();
-	}
-	
+
 	@Bean(name="commonAnnotationBeanPostProcessor")
-	public CommonAnnotationBeanPostProcessor createCommonAnnotationBeanPostProcessor() {
+	public static CommonAnnotationBeanPostProcessor createCommonAnnotationBeanPostProcessor() {
 		CommonAnnotationBeanPostProcessor commonAnnotationBeanPostProcessor = new CommonAnnotationBeanPostProcessor();
 		commonAnnotationBeanPostProcessor.setFallbackToDefaultTypeMatch(false);
-		
+
 		return commonAnnotationBeanPostProcessor;
 	}
-	
-	@Bean(name = "bindingInitializer")
-	public BindingInitializer create(Validator validator, ConversionService conversionService) {
-		ConfigurableBindingInitializer bindingInitializer = new ConfigurableBindingInitializer();
-		bindingInitializer.setValidator(validator);
-		bindingInitializer.setConversionService(conversionService);
-		
-		return bindingInitializer;
-	}
-	
+
 	@Bean(name="messageSource")
 	public static ResourceBundleMessageSource createMessageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -74,47 +56,67 @@ public class CoreComponentsAutoconfigure {
 				,"config.i18n.exception.Communication"
 				,"config.i18n.constants.Constants"
 				,"config.i18n.dictionary.Dictionary"
-				);
-		
+		);
+
 		return messageSource;
 	}
-	
+
 	@Bean(name="commonProperties")
 	public static List<Resource> createCommonProperties() {
 		List<Resource> commonProperties = new ArrayList<Resource>(2);
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
-		
+
 		return commonProperties;
 	}
-	
+
 	@Bean(name="devPropertyPlaceholderConfigurer")
 	@Profile("DEV")
 	public static PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
 		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_DEV.properties"));
-		
+
 		return propertyPlaceholderConfigurer;
 	}
-	
+
 	@Bean(name="testPropertyPlaceholderConfigurer")
 	@Profile("TEST")
 	public static PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
 		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_TEST.properties"));
-		
+
 		return propertyPlaceholderConfigurer;
 	}
-	
+
 	@Bean(name="prodPropertyPlaceholderConfigurer")
 	@Profile("PROD")
 	public static PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
 		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_PROD.properties"));
-		
+
 		return propertyPlaceholderConfigurer;
+	}
+	
+	@Bean(name="conversionService")
+	public FormattingConversionServiceFactoryBean createConversionService() {
+		FormattingConversionServiceFactoryBean conversionService = new FormattingConversionServiceFactoryBean();
+		return conversionService;
+	}
+	
+	@Bean(name="validator")
+	public Validator createValidator() {
+		return new LocalValidatorFactoryBean();
+	}
+	
+	@Bean(name = "bindingInitializer")
+	public BindingInitializer create(Validator validator, ConversionService conversionService) {
+		ConfigurableBindingInitializer bindingInitializer = new ConfigurableBindingInitializer();
+		bindingInitializer.setValidator(validator);
+		bindingInitializer.setConversionService(conversionService);
+		
+		return bindingInitializer;
 	}
 	
 }
