@@ -60,7 +60,7 @@ public class CoreComponentsAutoconfigure {
 	}
 	
 	@Bean(name="messageSource")
-	public ResourceBundleMessageSource createMessageSource() {
+	public static ResourceBundleMessageSource createMessageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setDefaultEncoding(CubeConfigure.DEFAULT_ENCODING);
 		messageSource.setBasenames(
@@ -89,8 +89,8 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="devPropertyPlaceholderConfigurer")
 	@Profile("DEV")
-	public static PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer() {
-		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
+	public static PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
+		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
 		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_DEV.properties"));
 		
@@ -99,8 +99,8 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="testPropertyPlaceholderConfigurer")
 	@Profile("TEST")
-	public static PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer() {
-		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
+	public static PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
+		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
 		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_TEST.properties"));
 		
@@ -109,8 +109,8 @@ public class CoreComponentsAutoconfigure {
 	
 	@Bean(name="prodPropertyPlaceholderConfigurer")
 	@Profile("PROD")
-	public static PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer() {
-		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(createCommonProperties());
+	public static PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
+		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
 		propertyPlaceholderConfigurer.setFileEncoding(CubeConfigure.DEFAULT_ENCODING);
 		propertyPlaceholderConfigurer.setLocations(new ClassPathResource("config/app/AppConfigure_PROD.properties"));
 		
