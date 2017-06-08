@@ -5,13 +5,11 @@ import com.sharingif.cube.core.config.CubeConfigure;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
 import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.Ordered;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -30,7 +28,6 @@ import java.util.List;
  * @since v1.0
  */
 @Configuration
-@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 public class CoreComponentsAutoconfigure {
 
 	@Bean(name="commonAnnotationBeanPostProcessor")
