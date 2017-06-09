@@ -13,6 +13,7 @@ import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionRe
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.support.ManagedMap;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +46,7 @@ import java.util.Map;
 public class WebCubeContextAutoconfigure {
 	
 	@Bean(name="simpleUrlHandlerMapping")
+	@ConditionalOnMissingBean(name="simpleUrlHandlerMapping")
 	public SimpleUrlHandlerMapping createSimpleUrlHandlerMapping(ResourceHttpRequestHandler resourceHttpRequestHandler) {
 		
 		Map<String, ResourceHttpRequestHandler> urlMap = new ManagedMap<String, ResourceHttpRequestHandler>();
@@ -57,6 +59,7 @@ public class WebCubeContextAutoconfigure {
 		return simpleUrlHandlerMapping;
 	}
 	@Bean(name="handlerMapping")
+	@ConditionalOnMissingBean(name="handlerMapping")
 	public RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
 		RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
 		handlerMapping.setUseSuffixPatternMatch(false);
@@ -65,6 +68,7 @@ public class WebCubeContextAutoconfigure {
 	}
 
 	@Bean(name="handlerAdapter")
+	@ConditionalOnMissingBean(name="handlerAdapter")
 	public RequestMappingHandlerAdapter createRequestMappingHandlerAdapter(
 			MultiHandlerMethodChain<SpringMVCHandlerMethodContent> springMCVChains
 			,WebBindingInitializer webBindingInitializer
@@ -78,6 +82,7 @@ public class WebCubeContextAutoconfigure {
 		return handlerAdapter;
 	}
 	@Bean(name="httpRequestHandlerAdapter")
+	@ConditionalOnMissingBean(name="httpRequestHandlerAdapter")
 	public HttpRequestHandlerAdapter createHttpRequestHandlerAdapter() {
 		HttpRequestHandlerAdapter httpRequestHandlerAdapter = new HttpRequestHandlerAdapter();
 		
