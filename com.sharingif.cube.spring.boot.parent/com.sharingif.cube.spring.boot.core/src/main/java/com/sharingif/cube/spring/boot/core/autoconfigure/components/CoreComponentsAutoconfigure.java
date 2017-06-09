@@ -66,7 +66,7 @@ public class CoreComponentsAutoconfigure {
 		return commonProperties;
 	}
 
-	@Bean(name="devPropertyPlaceholderConfigurer")
+	@Bean(name="propertyPlaceholderConfigurer")
 	@Profile("DEV")
 	public static PropertyPlaceholderConfigurer createDevPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
@@ -76,7 +76,7 @@ public class CoreComponentsAutoconfigure {
 		return propertyPlaceholderConfigurer;
 	}
 
-	@Bean(name="testPropertyPlaceholderConfigurer")
+	@Bean(name="propertyPlaceholderConfigurer")
 	@Profile("TEST")
 	public static PropertyPlaceholderConfigurer createTestPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
@@ -86,7 +86,7 @@ public class CoreComponentsAutoconfigure {
 		return propertyPlaceholderConfigurer;
 	}
 
-	@Bean(name="prodPropertyPlaceholderConfigurer")
+	@Bean(name="propertyPlaceholderConfigurer")
 	@Profile("PROD")
 	public static PropertyPlaceholderConfigurer createProdPropertyPlaceholderConfigurer(List<Resource> commonProperties) {
 		ExtendedPropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new ExtendedPropertyPlaceholderConfigurer(commonProperties);
