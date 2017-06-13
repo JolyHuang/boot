@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.support.FormattingConversionServiceFactoryBean;
 import org.springframework.validation.Validator;
@@ -61,6 +62,7 @@ public class CoreComponentsAutoconfigure {
 	@Bean(name="commonProperties")
 	public static List<Resource> createCommonProperties() {
 		List<Resource> commonProperties = new ArrayList<Resource>(2);
+		commonProperties.add(new FileSystemResource(CubeConfigure.EXTERNAL_CONFIGURE));
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
 
 		return commonProperties;
