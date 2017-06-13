@@ -61,7 +61,7 @@ public class CoreComponentsAutoconfigure {
 
 	@Bean(name="commonProperties")
 	public static List<Resource> createCommonProperties() {
-		List<Resource> commonProperties = new ArrayList<Resource>(2);
+		List<Resource> commonProperties = new ArrayList<Resource>();
 		commonProperties.add(new FileSystemResource(CubeConfigure.EXTERNAL_CONFIGURE));
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
 
