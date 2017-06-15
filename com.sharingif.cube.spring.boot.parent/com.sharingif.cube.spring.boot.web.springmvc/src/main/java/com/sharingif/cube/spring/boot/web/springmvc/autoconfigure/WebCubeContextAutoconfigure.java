@@ -90,9 +90,9 @@ public class WebCubeContextAutoconfigure {
 	}
 	
 	@Bean("handlerExceptionResolver")
-	public HandlerExceptionResolver createHandlerExceptionResolver(@Qualifier("springMVCCubeExceptionHandlers") MultiCubeExceptionHandler<WebRequestInfo, HandlerMethod> springMVCCubeExceptionHandlers) {
+	public HandlerExceptionResolver createHandlerExceptionResolver(MultiCubeExceptionHandler<WebRequestInfo, HandlerMethod> springMVCCubeExceptionHandler) {
 		SimpleHandlerExceptionResolver handlerExceptionResolver = new SimpleHandlerExceptionResolver();
-		handlerExceptionResolver.setCubeExceptionHandler(springMVCCubeExceptionHandlers);
+		handlerExceptionResolver.setCubeExceptionHandler(springMVCCubeExceptionHandler);
 		
 		return handlerExceptionResolver;
 	}

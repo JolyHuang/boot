@@ -124,31 +124,41 @@ public class SpringMVCComponentsAutoconfigure {
 
 		return noHandlerFoundExceptionHandler;
 	}
-	
+
 	@Bean(name="springMVCCubeExceptionHandlers")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public MultiCubeExceptionHandler<WebRequestInfo,HandlerMethod> createSpringMVCCubeExceptionHandlers(
+	@ConditionalOnMissingBean(name = "springMVCCubeExceptionHandlers")
+	public List<WebCubeExceptionHandler> createSpringMVCCubeExceptionHandlers(
 			AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler
 			,TokenValidationCubeExceptionHandler tokenValidationCubeExceptionHandler
+			,MethodArgumentNotValidExceptionHandler methodArgumentNotValidExceptionHandler
 			,BindValidationCubeExceptionHandler bindValidationCubeExceptionHandler
 			,NoHandlerFoundExceptionHandler noHandlerFoundExceptionHandler
 			,ValidationCubeExceptionHandler validationCubeExceptionHandler
-			,WebCubeExceptionHandler webCubeExceptionHandler
-			) {
-		List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>();
-		webCubeExceptionHandlers.add(accessDecisionCubeExceptionHandler);
-		webCubeExceptionHandlers.add(tokenValidationCubeExceptionHandler);
-		webCubeExceptionHandlers.add(createMethodArgumentNotValidExceptionHandler());
-		webCubeExceptionHandlers.add(bindValidationCubeExceptionHandler);
-		webCubeExceptionHandlers.add(noHandlerFoundExceptionHandler);
-		webCubeExceptionHandlers.add(validationCubeExceptionHandler);
-		webCubeExceptionHandlers.add(webCubeExceptionHandler);
-		
-		
-		MultiCubeExceptionHandler springMVCCubeExceptionHandlers = new MultiCubeExceptionHandler();
-		springMVCCubeExceptionHandlers.setCubeExceptionHandlers(webCubeExceptionHandlers);
-		
+			,WebCubeExceptionHandler webCubeExceptionHandler) {
+
+		List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>();
+		springMVCCubeExceptionHandlers.add(accessDecisionCubeExceptionHandler);
+		springMVCCubeExceptionHandlers.add(tokenValidationCubeExceptionHandler);
+		springMVCCubeExceptionHandlers.add(methodArgumentNotValidExceptionHandler);
+		springMVCCubeExceptionHandlers.add(bindValidationCubeExceptionHandler);
+		springMVCCubeExceptionHandlers.add(noHandlerFoundExceptionHandler);
+		springMVCCubeExceptionHandlers.add(validationCubeExceptionHandler);
+		springMVCCubeExceptionHandlers.add(webCubeExceptionHandler);
+
 		return springMVCCubeExceptionHandlers;
+
+	}
+
+	
+	@Bean(name="springMVCCubeExceptionHandler")
+	public MultiCubeExceptionHandler<WebRequestInfo,HandlerMethod> createSpringMVCCubeExceptionHandler(
+			List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers
+			) {
+
+		MultiCubeExceptionHandler springMVCCubeExceptionHandler = new MultiCubeExceptionHandler();
+		springMVCCubeExceptionHandler.setCubeExceptionHandlers(springMVCCubeExceptionHandlers);
+
+		return springMVCCubeExceptionHandler;
 	}
 	
 	@Bean(name="contentNegotiationManager")
