@@ -151,6 +151,7 @@ public class SpringMVCComponentsAutoconfigure {
 
 	
 	@Bean(name="springMVCCubeExceptionHandler")
+	@ConditionalOnMissingBean(name = "springMVCCubeExceptionHandler")
 	public MultiCubeExceptionHandler<WebRequestInfo,HandlerMethod> createSpringMVCCubeExceptionHandler(
 			List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers
 			) {
