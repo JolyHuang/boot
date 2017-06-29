@@ -57,7 +57,7 @@ public class TomcatComponentsAutoconfigure {
 			String password = dataSourcePoolConfig.getPassword();
 			if(propertyTextEncryptor != null) {
 				password = propertyTextEncryptor.decrypt(password);
-			} else
+			}
 			resource.setProperty("password", password);
 
 			// 创建连接阶段
