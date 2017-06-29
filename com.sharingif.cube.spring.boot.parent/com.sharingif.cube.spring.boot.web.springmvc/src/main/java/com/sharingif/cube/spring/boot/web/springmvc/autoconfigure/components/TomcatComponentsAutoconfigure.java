@@ -5,7 +5,6 @@ import com.sharingif.cube.security.confidentiality.encrypt.TextEncryptor;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.ContextResource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
@@ -55,10 +54,11 @@ public class TomcatComponentsAutoconfigure {
 			resource.setProperty("url", dataSourcePoolConfig.getUrl());
 			resource.setProperty("username", dataSourcePoolConfig.getUsername());
 
+			String password = dataSourcePoolConfig.getPassword();
 			if(propertyTextEncryptor != null) {
-				resource.setProperty("password", propertyTextEncryptor.decrypt(dataSourcePoolConfig.getPassword()));
-			}
-			resource.setProperty("password", dataSourcePoolConfig.getPassword());
+				password = propertyTextEncryptor.decrypt(dataSourcePoolConfig.getPassword());
+			} else
+			resource.setProperty("password", password);
 
 			// 创建连接阶段
 			resource.setProperty("initialSize", dataSourcePoolConfig.getInitialSize());										// 启动时初始化多少连接数
