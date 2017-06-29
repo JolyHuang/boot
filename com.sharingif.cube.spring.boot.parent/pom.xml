@@ -38,6 +38,7 @@
 		<module>com.sharingif.cube.spring.boot.components</module>
 
 		<module>com.sharingif.cube.spring.boot.persistence</module>
+		<module>com.sharingif.cube.spring.boot.persistence.mybatis</module>
 		
 		<module>com.sharingif.cube.spring.boot.communication</module>
 		<module>com.sharingif.cube.spring.boot.communication.http</module>
