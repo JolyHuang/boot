@@ -56,7 +56,7 @@ public class TomcatComponentsAutoconfigure {
 
 			String password = dataSourcePoolConfig.getPassword();
 			if(propertyTextEncryptor != null) {
-				password = propertyTextEncryptor.decrypt(dataSourcePoolConfig.getPassword());
+				password = propertyTextEncryptor.decrypt(password);
 			} else
 			resource.setProperty("password", password);
 
