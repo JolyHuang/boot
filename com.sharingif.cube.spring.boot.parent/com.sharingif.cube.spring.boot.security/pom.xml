@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>com.sharingif.cube.spring.boot.security</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>com.sharingif.cube.spring.boot.security Maven Mojo</name>
+    <name>com.sharingif.cube.spring.boot.security</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
