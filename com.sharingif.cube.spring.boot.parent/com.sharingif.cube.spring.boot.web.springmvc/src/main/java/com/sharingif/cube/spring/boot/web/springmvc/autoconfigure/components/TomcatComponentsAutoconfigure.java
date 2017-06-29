@@ -5,6 +5,8 @@ import com.sharingif.cube.security.confidentiality.encrypt.TextEncryptor;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.ContextResource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +26,7 @@ public class TomcatComponentsAutoconfigure {
 
 
 	@Bean(name="tomcatFactory")
-	public TomcatEmbeddedServletContainerFactory tomcatFactory(List<DataSourcePoolConfig> dataSourcePoolConfigList, TextEncryptor textEncryptor) {
+	public TomcatEmbeddedServletContainerFactory tomcatFactory(List<DataSourcePoolConfig> dataSourcePoolConfigList, @Qualifier("propertyTextEncryptor") TextEncryptor propertyTextEncryptor) {
 		TomcatEmbeddedServletContainerFactory tomcatEmbeddedServletContainerFactory = new TomcatEmbeddedServletContainerFactory() {
 
 			@Override
@@ -35,23 +37,29 @@ public class TomcatComponentsAutoconfigure {
 
 			@Override
 			protected void postProcessContext(Context context) {
-				addNamingResources(context, dataSourcePoolConfigList, textEncryptor);
+				addNamingResources(context, dataSourcePoolConfigList, propertyTextEncryptor);
 			}
 		};
 
 		return tomcatEmbeddedServletContainerFactory;
 	}
 
-	protected void addNamingResources(Context context, List<DataSourcePoolConfig> dataSourcePoolConfigList, TextEncryptor textEncryptor) {
+	protected void addNamingResources(Context context, List<DataSourcePoolConfig> dataSourcePoolConfigList, TextEncryptor propertyTextEncryptor) {
 
 		for(DataSourcePoolConfig dataSourcePoolConfig : dataSourcePoolConfigList) {
+
 			ContextResource resource = new ContextResource();
 			resource.setName(dataSourcePoolConfig.getJndiName());
 			resource.setType(dataSourcePoolConfig.getType());
 			resource.setProperty("driverClassName", dataSourcePoolConfig.getDriverClassName());
 			resource.setProperty("url", dataSourcePoolConfig.getUrl());
 			resource.setProperty("username", dataSourcePoolConfig.getUsername());
-			resource.setProperty("password", textEncryptor.decrypt(dataSourcePoolConfig.getPassword()));
+
+			if(propertyTextEncryptor != null) {
+				resource.setProperty("password", propertyTextEncryptor.decrypt(dataSourcePoolConfig.getPassword()));
+			}
+			resource.setProperty("password", dataSourcePoolConfig.getPassword());
+
 			// 创建连接阶段
 			resource.setProperty("initialSize", dataSourcePoolConfig.getInitialSize());										// 启动时初始化多少连接数
 			resource.setProperty("maxTotal", dataSourcePoolConfig.getMaxTotal());												// 连接池中最多能有多少连接数
