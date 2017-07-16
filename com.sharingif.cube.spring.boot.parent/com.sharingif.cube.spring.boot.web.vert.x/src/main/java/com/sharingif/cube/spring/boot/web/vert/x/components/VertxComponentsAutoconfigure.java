@@ -22,6 +22,7 @@ import com.sharingif.cube.web.vert.x.view.VertXJsonViewResolver;
 import com.sharingif.cube.web.vert.x.view.VertXStaticViewResolver;
 import io.vertx.ext.web.handler.StaticHandler;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -82,6 +83,7 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("staticHandlerMapping")
+    @ConditionalOnMissingBean(name="staticHandlerMapping")
     public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :static/..}") String webRoot) {
 
         StaticHandler staticHandler = StaticHandler.create(webRoot,this.getClass().getClassLoader());
