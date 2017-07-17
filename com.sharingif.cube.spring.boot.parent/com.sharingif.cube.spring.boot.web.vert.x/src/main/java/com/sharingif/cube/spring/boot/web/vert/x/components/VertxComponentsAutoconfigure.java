@@ -84,7 +84,7 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("staticHandlerMapping")
     @ConditionalOnMissingBean(name="staticHandlerMapping")
-    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :static/..}") String webRoot) {
+    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :}") String webRoot) {
 
         StaticHandler staticHandler = StaticHandler.create(webRoot,this.getClass().getClassLoader());
 
