@@ -18,6 +18,7 @@ import com.sharingif.cube.web.vert.x.handler.adapter.JsonHandlerMethodArgumentRe
 import com.sharingif.cube.web.vert.x.handler.adapter.StaticHandlerAdapter;
 import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
+import com.sharingif.cube.web.vert.x.view.StaticHandlerImpl;
 import com.sharingif.cube.web.vert.x.view.VertXJsonViewResolver;
 import com.sharingif.cube.web.vert.x.view.VertXStaticViewResolver;
 import io.vertx.ext.web.handler.StaticHandler;
@@ -86,7 +87,7 @@ public class VertxComponentsAutoconfigure {
     @ConditionalOnMissingBean(name="staticHandlerMapping")
     public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :}") String webRoot) {
 
-        StaticHandler staticHandler = StaticHandler.create(webRoot,this.getClass().getClassLoader());
+        StaticHandler staticHandler = new StaticHandlerImpl(webRoot,this.getClass().getClassLoader());
 
         Map<String,StaticHandler> urlMap = new HashMap<String,StaticHandler>();
         urlMap.put("/static/**", staticHandler);
