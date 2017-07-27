@@ -8,6 +8,7 @@ import com.sharingif.cube.core.handler.adapter.HandlerMethodArgumentResolver;
 import com.sharingif.cube.core.handler.adapter.HandlerMethodHandlerAdapter;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
+import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.HandlerMapping;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.core.handler.mapping.RequestMappingHandlerMapping;
@@ -129,10 +130,12 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("handlerMethodHandlerAdapter")
     public HandlerMethodHandlerAdapter createHandlerMethodHandlerAdapter(
-            List<HandlerMethodArgumentResolver> argumentResolvers
+            MultiHandlerMethodChain vertxControllerChains
+            ,List<HandlerMethodArgumentResolver> argumentResolvers
             ,BindingInitializer bindingInitializer
             ) {
         HandlerMethodHandlerAdapter handlerMethodHandlerAdapter = new HandlerMethodHandlerAdapter();
+        handlerMethodHandlerAdapter.setHandlerMethodChain(vertxControllerChains);
         handlerMethodHandlerAdapter.setArgumentResolvers(argumentResolvers);
         handlerMethodHandlerAdapter.setBindingInitializer(bindingInitializer);
 
