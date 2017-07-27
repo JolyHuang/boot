@@ -1,5 +1,8 @@
 package com.sharingif.cube.spring.boot.communication.http.autoconfigure.components;
 
+import com.sharingif.cube.communication.JsonModel;
+import com.sharingif.cube.communication.http.transport.transform.StringToJsonModelMarshaller;
+import com.sharingif.cube.communication.transport.transform.ProxyInterfaceHandlerMethodCommunicationTransform;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,5 +32,24 @@ public class HttpComponentsAutoconfigure {
 		
 		return objectToJsonStringMarshaller;
 	}
-	
+
+	@Bean(name="stringToJsonModelMarshaller")
+	public StringToJsonModelMarshaller createBatchStringToJsonModelMarshaller() {
+		StringToJsonModelMarshaller stringToJsonModelMarshaller = new StringToJsonModelMarshaller();
+
+		return stringToJsonModelMarshaller;
+	}
+
+	@Bean(name="jsonModelProxyInterfaceHandlerMethodCommunicationTransform")
+	public ProxyInterfaceHandlerMethodCommunicationTransform<String,String,JsonModel<Object>> createJsonModelProxyInterfaceHandlerMethodCommunicationTransform(
+			ObjectToJsonStringMarshaller objectToJsonStringMarshaller
+			,StringToJsonModelMarshaller stringToJsonModelMarshaller
+	) {
+		ProxyInterfaceHandlerMethodCommunicationTransform<String,String,JsonModel<Object>> proxyInterfaceHandlerMethodCommunicationTransform = new ProxyInterfaceHandlerMethodCommunicationTransform<String,String,JsonModel<Object>>();
+		proxyInterfaceHandlerMethodCommunicationTransform.setMarshaller(objectToJsonStringMarshaller);
+		proxyInterfaceHandlerMethodCommunicationTransform.setUnmarshaller(stringToJsonModelMarshaller);
+
+		return proxyInterfaceHandlerMethodCommunicationTransform;
+	}
+
 }

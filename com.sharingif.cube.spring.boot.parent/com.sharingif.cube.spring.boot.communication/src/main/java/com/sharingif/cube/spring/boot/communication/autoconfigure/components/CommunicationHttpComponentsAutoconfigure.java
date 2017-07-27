@@ -1,5 +1,7 @@
 package com.sharingif.cube.spring.boot.communication.autoconfigure.components;
 
+import com.sharingif.cube.communication.exception.JsonModelBusinessCommunicationExceptionHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,5 +13,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class CommunicationHttpComponentsAutoconfigure {
+
+    @Bean("jsonModelBusinessCommunicationExceptionHandler")
+    public JsonModelBusinessCommunicationExceptionHandler createJsonModelBusinessCommunicationExceptionHandler() {
+
+        return new JsonModelBusinessCommunicationExceptionHandler();
+    }
+
 
 }

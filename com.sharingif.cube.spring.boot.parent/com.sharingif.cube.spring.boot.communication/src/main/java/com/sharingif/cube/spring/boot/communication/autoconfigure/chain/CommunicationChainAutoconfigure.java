@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.communication.autoconfigure.chain;
 
+import com.sharingif.cube.communication.handler.chain.JsonModelTransportChain;
 import com.sharingif.cube.core.handler.HandlerMethodContent;
 import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
@@ -35,6 +36,11 @@ public class CommunicationChainAutoconfigure {
 		transportChains.setChains(chains);
 		
 		return transportChains;
+	}
+
+	@Bean(name="jsonModelTransportChain")
+	public JsonModelTransportChain createJsonModelTransportChain() {
+		return new JsonModelTransportChain();
 	}
 
 }
