@@ -1,17 +1,8 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure;
 
-import com.sharingif.cube.core.config.CubeConfigure;
-import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
-import com.sharingif.cube.core.handler.HandlerMethod;
-import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.web.exception.handler.WebRequestInfo;
-import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
-import com.sharingif.cube.web.springmvc.handler.SpringMVCHandlerMethodContent;
-import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
-import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
-import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
-import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
@@ -32,8 +23,16 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
-import java.util.List;
-import java.util.Map;
+import com.sharingif.cube.core.config.CubeConfigure;
+import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
+import com.sharingif.cube.core.handler.HandlerMethod;
+import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
+import com.sharingif.cube.web.exception.handler.WebRequestInfo;
+import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
+import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
+import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
+import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
+import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
 
 /**
  * ExtendedWebMvcConfigurationSupport
@@ -70,7 +69,7 @@ public class WebCubeContextAutoconfigure {
 	@Bean(name="handlerAdapter")
 	@ConditionalOnMissingBean(name="handlerAdapter")
 	public RequestMappingHandlerAdapter createRequestMappingHandlerAdapter(
-			MultiHandlerMethodChain<SpringMVCHandlerMethodContent> springMCVChains
+			MultiHandlerMethodChain springMCVChains
 			,WebBindingInitializer webBindingInitializer
 			,List<HttpMessageConverter<?>> messageConverters
 			) {

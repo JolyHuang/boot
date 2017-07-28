@@ -1,5 +1,9 @@
 package com.sharingif.cube.spring.boot.web.vert.x;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.sharingif.cube.communication.view.MultiViewResolver;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
@@ -8,9 +12,6 @@ import com.sharingif.cube.web.vert.x.VertXServer;
 import com.sharingif.cube.web.vert.x.exception.handler.VertXExceptionResolver;
 import com.sharingif.cube.web.vert.x.handler.VertXDispatcherHandler;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * WebCubeContextAutoconfigure
@@ -23,7 +24,6 @@ import org.springframework.context.annotation.Configuration;
 public class WebCubeContextAutoconfigure {
 
 	@Bean("vertXDispatcherHandler")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public VertXDispatcherHandler createVertXDispatcherHandler(
             MultiHandlerMethodChain vertxWebHandlerMethodChain
             ,VertXRequestInfoResolver vertXRequestInfoResolver
