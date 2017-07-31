@@ -18,7 +18,6 @@ import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExc
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.handler.adapter.PathVariableMethodArgumentResolver;
-import com.sharingif.cube.web.vert.x.exception.handler.VertXExceptionResolver;
 import com.sharingif.cube.web.vert.x.handler.adapter.JsonHandlerMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.handler.adapter.StaticHandlerAdapter;
 import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
@@ -194,15 +193,6 @@ public class VertxComponentsAutoconfigure {
         vertxCubeExceptionHandler.setCubeExceptionHandlers(webCubeExceptionHandlers);
 
         return vertxCubeExceptionHandler;
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	@Bean("exceptionResolver")
-    public VertXExceptionResolver createVertXExceptionResolver(MultiCubeExceptionHandler vertxCubeExceptionHandler) {
-        VertXExceptionResolver exceptionResolver = new VertXExceptionResolver();
-        exceptionResolver.setCubeExceptionHandler(vertxCubeExceptionHandler);
-
-        return exceptionResolver;
     }
 
     @Bean("vertXJsonViewResolver")

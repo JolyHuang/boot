@@ -1,11 +1,26 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
+import com.sharingif.cube.communication.http.HttpRequest;
+import com.sharingif.cube.communication.http.HttpResponse;
+import com.sharingif.cube.communication.http.request.HttpRequestInfo;
+import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
+import com.sharingif.cube.core.handler.HandlerMethod;
+import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
+import com.sharingif.cube.web.springmvc.exception.NoHandlerFoundExceptionHandler;
+import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
+import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
+import com.sharingif.cube.web.springmvc.request.SpringMVCHttpRequestInfo;
+import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
+import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;
+import com.sharingif.cube.web.springmvc.servlet.view.NoHandlerFoundViewResolver;
+import com.sharingif.cube.web.springmvc.servlet.view.json.ExtendedMappingJackson2JsonView;
+import com.sharingif.cube.web.springmvc.servlet.view.referer.RefererViewResolver;
+import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
+import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -32,24 +47,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
-import com.sharingif.cube.core.handler.HandlerMethod;
-import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
-import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
-import com.sharingif.cube.web.exception.handler.WebRequestInfo;
-import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
-import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
-import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
-import com.sharingif.cube.web.springmvc.exception.NoHandlerFoundExceptionHandler;
-import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
-import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
-import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
-import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;
-import com.sharingif.cube.web.springmvc.servlet.view.NoHandlerFoundViewResolver;
-import com.sharingif.cube.web.springmvc.servlet.view.json.ExtendedMappingJackson2JsonView;
-import com.sharingif.cube.web.springmvc.servlet.view.referer.RefererViewResolver;
-import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
-import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
+import java.util.*;
 
 /**
  * SpringMVCComponentsAutoconfigure
@@ -158,7 +156,7 @@ public class SpringMVCComponentsAutoconfigure {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean(name="springMVCCubeExceptionHandler")
 	@ConditionalOnMissingBean(name = "springMVCCubeExceptionHandler")
-	public MultiCubeExceptionHandler<WebRequestInfo,HandlerMethod> createSpringMVCCubeExceptionHandler(
+	public MultiCubeExceptionHandler<SpringMVCHttpRequestInfo,HandlerMethod> createSpringMVCCubeExceptionHandler(
 			List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers
 			) {
 
