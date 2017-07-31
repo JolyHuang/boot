@@ -1,17 +1,16 @@
 package com.sharingif.cube.spring.boot.web.vert.x;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.sharingif.cube.communication.view.MultiViewResolver;
+import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.web.vert.x.VertXServer;
-import com.sharingif.cube.web.vert.x.exception.handler.VertXExceptionResolver;
 import com.sharingif.cube.web.vert.x.handler.VertXDispatcherHandler;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * WebCubeContextAutoconfigure
@@ -29,7 +28,7 @@ public class WebCubeContextAutoconfigure {
             ,VertXRequestInfoResolver vertXRequestInfoResolver
             ,MultiHandlerMapping multiHandlerMapping
             ,MultiHandlerMethodAdapter multiHandlerMethodAdapter
-            ,VertXExceptionResolver exceptionResolver
+            ,MultiCubeExceptionHandler multiCubeExceptionHandler
             ,MultiViewResolver multiViewResolver
          ) {
         VertXDispatcherHandler vertXDispatcherHandler = new VertXDispatcherHandler();
@@ -37,7 +36,7 @@ public class WebCubeContextAutoconfigure {
         vertXDispatcherHandler.setRequestInfoResolver(vertXRequestInfoResolver);
         vertXDispatcherHandler.setMultiHandlerMapping(multiHandlerMapping);
         vertXDispatcherHandler.setMultiHandlerMethodAdapter(multiHandlerMethodAdapter);
-        vertXDispatcherHandler.setExceptionResolver(exceptionResolver);
+        vertXDispatcherHandler.setMultiCubeExceptionHandler(multiCubeExceptionHandler);
         vertXDispatcherHandler.setMultiViewResolver(multiViewResolver);
 
         return vertXDispatcherHandler;
