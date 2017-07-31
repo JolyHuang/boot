@@ -12,7 +12,11 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.HandlerMapping;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.core.handler.mapping.RequestMappingHandlerMapping;
+import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.handler.adapter.PathVariableMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.exception.handler.VertXExceptionResolver;
 import com.sharingif.cube.web.vert.x.handler.adapter.JsonHandlerMethodArgumentResolver;
@@ -166,9 +170,13 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("webCubeExceptionHandlers")
     public List<WebCubeExceptionHandler> createWebCubeExceptionHandlers(
-            WebCubeExceptionHandler webCubeExceptionHandler
+            AccessDecisionCubeExceptionHandler accessDecisionCubeExceptionHandler
+            ,TokenValidationCubeExceptionHandler tokenValidationCubeExceptionHandler
+            ,BindValidationCubeExceptionHandler bindValidationCubeExceptionHandler
+            ,ValidationCubeExceptionHandler validationCubeExceptionHandler
+            ,WebCubeExceptionHandler webCubeExceptionHandler
             ) {
-        List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>(6);
+        List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>();
         webCubeExceptionHandlers.add(webCubeExceptionHandler);
 
         return webCubeExceptionHandlers;
