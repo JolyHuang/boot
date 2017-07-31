@@ -1,13 +1,5 @@
 package com.sharingif.cube.spring.boot.web.autoconfigure.chain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.sharingif.cube.components.handler.chain.RequestLocalContextHolderChain;
 import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.MDCChain;
@@ -15,6 +7,12 @@ import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.security.web.handler.chain.CoreUserContextHolderChain;
 import com.sharingif.cube.web.user.CoreUserHttpSessionManage;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * WebChainAutoconfigure
@@ -29,12 +27,14 @@ public class WebChainAutoconfigure {
 	@Bean(name="webHandlerMethodChain")
 	@ConditionalOnMissingBean(name = "webHandlerMethodChain")
 	public MultiHandlerMethodChain createWebHandlerMethodChain(
-			MDCChain mdcChain
+			CoreUserContextHolderChain coreUserContextHolderChain
+			,MDCChain mdcChain
 			,RequestLocalContextHolderChain requestLocalContextHolderChain
 			,MonitorPerformanceChain transactionMonitorPerformanceChain
 			) {
 		
 		List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>();
+		chains.add(coreUserContextHolderChain);
 		chains.add(requestLocalContextHolderChain);
 		chains.add(mdcChain);
 		chains.add(transactionMonitorPerformanceChain);

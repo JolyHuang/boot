@@ -1,18 +1,16 @@
 package com.sharingif.cube.spring.boot.web.vert.x.chain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.sharingif.cube.core.handler.chain.AnnotationHandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.HandlerMethodChain;
 import com.sharingif.cube.core.handler.chain.MonitorPerformanceChain;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
-import com.sharingif.cube.security.web.handler.chain.CoreUserContextHolderChain;
 import com.sharingif.cube.web.vert.x.handler.chain.VertXDispatcherHandlerExceptionChain;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * VertXChainAutoconfigure
@@ -45,14 +43,12 @@ public class VertXChainAutoconfigure {
 
     @Bean(name="vertxControllerChains")
     @ConditionalOnMissingBean(name="vertxControllerChains")
-    public MultiHandlerMethodChain createSpringMCVChains(
-            CoreUserContextHolderChain coreUserContextHolderChain
-            ,MonitorPerformanceChain controllerMonitorPerformanceChain
+    public MultiHandlerMethodChain createVertxControllerChains(
+            MonitorPerformanceChain controllerMonitorPerformanceChain
             ,AnnotationHandlerMethodChain annotationHandlerMethodChain
     ) {
 
         List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>(3);
-        chains.add(coreUserContextHolderChain);
         chains.add(controllerMonitorPerformanceChain);
         chains.add(annotationHandlerMethodChain);
 
