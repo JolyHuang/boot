@@ -177,6 +177,10 @@ public class VertxComponentsAutoconfigure {
             ,WebCubeExceptionHandler webCubeExceptionHandler
             ) {
         List<WebCubeExceptionHandler> webCubeExceptionHandlers = new ArrayList<WebCubeExceptionHandler>();
+        webCubeExceptionHandlers.add(accessDecisionCubeExceptionHandler);
+        webCubeExceptionHandlers.add(tokenValidationCubeExceptionHandler);
+        webCubeExceptionHandlers.add(bindValidationCubeExceptionHandler);
+        webCubeExceptionHandlers.add(validationCubeExceptionHandler);
         webCubeExceptionHandlers.add(webCubeExceptionHandler);
 
         return webCubeExceptionHandlers;
