@@ -3,6 +3,7 @@ package com.sharingif.cube.spring.boot.web.autoconfigure.components;
 import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
+import com.sharingif.cube.web.exception.handler.validation.SingleBindValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.user.CoreUserHttpSessionManage;
@@ -36,6 +37,13 @@ public class WebComponentsAutoconfigure {
 		tokenValidationCubeExceptionHandler.setDefaultErrorView("common/ResubmitTokenError");
 		
 		return tokenValidationCubeExceptionHandler;
+	}
+
+	@Bean(name="singleBindValidationCubeExceptionHandler")
+	public SingleBindValidationCubeExceptionHandler createSingleBindValidationCubeExceptionHandler() {
+		SingleBindValidationCubeExceptionHandler singleBindValidationCubeExceptionHandler = new SingleBindValidationCubeExceptionHandler();
+
+		return singleBindValidationCubeExceptionHandler;
 	}
 	
 	@Bean(name="bindValidationCubeExceptionHandler")
