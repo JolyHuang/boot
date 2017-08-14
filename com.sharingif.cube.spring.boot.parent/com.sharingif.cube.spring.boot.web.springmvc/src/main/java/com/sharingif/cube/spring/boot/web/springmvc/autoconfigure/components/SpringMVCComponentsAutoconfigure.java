@@ -1,8 +1,5 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components;
 
-import com.sharingif.cube.communication.http.HttpRequest;
-import com.sharingif.cube.communication.http.HttpResponse;
-import com.sharingif.cube.communication.http.request.HttpRequestInfo;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
@@ -12,6 +9,7 @@ import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeEx
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.springmvc.exception.NoHandlerFoundExceptionHandler;
 import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
+import com.sharingif.cube.web.springmvc.exception.handler.validation.SingleMethodArgumentNotValidExceptionHandler;
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
 import com.sharingif.cube.web.springmvc.request.SpringMVCHttpRequestInfo;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
@@ -119,6 +117,13 @@ public class SpringMVCComponentsAutoconfigure {
 		MethodArgumentNotValidExceptionHandler methodArgumentNotValidExceptionHandler = new MethodArgumentNotValidExceptionHandler();
 		
 		return methodArgumentNotValidExceptionHandler;
+	}
+
+	@Bean(name="singleMethodArgumentNotValidExceptionHandler")
+	public SingleMethodArgumentNotValidExceptionHandler createSingleMethodArgumentNotValidExceptionHandler() {
+		SingleMethodArgumentNotValidExceptionHandler singleMethodArgumentNotValidExceptionHandler = new SingleMethodArgumentNotValidExceptionHandler();
+
+		return singleMethodArgumentNotValidExceptionHandler;
 	}
 
 	@Bean("noHandlerFoundExceptionHandler")
