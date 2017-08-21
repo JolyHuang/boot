@@ -176,6 +176,7 @@ public class SpringMVCComponentsAutoconfigure {
 		
 		Properties mediaTypes = new Properties();
 		mediaTypes.put("image", "image/*");
+		mediaTypes.put("textCSV", "text/csv");
 		mediaTypes.put("json", MediaType.APPLICATION_JSON_VALUE);
 		mediaTypes.put("xml", MediaType.TEXT_XML_VALUE);
 		mediaTypes.put("html", MediaType.TEXT_HTML_VALUE);
@@ -189,18 +190,30 @@ public class SpringMVCComponentsAutoconfigure {
 		return contentNegotiationManagerFactoryBean;
 	}
 	
-	@Bean(name="streamView")
-	public StreamView createStreamView() {
+	@Bean(name="imagePngStreamView")
+	public StreamView createImagePngStreamView() {
 		StreamView streamView = new StreamView();
 		streamView.setContentType(MediaType.IMAGE_PNG_VALUE);
 		
 		return streamView;
 	}
+
+	@Bean(name="textCSVStreamView")
+	public StreamView createTextCSVStreamView() {
+		StreamView streamView = new StreamView();
+		streamView.setContentType("text/csv");
+
+		return streamView;
+	}
 	
 	@Bean(name="streamViewResolver")
-	public StreamViewResolver createStreamViewResolver() {
+	public StreamViewResolver createStreamViewResolver(
+			StreamView imagePngStreamView
+			,StreamView textCSVStreamView
+	) {
 		Map<String,StreamView> streamViews = new HashMap<String,StreamView>(1);
-		streamViews.put("imagePng", createStreamView());
+		streamViews.put("imagePng", imagePngStreamView);
+		streamViews.put("textCSV", textCSVStreamView);
 		
 		StreamViewResolver streamViewResolver = new StreamViewResolver();
 		streamViewResolver.setStreamViews(streamViews);
