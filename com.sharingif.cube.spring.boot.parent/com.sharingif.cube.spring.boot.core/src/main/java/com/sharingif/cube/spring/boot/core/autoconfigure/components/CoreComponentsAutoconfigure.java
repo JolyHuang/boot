@@ -4,6 +4,7 @@ import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfig
 import com.sharingif.cube.core.config.CubeConfigure;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
 import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
+import com.sharingif.cube.core.util.StringUtils;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
@@ -62,7 +63,9 @@ public class CoreComponentsAutoconfigure {
 	@Bean(name="commonProperties")
 	public static List<Resource> createCommonProperties() {
 		List<Resource> commonProperties = new ArrayList<Resource>();
-		commonProperties.add(new FileSystemResource(CubeConfigure.EXTERNAL_CONFIGURE));
+		if(StringUtils.isTrimEmpty(CubeConfigure.EXTERNAL_CONFIGURE)) {
+			commonProperties.add(new FileSystemResource(CubeConfigure.EXTERNAL_CONFIGURE));
+		}
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
 
 		return commonProperties;
