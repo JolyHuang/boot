@@ -12,19 +12,25 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.HandlerMapping;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.core.handler.mapping.RequestMappingHandlerMapping;
+import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.TokenValidationCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.ValidationCubeExceptionHandler;
 import com.sharingif.cube.web.handler.adapter.PathVariableMethodArgumentResolver;
+import com.sharingif.cube.web.vert.x.handler.adapter.CORSHandlerAdapter;
 import com.sharingif.cube.web.vert.x.handler.adapter.JsonHandlerMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.handler.adapter.StaticHandlerAdapter;
+import com.sharingif.cube.web.vert.x.handler.mapping.CORSHandlerMapping;
 import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
+import com.sharingif.cube.web.vert.x.view.CORSViewResolver;
 import com.sharingif.cube.web.vert.x.view.StaticHandlerImpl;
 import com.sharingif.cube.web.vert.x.view.VertXJsonViewResolver;
 import com.sharingif.cube.web.vert.x.view.VertXStaticViewResolver;
+import io.vertx.core.http.HttpMethod;
+import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -104,15 +110,43 @@ public class VertxComponentsAutoconfigure {
         return staticHandlerMapping;
     }
 
+    @Bean("corsHandlerMapping")
+    @ConditionalOnMissingBean(name="corsHandlerMapping")
+    public CORSHandlerMapping createCORSHandlerMapping(@Value("${corst.allowed.origin.pattern :}") String allowedOriginPattern
+    ,@Value("${corst.max.age.seconds : }") Integer maxAgeSeconds) {
+        if(StringUtils.isTrimEmpty(allowedOriginPattern)) {
+            allowedOriginPattern = "*";
+        }
+        if(maxAgeSeconds == null) {
+            maxAgeSeconds = 1*60*60;
+        }
+        CorsHandler corsHandler = CorsHandler.create(allowedOriginPattern)
+                .allowedMethod(HttpMethod.GET)
+                .allowedMethod(HttpMethod.HEAD)
+                .allowedMethod(HttpMethod.OPTIONS)
+                .allowedMethod(HttpMethod.POST)
+                .allowedMethod(HttpMethod.PUT)
+                .allowedMethod(HttpMethod.DELETE)
+                .allowedHeader("Content-Type")
+                .maxAgeSeconds(maxAgeSeconds);
+
+        CORSHandlerMapping corsHandlerMapping = new CORSHandlerMapping();
+        corsHandlerMapping.setCorsHandler(corsHandler);
+
+        return corsHandlerMapping;
+    }
+
 	@Bean("handlerMappings")
 	@SuppressWarnings("rawtypes")
     public List<HandlerMapping> createHandlerMappings(
             RequestMappingHandlerMapping requestMappingHandlerMapping
             ,StaticHandlerMapping staticHandlerMapping
+            ,CORSHandlerMapping corsHandlerMapping
             ) {
         List<HandlerMapping> handlerMappings = new ArrayList<HandlerMapping>();
         handlerMappings.add(requestMappingHandlerMapping);
         handlerMappings.add(staticHandlerMapping);
+        handlerMappings.add(corsHandlerMapping);
 
         return handlerMappings;
     }
@@ -129,6 +163,11 @@ public class VertxComponentsAutoconfigure {
     @Bean("staticHandlerAdapter")
     public StaticHandlerAdapter createStaticHandlerAdapter() {
         return new StaticHandlerAdapter();
+    }
+
+    @Bean("corsHandlerAdapter")
+    public CORSHandlerAdapter createCORSHandlerAdapter() {
+        return new CORSHandlerAdapter();
     }
 
     @Bean("handlerMethodHandlerAdapter")
@@ -150,10 +189,12 @@ public class VertxComponentsAutoconfigure {
     public List<HandlerAdapter> createHandlerAdapters(
             HandlerMethodHandlerAdapter handlerMethodHandlerAdapter
             ,StaticHandlerAdapter staticHandlerAdapter
+            ,CORSHandlerAdapter corsHandlerAdapter
             ) {
         List<HandlerAdapter> handlerAdapters = new ArrayList<HandlerAdapter>();
         handlerAdapters.add(handlerMethodHandlerAdapter);
         handlerAdapters.add(staticHandlerAdapter);
+        handlerAdapters.add(corsHandlerAdapter);
 
         return handlerAdapters;
     }
@@ -207,15 +248,22 @@ public class VertxComponentsAutoconfigure {
         return new VertXStaticViewResolver();
     }
 
+    @Bean("corsViewResolver")
+    public CORSViewResolver createCORSViewResolver() {
+        return new CORSViewResolver();
+    }
+
     @SuppressWarnings("rawtypes")
 	@Bean("viewResolvers")
     public List<ViewResolver> createViewResolvers(
             VertXStaticViewResolver vertXStaticViewResolver
             ,VertXJsonViewResolver vertXJsonViewResolver
+            ,CORSViewResolver corsViewResolver
             ) {
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
         viewResolvers.add(vertXStaticViewResolver);
         viewResolvers.add(vertXJsonViewResolver);
+        viewResolvers.add(corsViewResolver);
 
         return viewResolvers;
     }
