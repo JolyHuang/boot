@@ -95,7 +95,7 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("staticHandlerMapping")
     @ConditionalOnMissingBean(name="staticHandlerMapping")
-    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root :}") String webRoot) {
+    public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root:}") String webRoot) {
 
         StaticHandler staticHandler = new StaticHandlerImpl(webRoot,this.getClass().getClassLoader());
 
@@ -112,8 +112,8 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("corsHandlerMapping")
     @ConditionalOnMissingBean(name="corsHandlerMapping")
-    public CORSHandlerMapping createCORSHandlerMapping(@Value("${corst.allowed.origin.pattern :}") String allowedOriginPattern
-    ,@Value("${corst.max.age.seconds : }") Integer maxAgeSeconds) {
+    public CORSHandlerMapping createCORSHandlerMapping(@Value("${corst.allowed.origin.pattern:}") String allowedOriginPattern
+    ,@Value("${corst.max.age.seconds:}") Integer maxAgeSeconds) {
         if(StringUtils.isTrimEmpty(allowedOriginPattern)) {
             allowedOriginPattern = "*";
         }
@@ -128,6 +128,7 @@ public class VertxComponentsAutoconfigure {
                 .allowedMethod(HttpMethod.PUT)
                 .allowedMethod(HttpMethod.DELETE)
                 .allowedHeader("Content-Type")
+                .allowCredentials(true)
                 .maxAgeSeconds(maxAgeSeconds);
 
         CORSHandlerMapping corsHandlerMapping = new CORSHandlerMapping();
