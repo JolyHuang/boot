@@ -22,6 +22,7 @@ import com.sharingif.cube.web.handler.adapter.PathVariableMethodArgumentResolver
 import com.sharingif.cube.web.vert.x.handler.adapter.CORSHandlerAdapter;
 import com.sharingif.cube.web.vert.x.handler.adapter.JsonHandlerMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.handler.adapter.StaticHandlerAdapter;
+import com.sharingif.cube.web.vert.x.handler.adapter.container.DataContainerMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.handler.mapping.CORSHandlerMapping;
 import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
@@ -52,6 +53,11 @@ import java.util.Map;
 @Configuration
 public class VertxComponentsAutoconfigure {
 
+    @Bean("dataContainerMethodArgumentResolver")
+    public DataContainerMethodArgumentResolver createDataContainerMethodArgumentResolver() {
+        return new DataContainerMethodArgumentResolver();
+    }
+
     @Bean("pathVariableMethodArgumentResolver")
     public PathVariableMethodArgumentResolver createPathVariableMethodArgumentResolver() {
         PathVariableMethodArgumentResolver pathVariableMethodArgumentResolver = new PathVariableMethodArgumentResolver();
@@ -68,10 +74,12 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("argumentResolvers")
     public List<HandlerMethodArgumentResolver> createArgumentResolvers(
-            PathVariableMethodArgumentResolver pathVariableMethodArgumentResolver
+            DataContainerMethodArgumentResolver dataContainerMethodArgumentResolver
+            ,PathVariableMethodArgumentResolver pathVariableMethodArgumentResolver
             ,JsonHandlerMethodArgumentResolver jsonHandlerMethodArgumentResolver
             ) {
         List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<HandlerMethodArgumentResolver>();
+        argumentResolvers.add(dataContainerMethodArgumentResolver);
         argumentResolvers.add(pathVariableMethodArgumentResolver);
         argumentResolvers.add(jsonHandlerMethodArgumentResolver);
 
