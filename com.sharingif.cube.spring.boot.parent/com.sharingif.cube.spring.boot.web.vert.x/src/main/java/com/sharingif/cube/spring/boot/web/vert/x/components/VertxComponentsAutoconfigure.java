@@ -136,8 +136,11 @@ public class VertxComponentsAutoconfigure {
                 .allowedMethod(HttpMethod.PUT)
                 .allowedMethod(HttpMethod.DELETE)
                 .allowedHeader("Content-Type")
-                .allowCredentials(true)
                 .maxAgeSeconds(maxAgeSeconds);
+
+        if(!"*".equals(allowedOriginPattern)) {
+            corsHandler.allowCredentials(true);
+        }
 
         CORSHandlerMapping corsHandlerMapping = new CORSHandlerMapping();
         corsHandlerMapping.setCorsHandler(corsHandler);
