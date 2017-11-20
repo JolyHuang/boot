@@ -265,7 +265,6 @@ public class VertxComponentsAutoconfigure {
         return new CORSViewResolver();
     }
 
-    @SuppressWarnings("rawtypes")
 	@Bean("viewResolvers")
     public List<ViewResolver> createViewResolvers(
             VertXStaticViewResolver vertXStaticViewResolver
@@ -281,7 +280,6 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("multiViewResolver")
-    @SuppressWarnings("rawtypes")
     public MultiViewResolver createmultiViewResolver(List<ViewResolver> viewResolvers) {
         MultiViewResolver multiViewResolver = new MultiViewResolver();
         multiViewResolver.setViewResolvers(viewResolvers);
