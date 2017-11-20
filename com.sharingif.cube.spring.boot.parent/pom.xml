@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sharingif.cube.spring.boot</groupId>
 	<artifactId>com.sharingif.cube.spring.boot.parent</artifactId>
-	<version>3.0.1-RELEASE</version>
+	<version>4.0.0-RELEASE</version>
 	<packaging>pom</packaging>
 	<name>com.sharingif.cube.spring.boot.parent</name>
 	<url>http://maven.apache.org</url>
@@ -22,10 +22,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.jdk.version>1.8</project.build.jdk.version>
-		<maven.project.com.sharingif.cube.spring.boot.version>3.0.1-RELEASE</maven.project.com.sharingif.cube.spring.boot.version>
+		<maven.project.com.sharingif.cube.spring.boot.version>4.0.0-RELEASE</maven.project.com.sharingif.cube.spring.boot.version>
 
 		<maven.project.com.sharingif.cube.groupId>com.sharingif.cube</maven.project.com.sharingif.cube.groupId>
-		<maven.project.com.sharingif.cube.release.version>3.0.1-RELEASE</maven.project.com.sharingif.cube.release.version>
+		<maven.project.com.sharingif.cube.release.version>4.0.0-RELEASE</maven.project.com.sharingif.cube.release.version>
 		<maven.project.springframework.groupId>org.springframework</maven.project.springframework.groupId>
 		<maven.project.org.springframework.boot.groupId>org.springframework.boot</maven.project.org.springframework.boot.groupId>
 		<maven.project.org.springframework.boot.release.version>1.5.3.RELEASE</maven.project.org.springframework.boot.release.version>

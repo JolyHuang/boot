@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.sharingif.cube.spring.boot</groupId>
 		<artifactId>com.sharingif.cube.spring.boot.parent</artifactId>
-		<version>3.0.1-RELEASE</version>
+		<version>4.0.0-RELEASE</version>
 	</parent>
 	<artifactId>com.sharingif.cube.spring.boot.core</artifactId>
 	<name>com.sharingif.cube.spring.boot.core</name>
