@@ -6,7 +6,7 @@ import com.sharingif.cube.communication.transport.transform.ProxyInterfaceHandle
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sharingif.cube.communication.http.transport.HandlerMethodCommunicationTransportRequestInfoResolver;
+import com.sharingif.cube.communication.http.transport.HandlerMethodCommunicationTransportRequestContextResolver;
 import com.sharingif.cube.communication.http.transport.transform.ObjectToJsonStringMarshaller;
 
 /**
@@ -19,11 +19,9 @@ import com.sharingif.cube.communication.http.transport.transform.ObjectToJsonStr
 @Configuration
 public class HttpComponentsAutoconfigure {
 	
-	@Bean(name = "handlerMethodCommunicationTransportRequestInfoResolver")
-	public HandlerMethodCommunicationTransportRequestInfoResolver createHandlerMethodCommunicationTransportRequestInfoResolver() {
-		HandlerMethodCommunicationTransportRequestInfoResolver handlerMethodCommunicationTransportRequestInfoResolver = new HandlerMethodCommunicationTransportRequestInfoResolver();
-		
-		return handlerMethodCommunicationTransportRequestInfoResolver;
+	@Bean(name = "handlerMethodCommunicationTransportRequestContextResolver")
+	public HandlerMethodCommunicationTransportRequestContextResolver createHandlerMethodCommunicationTransportRequestContextResolver() {
+		return new HandlerMethodCommunicationTransportRequestContextResolver();
 	}
 	
 	@Bean(name = "objectToJsonStringMarshaller")

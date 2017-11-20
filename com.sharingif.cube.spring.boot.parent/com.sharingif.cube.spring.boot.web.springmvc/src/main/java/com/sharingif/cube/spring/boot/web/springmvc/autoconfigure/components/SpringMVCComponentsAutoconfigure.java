@@ -11,7 +11,7 @@ import com.sharingif.cube.web.springmvc.exception.NoHandlerFoundExceptionHandler
 import com.sharingif.cube.web.springmvc.exception.handler.validation.MethodArgumentNotValidExceptionHandler;
 import com.sharingif.cube.web.springmvc.exception.handler.validation.SingleMethodArgumentNotValidExceptionHandler;
 import com.sharingif.cube.web.springmvc.http.converter.json.ExtendedMappingJackson2HttpMessageConverter;
-import com.sharingif.cube.web.springmvc.request.SpringMVCHttpRequestInfo;
+import com.sharingif.cube.web.springmvc.request.SpringMVCHttpRequestContext;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedInternalResourceViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedJstlView;
 import com.sharingif.cube.web.springmvc.servlet.view.NoHandlerFoundViewResolver;
@@ -161,7 +161,7 @@ public class SpringMVCComponentsAutoconfigure {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean(name="springMVCCubeExceptionHandler")
 	@ConditionalOnMissingBean(name = "springMVCCubeExceptionHandler")
-	public MultiCubeExceptionHandler<SpringMVCHttpRequestInfo,HandlerMethod> createSpringMVCCubeExceptionHandler(
+	public MultiCubeExceptionHandler<SpringMVCHttpRequestContext,HandlerMethod> createSpringMVCCubeExceptionHandler(
 			List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers
 			) {
 

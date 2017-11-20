@@ -6,7 +6,7 @@ import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.web.springmvc.filter.ExtendedHiddenHttpMethodFilter;
 import com.sharingif.cube.web.springmvc.handler.annotation.ExtendedRequestMappingHandlerAdapter;
-import com.sharingif.cube.web.springmvc.request.SpringMVCHttpRequestInfo;
+import com.sharingif.cube.web.springmvc.request.SpringMVCHttpRequestContext;
 import com.sharingif.cube.web.springmvc.servlet.ExtendedDispatcherServlet;
 import com.sharingif.cube.web.springmvc.servlet.handler.SimpleHandlerExceptionResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.ExtendedContentNegotiatingViewResolver;
@@ -88,7 +88,7 @@ public class WebCubeContextAutoconfigure {
 	}
 	
 	@Bean("handlerExceptionResolver")
-	public HandlerExceptionResolver createHandlerExceptionResolver(MultiCubeExceptionHandler<SpringMVCHttpRequestInfo, HandlerMethod> springMVCCubeExceptionHandler) {
+	public HandlerExceptionResolver createHandlerExceptionResolver(MultiCubeExceptionHandler<SpringMVCHttpRequestContext, HandlerMethod> springMVCCubeExceptionHandler) {
 		SimpleHandlerExceptionResolver handlerExceptionResolver = new SimpleHandlerExceptionResolver();
 		handlerExceptionResolver.setCubeExceptionHandler(springMVCCubeExceptionHandler);
 		

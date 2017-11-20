@@ -25,7 +25,7 @@ import com.sharingif.cube.web.vert.x.handler.adapter.StaticHandlerAdapter;
 import com.sharingif.cube.web.vert.x.handler.adapter.container.DataContainerMethodArgumentResolver;
 import com.sharingif.cube.web.vert.x.handler.mapping.CORSHandlerMapping;
 import com.sharingif.cube.web.vert.x.handler.mapping.StaticHandlerMapping;
-import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
+import com.sharingif.cube.web.vert.x.request.VertXRequestContextResolver;
 import com.sharingif.cube.web.vert.x.view.CORSViewResolver;
 import com.sharingif.cube.web.vert.x.view.StaticHandlerImpl;
 import com.sharingif.cube.web.vert.x.view.VertXJsonViewResolver;
@@ -86,11 +86,9 @@ public class VertxComponentsAutoconfigure {
         return argumentResolvers;
     }
 
-    @Bean("vertXRequestInfoResolver")
-    public VertXRequestInfoResolver createVertXRequestInfoResolver() {
-        VertXRequestInfoResolver vertXRequestInfoResolver = new VertXRequestInfoResolver();
-
-        return vertXRequestInfoResolver;
+    @Bean("vertXRequestContextResolver")
+    public VertXRequestContextResolver createVertXRequestContextResolver() {
+        return new VertXRequestContextResolver();
     }
 
     @Bean("requestMappingHandlerMapping")

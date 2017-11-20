@@ -7,7 +7,7 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.web.vert.x.VertXServer;
 import com.sharingif.cube.web.vert.x.handler.VertXDispatcherHandler;
-import com.sharingif.cube.web.vert.x.request.VertXRequestInfoResolver;
+import com.sharingif.cube.web.vert.x.request.VertXRequestContextResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class WebCubeContextAutoconfigure {
 	@Bean("vertXDispatcherHandler")
 	public VertXDispatcherHandler createVertXDispatcherHandler(
             MultiHandlerMethodChain vertxWebHandlerMethodChain
-            ,VertXRequestInfoResolver vertXRequestInfoResolver
+            ,VertXRequestContextResolver vertXRequestContextResolver
             ,MultiHandlerMapping multiHandlerMapping
             ,MultiHandlerMethodAdapter multiHandlerMethodAdapter
             ,MultiCubeExceptionHandler multiCubeExceptionHandler
@@ -34,7 +34,7 @@ public class WebCubeContextAutoconfigure {
          ) {
         VertXDispatcherHandler vertXDispatcherHandler = new VertXDispatcherHandler();
         vertXDispatcherHandler.setHandlerMethodChain(vertxWebHandlerMethodChain);
-        vertXDispatcherHandler.setRequestInfoResolver(vertXRequestInfoResolver);
+        vertXDispatcherHandler.setRequestContextResolver(vertXRequestContextResolver);
         vertXDispatcherHandler.setMultiHandlerMapping(multiHandlerMapping);
         vertXDispatcherHandler.setMultiHandlerMethodAdapter(multiHandlerMethodAdapter);
         vertXDispatcherHandler.setMultiCubeExceptionHandler(multiCubeExceptionHandler);
