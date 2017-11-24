@@ -48,6 +48,7 @@
 		<module>com.sharingif.cube.spring.boot.web</module>
 		<module>com.sharingif.cube.spring.boot.web.springmvc</module>
         <module>com.sharingif.cube.spring.boot.web.vert.x</module>
+        <module>com.sharingif.cube.spring.boot.batch.core</module>
     </modules>
 
 	<dependencies>
