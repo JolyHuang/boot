@@ -1,7 +1,9 @@
 package com.sharingif.cube.spring.boot.batch.core.autoconfigure.components;
 
+import com.sharingif.cube.batch.core.exception.JobExceptionHandler;
 import com.sharingif.cube.batch.core.handler.adapter.JobRequestHandlerMethodArgumentResolver;
 import com.sharingif.cube.batch.core.request.JobRequestContextResolver;
+import com.sharingif.cube.batch.core.view.JobViewResolver;
 import com.sharingif.cube.communication.view.MultiViewResolver;
 import com.sharingif.cube.communication.view.ViewResolver;
 import com.sharingif.cube.core.exception.handler.IExceptionHandler;
@@ -15,6 +17,7 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.HandlerMapping;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.core.handler.mapping.RequestMappingHandlerMapping;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,7 +33,7 @@ import java.util.List;
  * 2017/11/21 下午4:15
  */
 @Configuration
-public class CoreComponentsAutoconfigure {
+public class CoreBatchComponentsAutoconfigure {
 
     @Bean("jobRequestHandlerMethodArgumentResolver")
     public JobRequestHandlerMethodArgumentResolver createJobRequestHandlerMethodArgumentResolver() {
@@ -114,14 +117,33 @@ public class CoreComponentsAutoconfigure {
         return multiHandlerMethodAdapter;
     }
 
+    @Bean("exceptionHandlers")
+    @ConditionalOnMissingBean(name = "exceptionHandlers")
+    public List<IExceptionHandler> createWebCubeExceptionHandlers(
+    ) {
+        List<IExceptionHandler> jobExceptionHandlers = new ArrayList<IExceptionHandler>();
+        jobExceptionHandlers.add(new JobExceptionHandler());
+
+        return jobExceptionHandlers;
+    }
+
     @Bean("multiCubeExceptionHandler")
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public MultiCubeExceptionHandler createVertxCubeExceptionHandler(List<IExceptionHandler> exceptionHandlers) {
 
-        MultiCubeExceptionHandler vertxCubeExceptionHandler = new MultiCubeExceptionHandler();
-        vertxCubeExceptionHandler.setCubeExceptionHandlers(exceptionHandlers);
+        MultiCubeExceptionHandler multiCubeExceptionHandler = new MultiCubeExceptionHandler();
+        multiCubeExceptionHandler.setCubeExceptionHandlers(exceptionHandlers);
 
-        return vertxCubeExceptionHandler;
+        return multiCubeExceptionHandler;
+    }
+
+    @Bean("viewResolvers")
+    @ConditionalOnMissingBean(name = "viewResolvers")
+    public List<ViewResolver> createViewResolvers() {
+        List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
+        viewResolvers.add(new JobViewResolver());
+
+        return viewResolvers;
     }
 
     @Bean("multiViewResolver")

@@ -20,7 +20,7 @@ import java.util.List;
  * 2017/11/21 下午4:35
  */
 @Configuration
-public class CoreChainAutoconfigure {
+public class CoreBatchChainAutoconfigure {
 
     @Bean(name="batchControllerChains")
     @ConditionalOnMissingBean(name="batchControllerChains")
@@ -29,14 +29,14 @@ public class CoreChainAutoconfigure {
             ,AnnotationHandlerMethodChain annotationHandlerMethodChain
     ) {
 
-        List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>(3);
+        List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>();
         chains.add(controllerMonitorPerformanceChain);
         chains.add(annotationHandlerMethodChain);
 
-        MultiHandlerMethodChain springMVCHandlerMethodContent = new MultiHandlerMethodChain();
-        springMVCHandlerMethodContent.setChains(chains);
+        MultiHandlerMethodChain multiHandlerMethodChain = new MultiHandlerMethodChain();
+        multiHandlerMethodChain.setChains(chains);
 
-        return  springMVCHandlerMethodContent;
+        return  multiHandlerMethodChain;
     }
 
 }

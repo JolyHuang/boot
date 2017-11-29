@@ -7,8 +7,12 @@ import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import javax.sql.DataSource;
 
 /**
  * CoreBatchContextAutoconfigure
@@ -23,6 +27,7 @@ public class CoreBatchContextAutoconfigure {
 
     @SuppressWarnings("rawtypes")
     @Bean("simpleDispatcherHandler")
+    @ConditionalOnMissingBean(name = "simpleDispatcherHandler")
     public SimpleDispatcherHandler createSimpleDispatcherHandler(
             MultiHandlerMethodChain transactionMonitorPerformanceChain
             ,JobRequestContextResolver jobRequestContextResolver
@@ -30,6 +35,7 @@ public class CoreBatchContextAutoconfigure {
             ,MultiHandlerMethodAdapter multiHandlerMethodAdapter
             ,MultiCubeExceptionHandler multiCubeExceptionHandler
             ,MultiViewResolver multiViewResolver
+            ,DataSourceTransactionManager dataSourceTransactionManager
     ) {
         SimpleDispatcherHandler simpleDispatcherHandler = new SimpleDispatcherHandler();
         simpleDispatcherHandler.setHandlerMethodChain(transactionMonitorPerformanceChain);
@@ -38,6 +44,7 @@ public class CoreBatchContextAutoconfigure {
         simpleDispatcherHandler.setMultiHandlerMethodAdapter(multiHandlerMethodAdapter);
         simpleDispatcherHandler.setMultiCubeExceptionHandler(multiCubeExceptionHandler);
         simpleDispatcherHandler.setMultiViewResolver(multiViewResolver);
+        simpleDispatcherHandler.setDataSourceTransactionManager(dataSourceTransactionManager);
 
         return simpleDispatcherHandler;
     }
