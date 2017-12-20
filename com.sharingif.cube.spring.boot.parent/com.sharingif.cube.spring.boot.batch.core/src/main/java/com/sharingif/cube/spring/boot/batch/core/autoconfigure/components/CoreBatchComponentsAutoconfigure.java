@@ -40,8 +40,8 @@ public class CoreBatchComponentsAutoconfigure {
         return new JobRequestHandlerMethodArgumentResolver();
     }
 
-    @Bean("argumentResolvers")
-    public List<HandlerMethodArgumentResolver> createArgumentResolvers(
+    @Bean("batchArgumentResolvers")
+    public List<HandlerMethodArgumentResolver> createBatchArgumentResolvers(
             JobRequestHandlerMethodArgumentResolver jobRequestHandlerMethodArgumentResolver
     ) {
         List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<HandlerMethodArgumentResolver>();
@@ -55,71 +55,71 @@ public class CoreBatchComponentsAutoconfigure {
         return new JobRequestContextResolver();
     }
 
-    @Bean("requestMappingHandlerMapping")
-    public RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
+    @Bean("batchRequestMappingHandlerMapping")
+    public RequestMappingHandlerMapping createBatchRequestMappingHandlerMapping() {
         RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
         handlerMapping.setUseSuffixPatternMatch(false);
 
         return handlerMapping;
     }
 
-    @Bean("handlerMappings")
+    @Bean("batchHandlerMappings")
     @SuppressWarnings("rawtypes")
-    public List<HandlerMapping> createHandlerMappings(
-            RequestMappingHandlerMapping requestMappingHandlerMapping
+    public List<HandlerMapping> createBatchHandlerMappings(
+            RequestMappingHandlerMapping batchRequestMappingHandlerMapping
     ) {
         List<HandlerMapping> handlerMappings = new ArrayList<HandlerMapping>();
-        handlerMappings.add(requestMappingHandlerMapping);
+        handlerMappings.add(batchRequestMappingHandlerMapping);
 
         return handlerMappings;
     }
 
-    @Bean("multiHandlerMapping")
+    @Bean("batchMultiHandlerMapping")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMapping createMultiHandlerMapping(List<HandlerMapping> handlerMappings) {
+    public MultiHandlerMapping createBatchMultiHandlerMapping(List<HandlerMapping> batchHandlerMappings) {
         MultiHandlerMapping multiHandlerMapping = new MultiHandlerMapping();
-        multiHandlerMapping.setHandlerMappings(handlerMappings);
+        multiHandlerMapping.setHandlerMappings(batchHandlerMappings);
 
         return multiHandlerMapping;
     }
 
-    @Bean("handlerMethodHandlerAdapter")
-    public HandlerMethodHandlerAdapter createHandlerMethodHandlerAdapter(
+    @Bean("batchHandlerMethodHandlerAdapter")
+    public HandlerMethodHandlerAdapter createBatchHandlerMethodHandlerAdapter(
             MultiHandlerMethodChain batchControllerChains
-            ,List<HandlerMethodArgumentResolver> argumentResolvers
+            ,List<HandlerMethodArgumentResolver> batchArgumentResolvers
             ,BindingInitializer bindingInitializer
     ) {
         HandlerMethodHandlerAdapter handlerMethodHandlerAdapter = new HandlerMethodHandlerAdapter();
         handlerMethodHandlerAdapter.setHandlerMethodChain(batchControllerChains);
-        handlerMethodHandlerAdapter.setArgumentResolvers(argumentResolvers);
+        handlerMethodHandlerAdapter.setArgumentResolvers(batchArgumentResolvers);
         handlerMethodHandlerAdapter.setBindingInitializer(bindingInitializer);
 
         return handlerMethodHandlerAdapter;
     }
 
-    @Bean("handlerAdapters")
+    @Bean("batchHandlerAdapters")
     @SuppressWarnings("rawtypes")
-    public List<HandlerAdapter> createHandlerAdapters(
-            HandlerMethodHandlerAdapter handlerMethodHandlerAdapter
+    public List<HandlerAdapter> createBatchHandlerAdapters(
+            HandlerMethodHandlerAdapter batchHandlerMethodHandlerAdapter
     ) {
         List<HandlerAdapter> handlerAdapters = new ArrayList<HandlerAdapter>();
-        handlerAdapters.add(handlerMethodHandlerAdapter);
+        handlerAdapters.add(batchHandlerMethodHandlerAdapter);
 
         return handlerAdapters;
     }
 
-    @Bean("multiHandlerMethodAdapter")
+    @Bean("batchMultiHandlerMethodAdapter")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMethodAdapter createHandlerAdapter(List<HandlerAdapter> handlerAdapters) {
+    public MultiHandlerMethodAdapter createBatchMultiHandlerMethodAdapter(List<HandlerAdapter> handlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
         multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
 
         return multiHandlerMethodAdapter;
     }
 
-    @Bean("exceptionHandlers")
-    @ConditionalOnMissingBean(name = "exceptionHandlers")
-    public List<IExceptionHandler> createWebCubeExceptionHandlers(
+    @Bean("batchExceptionHandlers")
+    @ConditionalOnMissingBean(name = "batchExceptionHandlers")
+    public List<IExceptionHandler> createBatchExceptionHandlers(
     ) {
         List<IExceptionHandler> jobExceptionHandlers = new ArrayList<IExceptionHandler>();
         jobExceptionHandlers.add(new JobExceptionHandler());
@@ -127,29 +127,29 @@ public class CoreBatchComponentsAutoconfigure {
         return jobExceptionHandlers;
     }
 
-    @Bean("multiCubeExceptionHandler")
+    @Bean("batchCubeExceptionHandler")
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(List<IExceptionHandler> exceptionHandlers) {
+    public MultiCubeExceptionHandler createBatchCubeExceptionHandler(List<IExceptionHandler> batchExceptionHandlers) {
 
         MultiCubeExceptionHandler multiCubeExceptionHandler = new MultiCubeExceptionHandler();
-        multiCubeExceptionHandler.setCubeExceptionHandlers(exceptionHandlers);
+        multiCubeExceptionHandler.setCubeExceptionHandlers(batchExceptionHandlers);
 
         return multiCubeExceptionHandler;
     }
 
-    @Bean("viewResolvers")
-    @ConditionalOnMissingBean(name = "viewResolvers")
-    public List<ViewResolver> createViewResolvers() {
+    @Bean("batchViewResolvers")
+    @ConditionalOnMissingBean(name = "batchViewResolvers")
+    public List<ViewResolver> createBatchViewResolvers() {
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
         viewResolvers.add(new JobViewResolver());
 
         return viewResolvers;
     }
 
-    @Bean("multiViewResolver")
-    public MultiViewResolver createmultiViewResolver(List<ViewResolver> viewResolvers) {
+    @Bean("batchMultiViewResolver")
+    public MultiViewResolver createBatchMultiViewResolver(List<ViewResolver> batchViewResolvers) {
         MultiViewResolver multiViewResolver = new MultiViewResolver();
-        multiViewResolver.setViewResolvers(viewResolvers);
+        multiViewResolver.setViewResolvers(batchViewResolvers);
 
         return multiViewResolver;
     }

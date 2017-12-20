@@ -31,19 +31,19 @@ public class CoreBatchContextAutoconfigure {
     public SimpleDispatcherHandler createSimpleDispatcherHandler(
             MultiHandlerMethodChain transactionMonitorPerformanceChain
             ,JobRequestContextResolver jobRequestContextResolver
-            ,MultiHandlerMapping multiHandlerMapping
-            ,MultiHandlerMethodAdapter multiHandlerMethodAdapter
-            ,MultiCubeExceptionHandler multiCubeExceptionHandler
-            ,MultiViewResolver multiViewResolver
+            ,MultiHandlerMapping batchMultiHandlerMapping
+            ,MultiHandlerMethodAdapter batchMultiHandlerMethodAdapter
+            ,MultiCubeExceptionHandler batchCubeExceptionHandler
+            ,MultiViewResolver batchMultiViewResolver
             ,DataSourceTransactionManager dataSourceTransactionManager
     ) {
         SimpleDispatcherHandler simpleDispatcherHandler = new SimpleDispatcherHandler();
         simpleDispatcherHandler.setHandlerMethodChain(transactionMonitorPerformanceChain);
         simpleDispatcherHandler.setRequestContextResolver(jobRequestContextResolver);
-        simpleDispatcherHandler.setMultiHandlerMapping(multiHandlerMapping);
-        simpleDispatcherHandler.setMultiHandlerMethodAdapter(multiHandlerMethodAdapter);
-        simpleDispatcherHandler.setMultiCubeExceptionHandler(multiCubeExceptionHandler);
-        simpleDispatcherHandler.setMultiViewResolver(multiViewResolver);
+        simpleDispatcherHandler.setMultiHandlerMapping(batchMultiHandlerMapping);
+        simpleDispatcherHandler.setMultiHandlerMethodAdapter(batchMultiHandlerMethodAdapter);
+        simpleDispatcherHandler.setMultiCubeExceptionHandler(batchCubeExceptionHandler);
+        simpleDispatcherHandler.setMultiViewResolver(batchMultiViewResolver);
         simpleDispatcherHandler.setDataSourceTransactionManager(dataSourceTransactionManager);
 
         return simpleDispatcherHandler;
