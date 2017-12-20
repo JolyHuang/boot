@@ -33,6 +33,7 @@ import com.sharingif.cube.web.vert.x.view.VertXStaticViewResolver;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.StaticHandler;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -163,7 +164,7 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("multiHandlerMapping")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMapping createMultiHandlerMapping(List<HandlerMapping> handlerMappings) {
+    public MultiHandlerMapping createMultiHandlerMapping(@Qualifier("handlerMappings") List<HandlerMapping> handlerMappings) {
         MultiHandlerMapping multiHandlerMapping = new MultiHandlerMapping();
         multiHandlerMapping.setHandlerMappings(handlerMappings);
 
@@ -211,7 +212,7 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("multiHandlerMethodAdapter")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMethodAdapter createHandlerAdapter(List<HandlerAdapter> handlerAdapters) {
+    public MultiHandlerMethodAdapter createHandlerAdapter(@Qualifier("handlerAdapters") List<HandlerAdapter> handlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
         multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
 
@@ -238,7 +239,7 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("vertxCubeExceptionHandler")
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(List<WebCubeExceptionHandler> webCubeExceptionHandlers) {
+    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(@Qualifier("webCubeExceptionHandlers") List<WebCubeExceptionHandler> webCubeExceptionHandlers) {
 
         MultiCubeExceptionHandler vertxCubeExceptionHandler = new MultiCubeExceptionHandler();
         vertxCubeExceptionHandler.setCubeExceptionHandlers(webCubeExceptionHandlers);
@@ -278,7 +279,7 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("multiViewResolver")
-    public MultiViewResolver createmultiViewResolver(List<ViewResolver> viewResolvers) {
+    public MultiViewResolver createmultiViewResolver(@Qualifier("viewResolvers") List<ViewResolver> viewResolvers) {
         MultiViewResolver multiViewResolver = new MultiViewResolver();
         multiViewResolver.setViewResolvers(viewResolvers);
 
