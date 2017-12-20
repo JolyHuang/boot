@@ -29,7 +29,7 @@ public class CoreBatchContextAutoconfigure {
     @Bean("simpleDispatcherHandler")
     @ConditionalOnMissingBean(name = "simpleDispatcherHandler")
     public SimpleDispatcherHandler createSimpleDispatcherHandler(
-            MultiHandlerMethodChain transactionMonitorPerformanceChain
+            MultiHandlerMethodChain batchTransactionChains
             ,JobRequestContextResolver jobRequestContextResolver
             ,MultiHandlerMapping batchMultiHandlerMapping
             ,MultiHandlerMethodAdapter batchMultiHandlerMethodAdapter
@@ -38,7 +38,7 @@ public class CoreBatchContextAutoconfigure {
             ,DataSourceTransactionManager dataSourceTransactionManager
     ) {
         SimpleDispatcherHandler simpleDispatcherHandler = new SimpleDispatcherHandler();
-        simpleDispatcherHandler.setHandlerMethodChain(transactionMonitorPerformanceChain);
+        simpleDispatcherHandler.setHandlerMethodChain(batchTransactionChains);
         simpleDispatcherHandler.setRequestContextResolver(jobRequestContextResolver);
         simpleDispatcherHandler.setMultiHandlerMapping(batchMultiHandlerMapping);
         simpleDispatcherHandler.setMultiHandlerMethodAdapter(batchMultiHandlerMethodAdapter);

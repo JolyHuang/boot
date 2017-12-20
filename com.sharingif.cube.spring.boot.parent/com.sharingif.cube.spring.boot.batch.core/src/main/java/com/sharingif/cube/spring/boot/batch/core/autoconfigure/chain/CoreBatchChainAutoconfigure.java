@@ -22,9 +22,24 @@ import java.util.List;
 @Configuration
 public class CoreBatchChainAutoconfigure {
 
+    @Bean(name="batchTransactionChains")
+    @ConditionalOnMissingBean(name="batchTransactionChains")
+    public MultiHandlerMethodChain createBatchTransactionChains(
+            MonitorPerformanceChain transactionMonitorPerformanceChain
+    ) {
+
+        List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>();
+        chains.add(transactionMonitorPerformanceChain);
+
+        MultiHandlerMethodChain multiHandlerMethodChain = new MultiHandlerMethodChain();
+        multiHandlerMethodChain.setChains(chains);
+
+        return  multiHandlerMethodChain;
+    }
+
     @Bean(name="batchControllerChains")
     @ConditionalOnMissingBean(name="batchControllerChains")
-    public MultiHandlerMethodChain createSpringMCVChains(
+    public MultiHandlerMethodChain createBatchControllerChains(
             MonitorPerformanceChain controllerMonitorPerformanceChain
             ,AnnotationHandlerMethodChain annotationHandlerMethodChain
     ) {
