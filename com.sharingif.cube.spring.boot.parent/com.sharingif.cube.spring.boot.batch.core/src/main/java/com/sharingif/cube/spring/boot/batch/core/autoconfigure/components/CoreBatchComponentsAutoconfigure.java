@@ -111,7 +111,7 @@ public class CoreBatchComponentsAutoconfigure {
 
     @Bean("batchMultiHandlerMethodAdapter")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMethodAdapter createBatchMultiHandlerMethodAdapter(@Qualifier("handlerAdapters") List<HandlerAdapter> handlerAdapters) {
+    public MultiHandlerMethodAdapter createBatchMultiHandlerMethodAdapter(@Qualifier("batchHandlerAdapters") List<HandlerAdapter> handlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
         multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
 
