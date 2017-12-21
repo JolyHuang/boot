@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.batch.core.autoconfigure.components;
 
+import com.sharingif.cube.batch.core.JobService;
 import com.sharingif.cube.batch.core.exception.JobExceptionHandler;
 import com.sharingif.cube.batch.core.handler.adapter.JobRequestHandlerMethodArgumentResolver;
 import com.sharingif.cube.batch.core.request.JobRequestContextResolver;
@@ -140,9 +141,11 @@ public class CoreBatchComponentsAutoconfigure {
 
     @Bean("batchViewResolvers")
     @ConditionalOnMissingBean(name = "batchViewResolvers")
-    public List<ViewResolver> createBatchViewResolvers() {
+    public List<ViewResolver> createBatchViewResolvers(JobService jobService) {
+        JobViewResolver jobViewResolver = new JobViewResolver(jobService);
+
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
-        viewResolvers.add(new JobViewResolver());
+        viewResolvers.add(jobViewResolver);
 
         return viewResolvers;
     }
