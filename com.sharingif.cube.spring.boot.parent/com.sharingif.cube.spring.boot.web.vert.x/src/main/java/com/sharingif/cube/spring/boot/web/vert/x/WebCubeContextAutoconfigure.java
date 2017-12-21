@@ -27,18 +27,18 @@ public class WebCubeContextAutoconfigure {
 	public VertXDispatcherHandler createVertXDispatcherHandler(
             MultiHandlerMethodChain vertxWebHandlerMethodChain
             ,VertXRequestContextResolver vertXRequestContextResolver
-            ,MultiHandlerMapping multiHandlerMapping
-            ,MultiHandlerMethodAdapter multiHandlerMethodAdapter
-            ,MultiCubeExceptionHandler multiCubeExceptionHandler
-            ,MultiViewResolver multiViewResolver
+            ,MultiHandlerMapping vertXMultiHandlerMapping
+            ,MultiHandlerMethodAdapter vertXMultiHandlerMethodAdapter
+            ,MultiCubeExceptionHandler vertxCubeExceptionHandler
+            ,MultiViewResolver vertMultiViewResolver
          ) {
         VertXDispatcherHandler vertXDispatcherHandler = new VertXDispatcherHandler();
         vertXDispatcherHandler.setHandlerMethodChain(vertxWebHandlerMethodChain);
         vertXDispatcherHandler.setRequestContextResolver(vertXRequestContextResolver);
-        vertXDispatcherHandler.setMultiHandlerMapping(multiHandlerMapping);
-        vertXDispatcherHandler.setMultiHandlerMethodAdapter(multiHandlerMethodAdapter);
-        vertXDispatcherHandler.setMultiCubeExceptionHandler(multiCubeExceptionHandler);
-        vertXDispatcherHandler.setMultiViewResolver(multiViewResolver);
+        vertXDispatcherHandler.setMultiHandlerMapping(vertXMultiHandlerMapping);
+        vertXDispatcherHandler.setMultiHandlerMethodAdapter(vertXMultiHandlerMethodAdapter);
+        vertXDispatcherHandler.setMultiCubeExceptionHandler(vertxCubeExceptionHandler);
+        vertXDispatcherHandler.setMultiViewResolver(vertMultiViewResolver);
 
         return vertXDispatcherHandler;
     }

@@ -73,8 +73,8 @@ public class VertxComponentsAutoconfigure {
         return jsonHandlerMethodArgumentResolver;
     }
 
-    @Bean("argumentResolvers")
-    public List<HandlerMethodArgumentResolver> createArgumentResolvers(
+    @Bean("vertXArgumentResolvers")
+    public List<HandlerMethodArgumentResolver> createVertXArgumentResolvers(
             DataContainerMethodArgumentResolver dataContainerMethodArgumentResolver
             ,PathVariableMethodArgumentResolver pathVariableMethodArgumentResolver
             ,JsonHandlerMethodArgumentResolver jsonHandlerMethodArgumentResolver
@@ -92,15 +92,15 @@ public class VertxComponentsAutoconfigure {
         return new VertXRequestContextResolver();
     }
 
-    @Bean("requestMappingHandlerMapping")
-    public RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
+    @Bean("vertXRequestMappingHandlerMapping")
+    public RequestMappingHandlerMapping createVertXRequestMappingHandlerMapping() {
         RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
         handlerMapping.setUseSuffixPatternMatch(false);
 
         return handlerMapping;
     }
 
-    @Bean("staticHandlerMapping")
+    @Bean("vertXStaticHandlerMapping")
     @ConditionalOnMissingBean(name="staticHandlerMapping")
     public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root:}") String webRoot) {
 
@@ -117,7 +117,7 @@ public class VertxComponentsAutoconfigure {
         return staticHandlerMapping;
     }
 
-    @Bean("corsHandlerMapping")
+    @Bean("vertXCorsHandlerMapping")
     @ConditionalOnMissingBean(name="corsHandlerMapping")
     public CORSHandlerMapping createCORSHandlerMapping(@Value("${corst.allowed.origin.pattern:}") String allowedOriginPattern
     ,@Value("${corst.max.age.seconds:}") Integer maxAgeSeconds) {
@@ -147,72 +147,72 @@ public class VertxComponentsAutoconfigure {
         return corsHandlerMapping;
     }
 
-	@Bean("handlerMappings")
+	@Bean("vertXHandlerMappings")
 	@SuppressWarnings("rawtypes")
-    public List<HandlerMapping> createHandlerMappings(
-            RequestMappingHandlerMapping requestMappingHandlerMapping
-            ,StaticHandlerMapping staticHandlerMapping
-            ,CORSHandlerMapping corsHandlerMapping
+    public List<HandlerMapping> createVertXHandlerMappings(
+            RequestMappingHandlerMapping vertXRequestMappingHandlerMapping
+            ,StaticHandlerMapping vertXStaticHandlerMapping
+            ,CORSHandlerMapping vertXCorsHandlerMapping
             ) {
         List<HandlerMapping> handlerMappings = new ArrayList<HandlerMapping>();
-        handlerMappings.add(requestMappingHandlerMapping);
-        handlerMappings.add(staticHandlerMapping);
-        handlerMappings.add(corsHandlerMapping);
+        handlerMappings.add(vertXRequestMappingHandlerMapping);
+        handlerMappings.add(vertXStaticHandlerMapping);
+        handlerMappings.add(vertXCorsHandlerMapping);
 
         return handlerMappings;
     }
 
-    @Bean("multiHandlerMapping")
+    @Bean("vertXMultiHandlerMapping")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMapping createMultiHandlerMapping(@Qualifier("handlerMappings") List<HandlerMapping> handlerMappings) {
+    public MultiHandlerMapping createVertXMultiHandlerMapping(@Qualifier("vertXHandlerMappings") List<HandlerMapping> handlerMappings) {
         MultiHandlerMapping multiHandlerMapping = new MultiHandlerMapping();
         multiHandlerMapping.setHandlerMappings(handlerMappings);
 
         return multiHandlerMapping;
     }
 
-    @Bean("staticHandlerAdapter")
-    public StaticHandlerAdapter createStaticHandlerAdapter() {
+    @Bean("vertXStaticHandlerAdapter")
+    public StaticHandlerAdapter createVertXStaticHandlerAdapter() {
         return new StaticHandlerAdapter();
     }
 
-    @Bean("corsHandlerAdapter")
-    public CORSHandlerAdapter createCORSHandlerAdapter() {
+    @Bean("vertXCorsHandlerAdapter")
+    public CORSHandlerAdapter createVertXCorsHandlerAdapter() {
         return new CORSHandlerAdapter();
     }
 
-    @Bean("handlerMethodHandlerAdapter")
-    public HandlerMethodHandlerAdapter createHandlerMethodHandlerAdapter(
+    @Bean("vertXHandlerMethodHandlerAdapter")
+    public HandlerMethodHandlerAdapter createVertXHandlerMethodHandlerAdapter(
             MultiHandlerMethodChain vertxControllerChains
-            ,List<HandlerMethodArgumentResolver> argumentResolvers
+            ,List<HandlerMethodArgumentResolver> vertXArgumentResolvers
             ,BindingInitializer bindingInitializer
             ) {
         HandlerMethodHandlerAdapter handlerMethodHandlerAdapter = new HandlerMethodHandlerAdapter();
         handlerMethodHandlerAdapter.setHandlerMethodChain(vertxControllerChains);
-        handlerMethodHandlerAdapter.setArgumentResolvers(argumentResolvers);
+        handlerMethodHandlerAdapter.setArgumentResolvers(vertXArgumentResolvers);
         handlerMethodHandlerAdapter.setBindingInitializer(bindingInitializer);
 
         return handlerMethodHandlerAdapter;
     }
 
-	@Bean("handlerAdapters")
+	@Bean("vertXHandlerAdapters")
 	@SuppressWarnings("rawtypes")
-    public List<HandlerAdapter> createHandlerAdapters(
-            HandlerMethodHandlerAdapter handlerMethodHandlerAdapter
-            ,StaticHandlerAdapter staticHandlerAdapter
-            ,CORSHandlerAdapter corsHandlerAdapter
+    public List<HandlerAdapter> createVertXHandlerAdapters(
+            HandlerMethodHandlerAdapter vertXHandlerMethodHandlerAdapter
+            ,StaticHandlerAdapter vertXStaticHandlerAdapter
+            ,CORSHandlerAdapter vertXCorsHandlerAdapter
             ) {
         List<HandlerAdapter> handlerAdapters = new ArrayList<HandlerAdapter>();
-        handlerAdapters.add(handlerMethodHandlerAdapter);
-        handlerAdapters.add(staticHandlerAdapter);
-        handlerAdapters.add(corsHandlerAdapter);
+        handlerAdapters.add(vertXHandlerMethodHandlerAdapter);
+        handlerAdapters.add(vertXStaticHandlerAdapter);
+        handlerAdapters.add(vertXCorsHandlerAdapter);
 
         return handlerAdapters;
     }
 
-    @Bean("multiHandlerMethodAdapter")
+    @Bean("vertXMultiHandlerMethodAdapter")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMethodAdapter createHandlerAdapter(@Qualifier("handlerAdapters") List<HandlerAdapter> handlerAdapters) {
+    public MultiHandlerMethodAdapter createVertXMultiHandlerMethodAdapter(@Qualifier("vertXHandlerAdapters") List<HandlerAdapter> handlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
         multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
 
@@ -264,7 +264,7 @@ public class VertxComponentsAutoconfigure {
         return new CORSViewResolver();
     }
 
-	@Bean("viewResolvers")
+	@Bean("vertXViewResolvers")
     public List<ViewResolver> createViewResolvers(
             VertXStaticViewResolver vertXStaticViewResolver
             ,VertXJsonViewResolver vertXJsonViewResolver
@@ -278,8 +278,8 @@ public class VertxComponentsAutoconfigure {
         return viewResolvers;
     }
 
-    @Bean("multiViewResolver")
-    public MultiViewResolver createmultiViewResolver(@Qualifier("viewResolvers") List<ViewResolver> viewResolvers) {
+    @Bean("vertMultiViewResolver")
+    public MultiViewResolver createVertMultiViewResolver(@Qualifier("vertXViewResolvers") List<ViewResolver> viewResolvers) {
         MultiViewResolver multiViewResolver = new MultiViewResolver();
         multiViewResolver.setViewResolvers(viewResolvers);
 
