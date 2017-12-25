@@ -35,7 +35,6 @@ public class CoreBatchContextAutoconfigure {
             ,MultiHandlerMethodAdapter batchMultiHandlerMethodAdapter
             ,MultiCubeExceptionHandler batchCubeExceptionHandler
             ,MultiViewResolver batchMultiViewResolver
-            ,DataSourceTransactionManager dataSourceTransactionManager
     ) {
         SimpleDispatcherHandler simpleDispatcherHandler = new SimpleDispatcherHandler();
         simpleDispatcherHandler.setHandlerMethodChain(batchTransactionChains);
@@ -44,7 +43,6 @@ public class CoreBatchContextAutoconfigure {
         simpleDispatcherHandler.setMultiHandlerMethodAdapter(batchMultiHandlerMethodAdapter);
         simpleDispatcherHandler.setMultiCubeExceptionHandler(batchCubeExceptionHandler);
         simpleDispatcherHandler.setMultiViewResolver(batchMultiViewResolver);
-        simpleDispatcherHandler.setDataSourceTransactionManager(dataSourceTransactionManager);
 
         return simpleDispatcherHandler;
     }
