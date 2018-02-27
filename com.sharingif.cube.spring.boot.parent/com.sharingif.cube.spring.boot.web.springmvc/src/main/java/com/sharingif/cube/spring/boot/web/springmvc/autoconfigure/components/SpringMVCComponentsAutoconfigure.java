@@ -2,6 +2,7 @@ package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components;
 
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
+import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
@@ -20,12 +21,14 @@ import com.sharingif.cube.web.springmvc.servlet.view.referer.RefererViewResolver
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -45,6 +48,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -241,10 +245,14 @@ public class SpringMVCComponentsAutoconfigure {
 	
 	@Bean(name="multipartResolver")
 	@ConditionalOnBean(FileItemFactory.class)
-	public CommonsMultipartResolver createMultipartResolver() {
+	@ConditionalOnMissingBean(name = "multipartResolver")
+	public CommonsMultipartResolver createMultipartResolver(@Value("${upload.temp.dir:}")String uploadTempDir) throws IOException {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(1024*1024*5);
-		
+		multipartResolver.setMaxUploadSize(1024*1024*100);
+		if(!StringUtils.isTrimEmpty(uploadTempDir)) {
+			multipartResolver.setUploadTempDir(new FileSystemResource(uploadTempDir));
+		}
+
 		return multipartResolver;
 	}
 	
