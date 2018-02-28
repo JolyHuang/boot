@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>com.sharingif.cube.spring.boot.parent</artifactId>
+        <groupId>com.sharingif.cube.spring.boot</groupId>
+        <version>4.0.0-RELEASE</version>
+    </parent>
+    <artifactId>com.sharingif.cube.spring.boot.security.web.spring</artifactId>
+    <name>com.sharingif.cube.spring.boot.security.web.spring</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
+            <artifactId>com.sharingif.cube.security.web.spring</artifactId>
+            <version>${maven.project.com.sharingif.cube.release.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.sharingif.cube.spring.boot.security</artifactId>
+            <version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
