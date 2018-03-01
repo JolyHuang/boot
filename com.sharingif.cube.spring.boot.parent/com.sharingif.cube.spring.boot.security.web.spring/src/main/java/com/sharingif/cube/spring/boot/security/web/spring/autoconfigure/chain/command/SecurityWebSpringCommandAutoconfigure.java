@@ -2,8 +2,11 @@ package com.sharingif.cube.spring.boot.security.web.spring.autoconfigure.chain.c
 
 import com.sharingif.cube.security.web.authentication.ISessionConcurrentHandler;
 import com.sharingif.cube.security.web.handler.chain.command.authentication.SessionConcurrentWebCommand;
+import com.sharingif.cube.security.web.spring.handler.chain.command.session.SessionRegistryCommand;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 
 /**
  * SecurityWebSpringCommandAutoconfigure
@@ -22,6 +25,14 @@ public class SecurityWebSpringCommandAutoconfigure {
         sessionConcurrentWebCommand.setSessionConcurrentHandler(sessionConcurrentHandlerImpl);
 
         return sessionConcurrentWebCommand;
+    }
+
+    @Bean(name="sessionRegistryCommand")
+    public SessionRegistryCommand createSessionRegistryCommand(SessionRegistry sessionRegistryImpl) {
+        SessionRegistryCommand sessionRegistryCommand = new SessionRegistryCommand();
+        sessionRegistryCommand.setSessionRegistry(sessionRegistryImpl);
+
+        return sessionRegistryCommand;
     }
 
 }
