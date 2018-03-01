@@ -26,12 +26,4 @@ public class SecurityWebCommandAutoconfigure {
         return invalidateHttpSessionWebCommand;
     }
 
-    @Bean(name="coreUserHttpSessionManageWebCommand")
-    public CoreUserHttpSessionManageWebCommand createCoreUserHttpSessionManageWebCommand(IWebUserManage coreUserHttpSessionManage) {
-        CoreUserHttpSessionManageWebCommand coreUserHttpSessionManageWebCommand = new CoreUserHttpSessionManageWebCommand();
-        coreUserHttpSessionManageWebCommand.setWebUserManage(coreUserHttpSessionManage);
-
-        return coreUserHttpSessionManageWebCommand;
-    }
-
 }
