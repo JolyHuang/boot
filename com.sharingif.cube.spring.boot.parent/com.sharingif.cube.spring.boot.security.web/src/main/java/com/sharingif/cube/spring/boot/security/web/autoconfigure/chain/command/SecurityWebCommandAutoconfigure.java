@@ -1,8 +1,6 @@
 package com.sharingif.cube.spring.boot.security.web.autoconfigure.chain.command;
 
-import com.sharingif.cube.security.web.handler.chain.command.user.CoreUserHttpSessionManageWebCommand;
 import com.sharingif.cube.security.web.handler.chain.command.user.InvalidateHttpSessionWebCommand;
-import com.sharingif.cube.web.user.IWebUserManage;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
