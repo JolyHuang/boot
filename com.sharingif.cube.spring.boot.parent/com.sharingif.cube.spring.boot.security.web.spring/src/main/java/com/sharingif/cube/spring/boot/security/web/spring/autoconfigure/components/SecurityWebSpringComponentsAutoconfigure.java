@@ -5,6 +5,7 @@ import com.sharingif.cube.security.web.spring.authentication.SessionConcurrentHa
 import com.sharingif.cube.security.web.spring.authentication.SignOutHandlerImpl;
 import com.sharingif.cube.security.web.spring.authentication.session.ExtendedConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistry;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  * SecurityWebSpringComponentsAutoconfigure
@@ -65,6 +67,12 @@ public class SecurityWebSpringComponentsAutoconfigure {
         signOutHandlerImpl.setLogoutHandler(securityContextLogoutHandler);
 
         return signOutHandlerImpl;
+    }
+
+    @Bean
+    public static ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(
+                new HttpSessionEventPublisher());
     }
 
 }
