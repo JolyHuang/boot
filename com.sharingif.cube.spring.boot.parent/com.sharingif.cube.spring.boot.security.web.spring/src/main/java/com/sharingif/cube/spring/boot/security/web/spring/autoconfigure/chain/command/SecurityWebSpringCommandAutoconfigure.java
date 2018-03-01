@@ -1,12 +1,13 @@
 package com.sharingif.cube.spring.boot.security.web.spring.autoconfigure.chain.command;
 
 import com.sharingif.cube.security.web.authentication.ISessionConcurrentHandler;
+import com.sharingif.cube.security.web.authentication.ISignOutHandler;
 import com.sharingif.cube.security.web.handler.chain.command.authentication.SessionConcurrentWebCommand;
+import com.sharingif.cube.security.web.handler.chain.command.authentication.SignOutWebCommand;
 import com.sharingif.cube.security.web.spring.handler.chain.command.session.SessionRegistryCommand;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 
 /**
  * SecurityWebSpringCommandAutoconfigure
@@ -33,6 +34,14 @@ public class SecurityWebSpringCommandAutoconfigure {
         sessionRegistryCommand.setSessionRegistry(sessionRegistryImpl);
 
         return sessionRegistryCommand;
+    }
+
+    @Bean(name="signOutWebCommand")
+    public SignOutWebCommand createSignOutWebCommand(ISignOutHandler signOutHandlerImpl) {
+        SignOutWebCommand signOutWebCommand = new SignOutWebCommand();
+        signOutWebCommand.setSignOutHandler(signOutHandlerImpl);
+
+        return signOutWebCommand;
     }
 
 }
