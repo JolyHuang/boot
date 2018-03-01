@@ -36,7 +36,7 @@ public class SecurityCommandAutoconfigure {
     }
 
     @Bean(name="coreUserUniqueIdCommand")
-    public CoreUserUniqueIdCommand createRemoveUserPasswordCommand(CoreUserUniqueIdHandler coreUserUniqueIdHandler) {
+    public CoreUserUniqueIdCommand createCoreUserUniqueIdCommand(CoreUserUniqueIdHandler coreUserUniqueIdHandler) {
 
         CoreUserUniqueIdCommand coreUserUniqueIdCommand = new CoreUserUniqueIdCommand();
         coreUserUniqueIdCommand.setCoreUserUniqueIdHandler(coreUserUniqueIdHandler);
