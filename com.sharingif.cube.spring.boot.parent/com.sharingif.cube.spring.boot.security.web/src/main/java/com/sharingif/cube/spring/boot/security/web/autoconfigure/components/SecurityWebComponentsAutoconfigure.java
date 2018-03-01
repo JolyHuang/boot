@@ -1,7 +1,5 @@
 package com.sharingif.cube.spring.boot.security.web.autoconfigure.components;
 
-import com.sharingif.cube.web.user.CoreUserHttpSessionManage;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -14,10 +12,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SecurityWebComponentsAutoconfigure {
-
-    @Bean(name="coreUserHttpSessionManage")
-    public CoreUserHttpSessionManage createCoreUserHttpSessionManage() {
-        return new CoreUserHttpSessionManage();
-    }
 
 }
