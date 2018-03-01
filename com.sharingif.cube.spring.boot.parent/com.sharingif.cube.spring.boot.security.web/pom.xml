@@ -6,24 +6,23 @@
         <groupId>com.sharingif.cube.spring.boot</groupId>
         <version>4.0.0-RELEASE</version>
     </parent>
-    <artifactId>com.sharingif.cube.spring.boot.security.web.spring</artifactId>
-    <name>com.sharingif.cube.spring.boot.security.web.spring</name>
+    <artifactId>com.sharingif.cube.spring.boot.security.web</artifactId>
+    <name>com.sharingif.cube.spring.boot.security.web</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
 
         <dependency>
             <groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
-            <artifactId>com.sharingif.cube.security.web.spring</artifactId>
+            <artifactId>com.sharingif.cube.security.web</artifactId>
             <version>${maven.project.com.sharingif.cube.release.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.sharingif.cube.spring.boot.security.web</artifactId>
+            <artifactId>com.sharingif.cube.spring.boot.security</artifactId>
             <version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
         </dependency>
 
     </dependencies>
-
 </project>

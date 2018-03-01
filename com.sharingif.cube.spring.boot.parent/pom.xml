@@ -44,6 +44,7 @@
 		<module>com.sharingif.cube.spring.boot.communication.http</module>
 
 		<module>com.sharingif.cube.spring.boot.security</module>
+		<module>com.sharingif.cube.spring.boot.security.web</module>
 		<module>com.sharingif.cube.spring.boot.security.web.spring</module>
 		
 		<module>com.sharingif.cube.spring.boot.web</module>
