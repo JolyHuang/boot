@@ -243,18 +243,18 @@ public class SpringMVCComponentsAutoconfigure {
 		return internalResourceViewResolver;
 	}
 	
-	@Bean(name="multipartResolver")
-	@ConditionalOnBean(FileItemFactory.class)
-	@ConditionalOnMissingBean(name = "multipartResolver")
-	public CommonsMultipartResolver createMultipartResolver(@Value("${upload.temp.dir:}")String uploadTempDir) throws IOException {
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(1024*1024*100);
-		if(!StringUtils.isTrimEmpty(uploadTempDir)) {
-			multipartResolver.setUploadTempDir(new FileSystemResource(uploadTempDir));
-		}
-
-		return multipartResolver;
-	}
+//	@Bean(name="multipartResolver")
+//	@ConditionalOnBean(FileItemFactory.class)
+//	@ConditionalOnMissingBean(name = "multipartResolver")
+//	public CommonsMultipartResolver createMultipartResolver(@Value("${upload.temp.dir:}")String uploadTempDir) throws IOException {
+//		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//		multipartResolver.setMaxUploadSize(1024*1024*100);
+//		if(!StringUtils.isTrimEmpty(uploadTempDir)) {
+//			multipartResolver.setUploadTempDir(new FileSystemResource(uploadTempDir));
+//		}
+//
+//		return multipartResolver;
+//	}
 	
 	@Bean(name="mappingJackson2JsonView")
 	@ConditionalOnMissingBean(name = "mappingJackson2JsonView")

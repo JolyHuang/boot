@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.security.web.spring.autoconfigure.components;
 
+import com.sharingif.cube.security.web.access.ISessionExpireHandler;
 import com.sharingif.cube.security.web.spring.access.SessionExpireHandlerImpl;
 import com.sharingif.cube.security.web.spring.authentication.SessionConcurrentHandlerImpl;
 import com.sharingif.cube.security.web.spring.authentication.SignOutHandlerImpl;
@@ -67,6 +68,14 @@ public class SecurityWebSpringComponentsAutoconfigure {
         signOutHandlerImpl.setLogoutHandler(securityContextLogoutHandler);
 
         return signOutHandlerImpl;
+    }
+
+    @Bean(name="sessionExpireHandlerImpl")
+    public ISessionExpireHandler createSessionExpireHandlerImpl(SessionRegistry sessionRegistryImpl) {
+        SessionExpireHandlerImpl sessionExpireHandlerImpl = new SessionExpireHandlerImpl();
+        sessionExpireHandlerImpl.setSessionRegistry(sessionRegistryImpl);
+
+        return sessionExpireHandlerImpl;
     }
 
     @Bean

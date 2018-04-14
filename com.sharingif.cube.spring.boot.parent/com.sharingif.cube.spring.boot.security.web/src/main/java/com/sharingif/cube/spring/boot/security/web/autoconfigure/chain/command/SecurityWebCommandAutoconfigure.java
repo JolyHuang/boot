@@ -1,5 +1,7 @@
 package com.sharingif.cube.spring.boot.security.web.autoconfigure.chain.command;
 
+import com.sharingif.cube.security.web.access.ISessionExpireHandler;
+import com.sharingif.cube.security.web.handler.chain.command.access.SessionExpireWebCommand;
 import com.sharingif.cube.security.web.handler.chain.command.user.InvalidateHttpSessionWebCommand;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,14 @@ public class SecurityWebCommandAutoconfigure {
         InvalidateHttpSessionWebCommand invalidateHttpSessionWebCommand = new InvalidateHttpSessionWebCommand();
 
         return invalidateHttpSessionWebCommand;
+    }
+
+    @Bean(name="sessionExpireWebCommand")
+    public SessionExpireWebCommand createSessionExpireWebCommand(ISessionExpireHandler sessionExpireHandlerImpl) {
+        SessionExpireWebCommand sessionExpireWebCommand = new SessionExpireWebCommand();
+        sessionExpireWebCommand.setSessionExpireHandler(sessionExpireHandlerImpl);
+
+        return sessionExpireWebCommand;
     }
 
 }
