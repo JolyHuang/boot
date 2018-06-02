@@ -32,12 +32,6 @@
 			<version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>${maven.project.org.springframework.boot.groupId}</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<version>${maven.project.org.springframework.boot.release.version}</version>
-		</dependency>
-		
 	</dependencies>
 
 </project>

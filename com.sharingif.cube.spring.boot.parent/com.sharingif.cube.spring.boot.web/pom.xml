@@ -13,7 +13,14 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
-	
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>${maven.project.com.sharingif.cube.groupId}</groupId>
 			<artifactId>com.sharingif.cube.security.web</artifactId>
