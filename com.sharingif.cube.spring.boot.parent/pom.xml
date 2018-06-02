@@ -51,6 +51,8 @@
 		<module>com.sharingif.cube.spring.boot.web.springmvc</module>
         <module>com.sharingif.cube.spring.boot.web.vert.x</module>
         <module>com.sharingif.cube.spring.boot.batch.core</module>
+
+		<module>com.sharingif.cube.spring.boot.tomcat</module>
     </modules>
 
 	<dependencies>
@@ -123,17 +125,17 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<artifactId>maven-source-plugin</artifactId>-->
+				<!--<version>3.0.0</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<goals>-->
+							<!--<goal>jar-no-fork</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 
