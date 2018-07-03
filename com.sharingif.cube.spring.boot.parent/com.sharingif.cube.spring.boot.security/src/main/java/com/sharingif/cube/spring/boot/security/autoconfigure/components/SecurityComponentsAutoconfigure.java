@@ -1,7 +1,9 @@
 package com.sharingif.cube.spring.boot.security.autoconfigure.components;
 
 import com.sharingif.cube.security.authentication.user.CoreUserUniqueIdHandler;
+import com.sharingif.cube.security.binary.Base64Coder;
 import com.sharingif.cube.security.confidentiality.encrypt.BCryptTextEncryptor;
+import com.sharingif.cube.security.confidentiality.encrypt.digest.SHA256Encryptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -24,6 +26,20 @@ public class SecurityComponentsAutoconfigure {
         bcryptTextEncryptor.setBcryptPasswordEncoder(bcryptPasswordEncoder);
 
         return bcryptTextEncryptor;
+    }
+
+    @Bean(name="sha256Encryptor")
+    public SHA256Encryptor createSHA256Encryptor() {
+        SHA256Encryptor sha256Encryptor = new SHA256Encryptor();
+
+        return sha256Encryptor;
+    }
+
+    @Bean(name="base64Coder")
+    public Base64Coder createBase64Coder() {
+        Base64Coder base64Coder = new Base64Coder();
+
+        return base64Coder;
     }
 
     @Bean(name="coreUserUniqueIdHandler")
