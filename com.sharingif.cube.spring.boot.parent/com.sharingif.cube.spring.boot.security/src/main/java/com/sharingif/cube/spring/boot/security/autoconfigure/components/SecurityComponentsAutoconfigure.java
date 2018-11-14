@@ -4,6 +4,7 @@ import com.sharingif.cube.security.authentication.user.CoreUserUniqueIdHandler;
 import com.sharingif.cube.security.binary.Base64Coder;
 import com.sharingif.cube.security.confidentiality.encrypt.BCryptTextEncryptor;
 import com.sharingif.cube.security.confidentiality.encrypt.digest.SHA256Encryptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityComponentsAutoconfigure {
 
     @Bean(name="bcryptTextEncryptor")
+    @ConditionalOnBean(name="bcryptPasswordEncoder")
     public BCryptTextEncryptor createBCryptTextEncryptor(BCryptPasswordEncoder bcryptPasswordEncoder) {
         BCryptTextEncryptor bcryptTextEncryptor = new BCryptTextEncryptor();
         bcryptTextEncryptor.setBcryptPasswordEncoder(bcryptPasswordEncoder);

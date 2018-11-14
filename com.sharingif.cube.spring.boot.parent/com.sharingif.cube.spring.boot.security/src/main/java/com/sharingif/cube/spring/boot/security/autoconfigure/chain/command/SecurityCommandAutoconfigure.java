@@ -5,6 +5,7 @@ import com.sharingif.cube.security.confidentiality.encrypt.TextEncryptor;
 import com.sharingif.cube.security.handler.chain.command.password.PasswordEncryptorCommand;
 import com.sharingif.cube.security.handler.chain.command.user.CoreUserUniqueIdCommand;
 import com.sharingif.cube.security.handler.chain.command.user.RemoveUserPasswordCommand;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ public class SecurityCommandAutoconfigure {
 
     @Bean(name="passwordEncryptorCommand")
     @ConditionalOnMissingBean(name="passwordEncryptorCommand")
+    @ConditionalOnBean(name="bcryptPasswordEncoder")
     public PasswordEncryptorCommand createPasswordEncryptorCommand(TextEncryptor bcryptTextEncryptor) {
         PasswordEncryptorCommand passwordEncryptorCommand = new PasswordEncryptorCommand();
         passwordEncryptorCommand.setTextEncryptor(bcryptTextEncryptor);
