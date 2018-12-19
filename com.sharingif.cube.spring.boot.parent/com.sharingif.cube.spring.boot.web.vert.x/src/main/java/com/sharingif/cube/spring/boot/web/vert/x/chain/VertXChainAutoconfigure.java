@@ -48,7 +48,7 @@ public class VertXChainAutoconfigure {
             ,AnnotationHandlerMethodChain annotationHandlerMethodChain
     ) {
 
-        List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>(3);
+        List<HandlerMethodChain> chains = new ArrayList<HandlerMethodChain>();
         chains.add(controllerMonitorPerformanceChain);
         chains.add(annotationHandlerMethodChain);
 
