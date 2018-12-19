@@ -28,8 +28,8 @@ public class WebChainAutoconfigure {
 	@ConditionalOnMissingBean(name = "webHandlerMethodChain")
 	public MultiHandlerMethodChain createWebHandlerMethodChain(
 			CoreUserContextHolderChain coreUserContextHolderChain
-			,MDCChain mdcChain
 			,RequestLocalContextHolderChain requestLocalContextHolderChain
+			,MDCChain mdcChain
 			,MonitorPerformanceChain transactionMonitorPerformanceChain
 			) {
 		
