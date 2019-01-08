@@ -4,8 +4,10 @@ import com.sharingif.cube.beans.factory.config.ExtendedPropertyPlaceholderConfig
 import com.sharingif.cube.core.config.CubeConfigure;
 import com.sharingif.cube.core.handler.bind.support.BindingInitializer;
 import com.sharingif.cube.core.handler.bind.support.ConfigurableBindingInitializer;
+import com.sharingif.cube.core.handler.mapping.RequestMappingHandlerMapping;
 import com.sharingif.cube.core.util.StringUtils;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
@@ -119,6 +121,15 @@ public class CoreComponentsAutoconfigure {
 		bindingInitializer.setConversionService(conversionService);
 		
 		return bindingInitializer;
+	}
+
+	@Bean("requestMappingHandlerMapping")
+	@ConditionalOnMissingBean(name="requestMappingHandlerMapping")
+	public RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
+		RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
+		handlerMapping.setUseSuffixPatternMatch(false);
+
+		return handlerMapping;
 	}
 	
 }

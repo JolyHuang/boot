@@ -92,14 +92,6 @@ public class VertxComponentsAutoconfigure {
         return new VertXRequestContextResolver();
     }
 
-    @Bean("vertXRequestMappingHandlerMapping")
-    public RequestMappingHandlerMapping createVertXRequestMappingHandlerMapping() {
-        RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
-        handlerMapping.setUseSuffixPatternMatch(false);
-
-        return handlerMapping;
-    }
-
     @Bean("vertXStaticHandlerMapping")
     @ConditionalOnMissingBean(name="staticHandlerMapping")
     public StaticHandlerMapping createStaticHandlerMapping(@Value("${verx.web.root:}") String webRoot) {
@@ -150,12 +142,12 @@ public class VertxComponentsAutoconfigure {
 	@Bean("vertXHandlerMappings")
 	@SuppressWarnings("rawtypes")
     public List<HandlerMapping> createVertXHandlerMappings(
-            RequestMappingHandlerMapping vertXRequestMappingHandlerMapping
+            RequestMappingHandlerMapping requestMappingHandlerMapping
             ,StaticHandlerMapping vertXStaticHandlerMapping
             ,CORSHandlerMapping vertXCorsHandlerMapping
             ) {
         List<HandlerMapping> handlerMappings = new ArrayList<HandlerMapping>();
-        handlerMappings.add(vertXRequestMappingHandlerMapping);
+        handlerMappings.add(requestMappingHandlerMapping);
         handlerMappings.add(vertXStaticHandlerMapping);
         handlerMappings.add(vertXCorsHandlerMapping);
 
