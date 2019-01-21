@@ -32,7 +32,7 @@ public class HttpComponentsAutoconfigure {
 	}
 
 	@Bean(name="stringToJsonModelMarshaller")
-	public StringToJsonModelMarshaller createBatchStringToJsonModelMarshaller() {
+	public StringToJsonModelMarshaller createStringToJsonModelMarshaller() {
 		StringToJsonModelMarshaller stringToJsonModelMarshaller = new StringToJsonModelMarshaller();
 
 		return stringToJsonModelMarshaller;
