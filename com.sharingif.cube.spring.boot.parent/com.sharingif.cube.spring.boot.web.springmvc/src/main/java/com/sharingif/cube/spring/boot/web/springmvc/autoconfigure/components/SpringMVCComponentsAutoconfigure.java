@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components;
 
+import com.sharingif.cube.core.exception.handler.ExceptionMessageConversion;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
 import com.sharingif.cube.core.util.StringUtils;
@@ -161,16 +162,21 @@ public class SpringMVCComponentsAutoconfigure {
 
 	}
 
+	@Bean("exceptionMessageConversion")
+	public ExceptionMessageConversion createExceptionMessageConversion() {
+		return new ExceptionMessageConversion();
+	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean(name="springMVCCubeExceptionHandler")
 	@ConditionalOnMissingBean(name = "springMVCCubeExceptionHandler")
 	public MultiCubeExceptionHandler<SpringMVCHttpRequestContext,HandlerMethod> createSpringMVCCubeExceptionHandler(
 			List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers
+			, ExceptionMessageConversion exceptionMessageConversion
 			) {
 
 		MultiCubeExceptionHandler springMVCCubeExceptionHandler = new MultiCubeExceptionHandler();
 		springMVCCubeExceptionHandler.setCubeExceptionHandlers(springMVCCubeExceptionHandlers);
+		springMVCCubeExceptionHandler.setExceptionMessageConversion(exceptionMessageConversion);
 
 		return springMVCCubeExceptionHandler;
 	}
