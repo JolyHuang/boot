@@ -60,8 +60,8 @@ public class SecurityComponentsAutoconfigure {
 
     @Bean(name="authenticationHanders")
     @ConditionalOnMissingBean(name="authenticationHanders")
-    public List<AuthenticationHander<? super ICoreUser, ? super IChannelContext>> createAuthenticationHanders(AuthenticationHander<? super ICoreUser, ? super IChannelContext> passwordAuthenticationHandler) {
-        List<AuthenticationHander<? super ICoreUser, ? super IChannelContext>> authenticationHanders = new ArrayList<>();
+    public List<AuthenticationHander> createAuthenticationHanders(AuthenticationHander passwordAuthenticationHandler) {
+        List<AuthenticationHander> authenticationHanders = new ArrayList<>();
         authenticationHanders.add(passwordAuthenticationHandler);
 
         return authenticationHanders;
@@ -69,8 +69,8 @@ public class SecurityComponentsAutoconfigure {
 
     @Bean(name="roleAuthenticationHandlers")
     @ConditionalOnMissingBean(name="roleAuthenticationHandlers")
-    public List<IRoleAuthenticationHandler<? super ICoreUser>> createRoleAuthenticationHandlers(IRoleAuthenticationHandler<? super ICoreUser> roleAuthenticationHandler) {
-        List<IRoleAuthenticationHandler<? super ICoreUser>> roleAuthenticationHandlers = new ArrayList<>();
+    public List<IRoleAuthenticationHandler> createRoleAuthenticationHandlers(IRoleAuthenticationHandler roleAuthenticationHandler) {
+        List<IRoleAuthenticationHandler> roleAuthenticationHandlers = new ArrayList<>();
         roleAuthenticationHandlers.add(roleAuthenticationHandler);
 
         return roleAuthenticationHandlers;
