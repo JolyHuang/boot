@@ -1,14 +1,20 @@
 package com.sharingif.cube.spring.boot.security.autoconfigure.chain.command;
 
-import com.sharingif.cube.security.authentication.user.CoreUserUniqueIdHandler;
+import com.sharingif.cube.components.channel.IChannelContext;
+import com.sharingif.cube.core.user.ICoreUser;
+import com.sharingif.cube.security.authentication.AuthenticationHander;
+import com.sharingif.cube.security.authentication.role.IRoleAuthenticationHandler;
 import com.sharingif.cube.security.confidentiality.encrypt.TextEncryptor;
+import com.sharingif.cube.security.handler.chain.command.authentication.RoleAuthenticationCommand;
+import com.sharingif.cube.security.handler.chain.command.authentication.SecurityAuthenticationCommand;
 import com.sharingif.cube.security.handler.chain.command.password.PasswordEncryptorCommand;
-import com.sharingif.cube.security.handler.chain.command.user.CoreUserUniqueIdCommand;
 import com.sharingif.cube.security.handler.chain.command.user.RemoveUserPasswordCommand;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * SecurityCommandAutoconfigure
@@ -37,13 +43,20 @@ public class SecurityCommandAutoconfigure {
         return new RemoveUserPasswordCommand();
     }
 
-    @Bean(name="coreUserUniqueIdCommand")
-    public CoreUserUniqueIdCommand createCoreUserUniqueIdCommand(CoreUserUniqueIdHandler coreUserUniqueIdHandler) {
+    @Bean(name="securityAuthenticationCommand")
+    public SecurityAuthenticationCommand createSecurityAuthenticationCommand(List<AuthenticationHander<? super ICoreUser, ? super IChannelContext>> authenticationHanders) {
+        SecurityAuthenticationCommand securityAuthenticationCommand = new SecurityAuthenticationCommand();
+        securityAuthenticationCommand.setAuthenticationHanders(authenticationHanders);
 
-        CoreUserUniqueIdCommand coreUserUniqueIdCommand = new CoreUserUniqueIdCommand();
-        coreUserUniqueIdCommand.setCoreUserUniqueIdHandler(coreUserUniqueIdHandler);
+        return securityAuthenticationCommand;
+    }
 
-        return coreUserUniqueIdCommand;
+    @Bean(name="roleAuthenticationCommand")
+    public RoleAuthenticationCommand createRoleAuthenticationCommand(List<IRoleAuthenticationHandler<? super ICoreUser>> roleAuthenticationHandlers) {
+        RoleAuthenticationCommand roleAuthenticationCommand = new RoleAuthenticationCommand();
+        roleAuthenticationCommand.setRoleAuthenticationHandlers(roleAuthenticationHandlers);
+
+        return roleAuthenticationCommand;
     }
 
 }
