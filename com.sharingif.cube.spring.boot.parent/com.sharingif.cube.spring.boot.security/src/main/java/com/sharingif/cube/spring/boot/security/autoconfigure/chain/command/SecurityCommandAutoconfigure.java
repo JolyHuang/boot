@@ -1,7 +1,5 @@
 package com.sharingif.cube.spring.boot.security.autoconfigure.chain.command;
 
-import com.sharingif.cube.components.channel.IChannelContext;
-import com.sharingif.cube.core.user.ICoreUser;
 import com.sharingif.cube.security.authentication.AuthenticationHander;
 import com.sharingif.cube.security.authentication.role.IRoleAuthenticationHandler;
 import com.sharingif.cube.security.confidentiality.encrypt.TextEncryptor;
@@ -45,7 +43,7 @@ public class SecurityCommandAutoconfigure {
 
     @Bean(name="securityAuthenticationCommand")
     @ConditionalOnBean(name = "authenticationHanders")
-    public SecurityAuthenticationCommand createSecurityAuthenticationCommand(List<AuthenticationHander<? super ICoreUser, ? super IChannelContext>> authenticationHanders) {
+    public SecurityAuthenticationCommand createSecurityAuthenticationCommand(List<AuthenticationHander> authenticationHanders) {
         SecurityAuthenticationCommand securityAuthenticationCommand = new SecurityAuthenticationCommand();
         securityAuthenticationCommand.setAuthenticationHanders(authenticationHanders);
 
@@ -54,7 +52,7 @@ public class SecurityCommandAutoconfigure {
 
     @Bean(name="roleAuthenticationCommand")
     @ConditionalOnBean(name = "roleAuthenticationHandlers")
-    public RoleAuthenticationCommand createRoleAuthenticationCommand(List<IRoleAuthenticationHandler<? super ICoreUser>> roleAuthenticationHandlers) {
+    public RoleAuthenticationCommand createRoleAuthenticationCommand(List<IRoleAuthenticationHandler> roleAuthenticationHandlers) {
         RoleAuthenticationCommand roleAuthenticationCommand = new RoleAuthenticationCommand();
         roleAuthenticationCommand.setRoleAuthenticationHandlers(roleAuthenticationHandlers);
 
