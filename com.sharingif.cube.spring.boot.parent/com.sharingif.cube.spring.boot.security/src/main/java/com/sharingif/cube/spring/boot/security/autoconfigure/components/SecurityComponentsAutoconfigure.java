@@ -60,7 +60,7 @@ public class SecurityComponentsAutoconfigure {
     }
 
     @Bean(name="authenticationHanders")
-    @ConditionalOnBean(name="authenticationHanders")
+    @ConditionalOnBean(name="passwordAuthenticationHandler")
     public List<AuthenticationHander> createAuthenticationHanders(AuthenticationHander passwordAuthenticationHandler) {
         List<AuthenticationHander> authenticationHanders = new ArrayList<>();
         authenticationHanders.add(passwordAuthenticationHandler);
