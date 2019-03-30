@@ -44,6 +44,7 @@ public class SecurityCommandAutoconfigure {
     }
 
     @Bean(name="securityAuthenticationCommand")
+    @ConditionalOnBean(name = "authenticationHanders")
     public SecurityAuthenticationCommand createSecurityAuthenticationCommand(List<AuthenticationHander<? super ICoreUser, ? super IChannelContext>> authenticationHanders) {
         SecurityAuthenticationCommand securityAuthenticationCommand = new SecurityAuthenticationCommand();
         securityAuthenticationCommand.setAuthenticationHanders(authenticationHanders);
@@ -52,6 +53,7 @@ public class SecurityCommandAutoconfigure {
     }
 
     @Bean(name="roleAuthenticationCommand")
+    @ConditionalOnBean(name = "roleAuthenticationHandlers")
     public RoleAuthenticationCommand createRoleAuthenticationCommand(List<IRoleAuthenticationHandler<? super ICoreUser>> roleAuthenticationHandlers) {
         RoleAuthenticationCommand roleAuthenticationCommand = new RoleAuthenticationCommand();
         roleAuthenticationCommand.setRoleAuthenticationHandlers(roleAuthenticationHandlers);

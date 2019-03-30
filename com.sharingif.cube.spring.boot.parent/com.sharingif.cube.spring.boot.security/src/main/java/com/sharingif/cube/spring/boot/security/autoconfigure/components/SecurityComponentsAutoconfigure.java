@@ -10,6 +10,7 @@ import com.sharingif.cube.security.confidentiality.encrypt.BCryptTextEncryptor;
 import com.sharingif.cube.security.confidentiality.encrypt.digest.SHA256Encryptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -59,7 +60,7 @@ public class SecurityComponentsAutoconfigure {
     }
 
     @Bean(name="authenticationHanders")
-    @ConditionalOnMissingBean(name="authenticationHanders")
+    @ConditionalOnBean(name="authenticationHanders")
     public List<AuthenticationHander> createAuthenticationHanders(AuthenticationHander passwordAuthenticationHandler) {
         List<AuthenticationHander> authenticationHanders = new ArrayList<>();
         authenticationHanders.add(passwordAuthenticationHandler);
@@ -68,7 +69,7 @@ public class SecurityComponentsAutoconfigure {
     }
 
     @Bean(name="roleAuthenticationHandlers")
-    @ConditionalOnMissingBean(name="roleAuthenticationHandlers")
+    @ConditionalOnBean(name = "roleAuthenticationHandler")
     public List<IRoleAuthenticationHandler> createRoleAuthenticationHandlers(IRoleAuthenticationHandler roleAuthenticationHandler) {
         List<IRoleAuthenticationHandler> roleAuthenticationHandlers = new ArrayList<>();
         roleAuthenticationHandlers.add(roleAuthenticationHandler);
