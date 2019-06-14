@@ -1,7 +1,5 @@
 package com.sharingif.cube.spring.boot.security.autoconfigure.components;
 
-import com.sharingif.cube.components.channel.IChannelContext;
-import com.sharingif.cube.core.user.ICoreUser;
 import com.sharingif.cube.security.authentication.AuthenticationHander;
 import com.sharingif.cube.security.authentication.authority.tree.TreeMapAuthorityHandler;
 import com.sharingif.cube.security.authentication.role.IRoleAuthenticationHandler;
@@ -9,8 +7,6 @@ import com.sharingif.cube.security.binary.Base64Coder;
 import com.sharingif.cube.security.confidentiality.encrypt.BCryptTextEncryptor;
 import com.sharingif.cube.security.confidentiality.encrypt.digest.SHA256Encryptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistryImpl;
