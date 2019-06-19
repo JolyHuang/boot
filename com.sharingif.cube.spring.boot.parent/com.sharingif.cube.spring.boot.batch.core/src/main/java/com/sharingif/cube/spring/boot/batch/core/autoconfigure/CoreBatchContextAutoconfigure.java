@@ -1,5 +1,6 @@
 package com.sharingif.cube.spring.boot.batch.core.autoconfigure;
 
+import com.sharingif.cube.batch.core.handler.MultithreadDispatcherHandler;
 import com.sharingif.cube.batch.core.handler.SimpleDispatcherHandler;
 import com.sharingif.cube.batch.core.request.JobRequestContextResolver;
 import com.sharingif.cube.communication.view.MultiViewResolver;
@@ -10,9 +11,7 @@ import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import javax.sql.DataSource;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  * CoreBatchContextAutoconfigure
@@ -25,10 +24,9 @@ import javax.sql.DataSource;
 @Configuration
 public class CoreBatchContextAutoconfigure {
 
-    @SuppressWarnings("rawtypes")
-    @Bean("simpleDispatcherHandler")
-    @ConditionalOnMissingBean(name = "simpleDispatcherHandler")
-    public SimpleDispatcherHandler createSimpleDispatcherHandler(
+    @Bean("batchDispatcherHandler")
+    @ConditionalOnMissingBean(name = "batchDispatcherHandler")
+    public SimpleDispatcherHandler createatchDispatcherHandler(
             MultiHandlerMethodChain batchTransactionChains
             ,JobRequestContextResolver jobRequestContextResolver
             ,MultiHandlerMapping batchMultiHandlerMapping
@@ -45,6 +43,19 @@ public class CoreBatchContextAutoconfigure {
         simpleDispatcherHandler.setMultiViewResolver(batchMultiViewResolver);
 
         return simpleDispatcherHandler;
+    }
+
+    @Bean("batchMultithreadDispatcherHandler")
+    public MultithreadDispatcherHandler createBatchMultithreadDispatcherHandler(
+            SimpleDispatcherHandler batchDispatcherHandler
+            , ThreadPoolTaskExecutor jobThreadPoolTaskExecutor
+    ) {
+        MultithreadDispatcherHandler multithreadDispatcherHandler = new MultithreadDispatcherHandler();
+
+        multithreadDispatcherHandler.setMultithreadDispatcherHandlerThreadPoolTaskExecutor(jobThreadPoolTaskExecutor);
+        multithreadDispatcherHandler.setSimpleDispatcherHandler(batchDispatcherHandler);
+
+        return multithreadDispatcherHandler;
     }
 
 }
