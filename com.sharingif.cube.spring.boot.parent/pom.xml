@@ -8,24 +8,14 @@
 	<name>com.sharingif.cube.spring.boot.parent</name>
 	<url>http://maven.apache.org</url>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>${snapshotsUrl}</url>
-		</snapshotRepository>
-		<repository>
-			<id>releases</id>
-			<url>${releasesUrl}</url>
-		</repository>
-	</distributionManagement>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.jdk.version>1.8</project.build.jdk.version>
-		<maven.project.com.sharingif.cube.spring.boot.version>4.0.0-RELEASE</maven.project.com.sharingif.cube.spring.boot.version>
 
 		<maven.project.com.sharingif.cube.groupId>com.sharingif.cube</maven.project.com.sharingif.cube.groupId>
 		<maven.project.com.sharingif.cube.release.version>4.0.0-RELEASE</maven.project.com.sharingif.cube.release.version>
+		<maven.project.com.sharingif.cube.spring.boot.version>4.0.0-RELEASE</maven.project.com.sharingif.cube.spring.boot.version>
+
 		<maven.project.springframework.groupId>org.springframework</maven.project.springframework.groupId>
 		<maven.project.org.springframework.boot.groupId>org.springframework.boot</maven.project.org.springframework.boot.groupId>
 		<maven.project.org.springframework.boot.release.version>1.5.3.RELEASE</maven.project.org.springframework.boot.release.version>
@@ -35,7 +25,7 @@
 	<modules>
 		<module>com.sharingif.cube.spring.boot.core</module>
 
-		<module>com.sharingif.cube.spring.boot.components</module>
+		<module>com.sharingif.cube.spring.boot.batch.core</module>
 
 		<module>com.sharingif.cube.spring.boot.persistence</module>
 		<module>com.sharingif.cube.spring.boot.persistence.mybatis</module>
