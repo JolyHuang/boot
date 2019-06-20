@@ -96,7 +96,7 @@ public class CoreBatchComponentsAutoconfigure {
     }
 
     @Bean("batchMultiHandlerMapping")
-    public MultiHandlerMapping createBatchMultiHandlerMapping(List<HandlerMapping> batchHandlerMappings) {
+    public MultiHandlerMapping createBatchMultiHandlerMapping(@Qualifier("batchHandlerMappings") List<HandlerMapping> batchHandlerMappings) {
         MultiHandlerMapping multiHandlerMapping = new MultiHandlerMapping();
         multiHandlerMapping.setHandlerMappings(batchHandlerMappings);
 
@@ -106,7 +106,7 @@ public class CoreBatchComponentsAutoconfigure {
     @Bean("batchHandlerMethodHandlerAdapter")
     public HandlerMethodHandlerAdapter createBatchHandlerMethodHandlerAdapter(
             MultiHandlerMethodChain batchControllerChains
-            ,List<HandlerMethodArgumentResolver> batchArgumentResolvers
+            ,@Qualifier("batchArgumentResolvers") List<HandlerMethodArgumentResolver> batchArgumentResolvers
             ,BindingInitializer bindingInitializer
     ) {
         HandlerMethodHandlerAdapter handlerMethodHandlerAdapter = new HandlerMethodHandlerAdapter();
@@ -129,7 +129,7 @@ public class CoreBatchComponentsAutoconfigure {
     }
 
     @Bean("batchMultiHandlerMethodAdapter")
-    public MultiHandlerMethodAdapter createBatchMultiHandlerMethodAdapter(List<HandlerAdapter> batchHandlerAdapters) {
+    public MultiHandlerMethodAdapter createBatchMultiHandlerMethodAdapter(@Qualifier("batchHandlerAdapters") List<HandlerAdapter> batchHandlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
         multiHandlerMethodAdapter.setHandlerAdapters(batchHandlerAdapters);
 
@@ -152,7 +152,7 @@ public class CoreBatchComponentsAutoconfigure {
 
     @Bean("batchCubeExceptionHandler")
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiCubeExceptionHandler createBatchCubeExceptionHandler(List<IExceptionHandler> batchExceptionHandlers) {
+    public MultiCubeExceptionHandler createBatchCubeExceptionHandler(@Qualifier("batchExceptionHandlers") List<IExceptionHandler> batchExceptionHandlers) {
 
         MultiCubeExceptionHandler multiCubeExceptionHandler = new MultiCubeExceptionHandler();
         multiCubeExceptionHandler.setCubeExceptionHandlers(batchExceptionHandlers);
@@ -193,7 +193,7 @@ public class CoreBatchComponentsAutoconfigure {
     }
 
     @Bean("batchMultiViewResolver")
-    public MultiViewResolver createBatchMultiViewResolver(List<ViewResolver> batchViewResolvers) {
+    public MultiViewResolver createBatchMultiViewResolver(@Qualifier("batchViewResolvers") List<ViewResolver> batchViewResolvers) {
         MultiViewResolver multiViewResolver = new MultiViewResolver();
         multiViewResolver.setViewResolvers(batchViewResolvers);
 
