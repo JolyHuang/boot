@@ -1,6 +1,7 @@
 package com.sharingif.cube.spring.boot.communication.http.autoconfigure.components;
 
 import com.sharingif.cube.communication.JsonModel;
+import com.sharingif.cube.communication.http.transport.DynamicUrlRequestContextResolver;
 import com.sharingif.cube.communication.http.transport.transform.StringToJsonModelMarshaller;
 import com.sharingif.cube.communication.transport.transform.ProxyInterfaceHandlerMethodCommunicationTransform;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,11 @@ public class HttpComponentsAutoconfigure {
 	@Bean(name = "handlerMethodCommunicationTransportRequestContextResolver")
 	public HandlerMethodCommunicationTransportRequestContextResolver createHandlerMethodCommunicationTransportRequestContextResolver() {
 		return new HandlerMethodCommunicationTransportRequestContextResolver();
+	}
+
+	@Bean(name = "dynamicUrlRequestContextResolver")
+	public DynamicUrlRequestContextResolver createDynamicUrlRequestContextResolver() {
+		return new DynamicUrlRequestContextResolver();
 	}
 	
 	@Bean(name = "objectToJsonStringMarshaller")
