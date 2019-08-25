@@ -27,6 +27,8 @@
 
 		<module>com.sharingif.cube.spring.boot.batch.core</module>
 
+		<module>com.sharingif.cube.spring.boot.components</module>
+
 		<module>com.sharingif.cube.spring.boot.persistence</module>
 		<module>com.sharingif.cube.spring.boot.persistence.mybatis</module>
 		
