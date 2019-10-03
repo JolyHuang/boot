@@ -1,9 +1,7 @@
 package com.sharingif.cube.spring.boot.web.springmvc.autoconfigure.components;
 
-import com.sharingif.cube.core.exception.handler.ExceptionMessageConversion;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.HandlerMethod;
-import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.security.web.exception.handler.validation.access.AccessDecisionCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.WebCubeExceptionHandler;
 import com.sharingif.cube.web.exception.handler.validation.BindValidationCubeExceptionHandler;
@@ -21,15 +19,11 @@ import com.sharingif.cube.web.springmvc.servlet.view.json.ExtendedMappingJackson
 import com.sharingif.cube.web.springmvc.servlet.view.referer.RefererViewResolver;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamView;
 import com.sharingif.cube.web.springmvc.servlet.view.stream.StreamViewResolver;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -42,14 +36,12 @@ import org.springframework.validation.Validator;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.bind.support.WebBindingInitializer;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -161,22 +153,15 @@ public class SpringMVCComponentsAutoconfigure {
 		return springMVCCubeExceptionHandlers;
 
 	}
-
-	@Bean("exceptionMessageConversion")
-	public ExceptionMessageConversion createExceptionMessageConversion() {
-		return new ExceptionMessageConversion();
-	}
 	
 	@Bean(name="springMVCCubeExceptionHandler")
 	@ConditionalOnMissingBean(name = "springMVCCubeExceptionHandler")
 	public MultiCubeExceptionHandler<SpringMVCHttpRequestContext,HandlerMethod> createSpringMVCCubeExceptionHandler(
 			List<WebCubeExceptionHandler> springMVCCubeExceptionHandlers
-			, ExceptionMessageConversion exceptionMessageConversion
 			) {
 
 		MultiCubeExceptionHandler springMVCCubeExceptionHandler = new MultiCubeExceptionHandler();
 		springMVCCubeExceptionHandler.setCubeExceptionHandlers(springMVCCubeExceptionHandlers);
-		springMVCCubeExceptionHandler.setExceptionMessageConversion(exceptionMessageConversion);
 
 		return springMVCCubeExceptionHandler;
 	}

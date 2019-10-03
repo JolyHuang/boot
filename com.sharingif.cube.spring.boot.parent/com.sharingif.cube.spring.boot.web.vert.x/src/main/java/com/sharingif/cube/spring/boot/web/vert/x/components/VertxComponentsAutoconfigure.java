@@ -230,8 +230,9 @@ public class VertxComponentsAutoconfigure {
     }
 
     @Bean("vertxCubeExceptionHandler")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(@Qualifier("webCubeExceptionHandlers") List<WebCubeExceptionHandler> webCubeExceptionHandlers) {
+    public MultiCubeExceptionHandler createVertxCubeExceptionHandler(
+            @Qualifier("webCubeExceptionHandlers") List<WebCubeExceptionHandler> webCubeExceptionHandlers
+            ) {
 
         MultiCubeExceptionHandler vertxCubeExceptionHandler = new MultiCubeExceptionHandler();
         vertxCubeExceptionHandler.setCubeExceptionHandlers(webCubeExceptionHandlers);
