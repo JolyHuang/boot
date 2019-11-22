@@ -44,6 +44,8 @@
         <module>com.sharingif.cube.spring.boot.web.vert.x</module>
 
 		<module>com.sharingif.cube.spring.boot.tomcat</module>
+
+		<module>com.sharingif.cube.spring.boot.netty</module>
     </modules>
 
 	<dependencies>
