@@ -11,8 +11,6 @@ import com.sharingif.cube.netty.websocket.handler.TextWebSocketFrameHandler;
 import com.sharingif.cube.netty.websocket.handler.WebSocketDispatcherHandler;
 import com.sharingif.cube.netty.websocket.handler.WebSocketServerChannelInitializer;
 import com.sharingif.cube.netty.websocket.request.WebSocketRequestContextResolver;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +20,7 @@ public class NettyWebSocketContextAutoconfigure {
 
     @Bean("webSocketDispatcherHandler")
     public WebSocketDispatcherHandler createWebSocketDispatcherHandler(
-            MultiHandlerMethodChain webHandlerMethodChain
+            MultiHandlerMethodChain nettyHandlerMethodChain
             , WebSocketRequestContextResolver webSocketRequestContextResolver
             , MultiHandlerMapping nettyMultiHandlerMapping
             , MultiHandlerMethodAdapter nettyMultiHandlerMethodAdapter
@@ -30,7 +28,7 @@ public class NettyWebSocketContextAutoconfigure {
             , MultiViewResolver nettyMultiViewResolver
     ) {
         WebSocketDispatcherHandler webSocketDispatcherHandler = new WebSocketDispatcherHandler();
-        webSocketDispatcherHandler.setHandlerMethodChain(webHandlerMethodChain);
+        webSocketDispatcherHandler.setHandlerMethodChain(nettyHandlerMethodChain);
         webSocketDispatcherHandler.setRequestContextResolver(webSocketRequestContextResolver);
         webSocketDispatcherHandler.setMultiHandlerMapping(nettyMultiHandlerMapping);
         webSocketDispatcherHandler.setMultiHandlerMethodAdapter(nettyMultiHandlerMethodAdapter);
@@ -61,12 +59,12 @@ public class NettyWebSocketContextAutoconfigure {
     public WebSocketServerBootstrap createWebSocketServerBootstrap(
             @Value("${websocket.port}")int port
             , @Value("${websocket.worker.group.thread.number}")int workerGroupThreadNumber
-            , ChannelInitializer<SocketChannel> webSocketServerChannelInitializer
+            , WebSocketServerChannelInitializer webSocketServerChannelInitializer
     ) {
         WebSocketServerBootstrap webSocketServerBootstrap = new WebSocketServerBootstrap();
         webSocketServerBootstrap.setPort(port);
         webSocketServerBootstrap.setWorkerGroupThreadNumber(workerGroupThreadNumber);
-        webSocketServerBootstrap.setWebSocketChannelInitializer(webSocketServerChannelInitializer);
+        webSocketServerBootstrap.setWebSocketServerChannelInitializer(webSocketServerChannelInitializer);
 
         return webSocketServerBootstrap;
     }
