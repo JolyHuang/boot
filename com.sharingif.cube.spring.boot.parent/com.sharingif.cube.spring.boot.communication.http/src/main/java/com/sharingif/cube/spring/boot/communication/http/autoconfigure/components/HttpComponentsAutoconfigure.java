@@ -1,6 +1,6 @@
 package com.sharingif.cube.spring.boot.communication.http.autoconfigure.components;
 
-import com.sharingif.cube.communication.JsonModel;
+import com.sharingif.cube.core.view.JsonModel;
 import com.sharingif.cube.communication.http.transport.DynamicUrlRequestContextResolver;
 import com.sharingif.cube.communication.http.transport.transform.StringToJsonModelMarshaller;
 import com.sharingif.cube.communication.transport.transform.ProxyInterfaceHandlerMethodCommunicationTransform;

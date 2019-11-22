@@ -52,10 +52,10 @@ public class VertXChainAutoconfigure {
         chains.add(controllerMonitorPerformanceChain);
         chains.add(annotationHandlerMethodChain);
 
-        MultiHandlerMethodChain springMVCHandlerMethodContent = new MultiHandlerMethodChain();
-        springMVCHandlerMethodContent.setChains(chains);
+        MultiHandlerMethodChain vertxControllerChains = new MultiHandlerMethodChain();
+        vertxControllerChains.setChains(chains);
 
-        return  springMVCHandlerMethodContent;
+        return  vertxControllerChains;
     }
 
 }

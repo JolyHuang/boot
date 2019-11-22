@@ -1,6 +1,6 @@
 package com.sharingif.cube.spring.boot.web.vert.x;
 
-import com.sharingif.cube.communication.view.MultiViewResolver;
+import com.sharingif.cube.core.view.MultiViewResolver;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;

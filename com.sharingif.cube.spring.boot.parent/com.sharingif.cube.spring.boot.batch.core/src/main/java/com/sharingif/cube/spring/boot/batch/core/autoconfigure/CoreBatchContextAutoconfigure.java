@@ -3,7 +3,7 @@ package com.sharingif.cube.spring.boot.batch.core.autoconfigure;
 import com.sharingif.cube.batch.core.handler.MultithreadDispatcherHandler;
 import com.sharingif.cube.batch.core.handler.SimpleDispatcherHandler;
 import com.sharingif.cube.batch.core.request.JobRequestContextResolver;
-import com.sharingif.cube.communication.view.MultiViewResolver;
+import com.sharingif.cube.core.view.MultiViewResolver;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.MultiHandlerMethodAdapter;
 import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;

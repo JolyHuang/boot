@@ -7,8 +7,8 @@ import com.sharingif.cube.batch.core.handler.adapter.JobRequestHandlerMethodArgu
 import com.sharingif.cube.batch.core.request.JobRequestContextResolver;
 import com.sharingif.cube.batch.core.view.JobView;
 import com.sharingif.cube.batch.core.view.JobViewResolver;
-import com.sharingif.cube.communication.view.MultiViewResolver;
-import com.sharingif.cube.communication.view.ViewResolver;
+import com.sharingif.cube.core.view.MultiViewResolver;
+import com.sharingif.cube.core.view.ViewResolver;
 import com.sharingif.cube.core.exception.handler.IExceptionHandler;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.HandlerAdapter;

@@ -1,7 +1,7 @@
 package com.sharingif.cube.spring.boot.web.vert.x.components;
 
-import com.sharingif.cube.communication.view.MultiViewResolver;
-import com.sharingif.cube.communication.view.ViewResolver;
+import com.sharingif.cube.core.view.MultiViewResolver;
+import com.sharingif.cube.core.view.ViewResolver;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.HandlerAdapter;
 import com.sharingif.cube.core.handler.adapter.HandlerMethodArgumentResolver;
@@ -204,9 +204,9 @@ public class VertxComponentsAutoconfigure {
 
     @Bean("vertXMultiHandlerMethodAdapter")
     @SuppressWarnings("rawtypes")
-    public MultiHandlerMethodAdapter createVertXMultiHandlerMethodAdapter(@Qualifier("vertXHandlerAdapters") List<HandlerAdapter> handlerAdapters) {
+    public MultiHandlerMethodAdapter createVertXMultiHandlerMethodAdapter(@Qualifier("vertXHandlerAdapters") List<HandlerAdapter> vertXHandlerAdapters) {
         MultiHandlerMethodAdapter multiHandlerMethodAdapter = new MultiHandlerMethodAdapter();
-        multiHandlerMethodAdapter.setHandlerAdapters(handlerAdapters);
+        multiHandlerMethodAdapter.setHandlerAdapters(vertXHandlerAdapters);
 
         return multiHandlerMethodAdapter;
     }
