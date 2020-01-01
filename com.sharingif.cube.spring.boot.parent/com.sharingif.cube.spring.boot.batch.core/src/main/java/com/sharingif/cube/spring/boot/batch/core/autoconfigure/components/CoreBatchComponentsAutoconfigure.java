@@ -160,22 +160,10 @@ public class CoreBatchComponentsAutoconfigure {
         return multiCubeExceptionHandler;
     }
 
-    private JobService jobService;
-    private Map<String, JobConfig> allJobConfig;
-    @Autowired(required = false)
-    public void setJobService(JobService jobService) {
-        this.jobService = jobService;
-    }
-    @Autowired(required = false)
-    @Qualifier("allJobConfig")
-    public void setAllJobConfig(Map<String, JobConfig> allJobConfig) {
-        this.allJobConfig = allJobConfig;
-    }
     @Bean("jobView")
-    public JobView createJobView() {
+    public JobView createJobView(JobService jobService) {
         JobView jobView = new JobView();
         jobView.setJobService(jobService);
-        jobView.setAllJobConfig(allJobConfig);
 
         return jobView;
     }
