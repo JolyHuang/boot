@@ -161,7 +161,7 @@ public class CoreBatchComponentsAutoconfigure {
     }
 
     @Bean("jobView")
-    public JobView createJobView(JobService jobService) {
+    public JobView createJobView(@Autowired(required = false)JobService jobService) {
         JobView jobView = new JobView();
         jobView.setJobService(jobService);
 
