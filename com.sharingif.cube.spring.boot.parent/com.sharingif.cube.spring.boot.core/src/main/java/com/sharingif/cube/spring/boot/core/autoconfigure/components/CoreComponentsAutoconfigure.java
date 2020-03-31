@@ -66,7 +66,11 @@ public class CoreComponentsAutoconfigure {
 	public static List<Resource> createCommonProperties() {
 		List<Resource> commonProperties = new ArrayList<Resource>();
 		if(!StringUtils.isTrimEmpty(CubeConfigure.EXTERNAL_CONFIGURE)) {
-			commonProperties.add(new FileSystemResource(CubeConfigure.EXTERNAL_CONFIGURE));
+			String[] externalConfigureArray = CubeConfigure.EXTERNAL_CONFIGURE.split(",");
+			for (String externalConfigure : externalConfigureArray) {
+				commonProperties.add(new FileSystemResource(externalConfigure));
+			}
+
 		}
 		commonProperties.add(new ClassPathResource("config/app/CubeConfigure.properties"));
 
