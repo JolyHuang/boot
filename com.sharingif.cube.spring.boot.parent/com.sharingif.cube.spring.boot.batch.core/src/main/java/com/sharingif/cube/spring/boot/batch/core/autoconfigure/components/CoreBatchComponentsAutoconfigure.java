@@ -1,14 +1,11 @@
 package com.sharingif.cube.spring.boot.batch.core.autoconfigure.components;
 
-import com.sharingif.cube.batch.core.JobConfig;
 import com.sharingif.cube.batch.core.JobService;
 import com.sharingif.cube.batch.core.exception.JobExceptionHandler;
 import com.sharingif.cube.batch.core.handler.adapter.JobRequestHandlerMethodArgumentResolver;
 import com.sharingif.cube.batch.core.request.JobRequestContextResolver;
 import com.sharingif.cube.batch.core.view.JobView;
 import com.sharingif.cube.batch.core.view.JobViewResolver;
-import com.sharingif.cube.core.view.MultiViewResolver;
-import com.sharingif.cube.core.view.ViewResolver;
 import com.sharingif.cube.core.exception.handler.IExceptionHandler;
 import com.sharingif.cube.core.exception.handler.MultiCubeExceptionHandler;
 import com.sharingif.cube.core.handler.adapter.HandlerAdapter;
@@ -20,6 +17,8 @@ import com.sharingif.cube.core.handler.chain.MultiHandlerMethodChain;
 import com.sharingif.cube.core.handler.mapping.HandlerMapping;
 import com.sharingif.cube.core.handler.mapping.MultiHandlerMapping;
 import com.sharingif.cube.core.handler.mapping.RequestMappingHandlerMapping;
+import com.sharingif.cube.core.view.MultiViewResolver;
+import com.sharingif.cube.core.view.ViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +31,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * CoreComponentsAutoconfigure
