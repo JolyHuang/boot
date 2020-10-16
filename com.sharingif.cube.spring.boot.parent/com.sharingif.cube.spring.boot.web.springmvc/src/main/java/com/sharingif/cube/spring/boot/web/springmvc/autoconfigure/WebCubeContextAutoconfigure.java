@@ -96,6 +96,7 @@ public class WebCubeContextAutoconfigure {
 	}
 	
 	@Bean(name="viewResolver")
+	@ConditionalOnMissingBean(name = "viewResolver")
 	public ViewResolver createViewResolver(
 			ContentNegotiationManager contentNegotiationManager
 			,List<ViewResolver> viewResolvers
