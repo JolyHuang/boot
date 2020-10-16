@@ -128,7 +128,10 @@ public class WebCubeContextAutoconfigure {
 		dispatcherServlet.setDispatchOptionsRequest(true);
 		dispatcherServlet.setDispatchTraceRequest(false);
 		dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
-		
+
+		dispatcherServlet.setDetectAllHandlerMappings(false);
+		dispatcherServlet.setDetectAllHandlerAdapters(false);
+		dispatcherServlet.setDetectAllViewResolvers(false);
 		dispatcherServlet.setDetectAllHandlerExceptionResolvers(false);
 		
 		return dispatcherServlet;
